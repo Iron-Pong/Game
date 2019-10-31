@@ -124,3 +124,19 @@ function startGame() {
   theGame = new Game();
   mainLoop();
 }
+
+if (
+  theGame.theBall.x < theGame.thePlayer2.x + theGame.thePlayer2.width &&
+  theGame.theBall.x + theGame.theBall.width > theGame.thePlayer2.x &&
+  theGame.theBall.y < theGame.thePlayer2.y + theGame.thePlayer2.height &&
+  theGame.theBall.y + theGame.theBall.height > theGame.thePlayer2.y
+) {
+  console.log("collision made with player 2!");
+} else if (
+  theGame.theBall.x < theGame.thePlayer.x + theGame.thePlayer.width &&
+  theGame.theBall.x + theGame.theBall.width > theGame.thePlayer.x &&
+  theGame.theBall.y < theGame.thePlayer.y + theGame.thePlayer.height &&
+  theGame.theBall.y + theGame.theBall.height > theGame.thePlayer.y
+) {
+  console.log("collision made with player 1!");
+}
