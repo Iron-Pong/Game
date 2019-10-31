@@ -128,14 +128,6 @@ class Game {
     this.theBall = new Ball(300, 200, 10, 10);
   }
 
-//   collisionDetect(futureX, futureY) {
-//       let canMove = true;
-//       if(futureX + this.thePlayer2.width >= 560 && futureX <= 560 
-//         && futureY + this.thePlayer2.height >= 300 && futureY <= 30){
-//           canMove = false
-//       } 
-//       return canMove;
-//   }
 
 }
 
@@ -148,12 +140,3 @@ function startGame() {
   theGame = new Game();
   mainLoop();
 }
-
-
-// var rect1 = {x: 5, y: 5, width: 50, height: 50}
-// var rect2 = {x: 560, y: 30}
-
-// if (rect1.x < rect2.x + rect2.width &&
-//    rect1.x + rect1.width > rect2.x &&
-//    rect1.y < rect2.y + rect2.height &&
-//    rect1.y + rect1.height > rect2.y)
