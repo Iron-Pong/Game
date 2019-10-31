@@ -18,19 +18,22 @@ class Player {
 }
 
 class Ball {
-  constructor(x, y, width, height) {
+  constructor(x, y, dx, dy, width, height) {
     this.x = x;
     this.y = y;
+    this.dx = dx;
+    this.dy = dy;
     this.width = width;
     this.height = height;
   }
-  moveBall() {
-    setInterval(() => {
-      this.x -= 2;
-      //   if (this.x > 500) {
-      //     clearInterval(travelDown);
-      //   }
-    }, 600);
+  moveBall(futureX, futureY) {
+    this.x -= this.dx;
+    // setInterval(() => {
+    // futureY = this.y;
+    //   if (this.x > 500) {
+    //     clearInterval(travelDown);
+    //   }
+    // }, 1000);
   }
 }
 
@@ -72,6 +75,7 @@ function mainLoop() {
   draw(theGame.thePlayer2, "player");
   draw(theGame.theBall, "ball");
   theGame.theBall.moveBall();
+  theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
 
   requestAnimationFrame(mainLoop);
 }
@@ -125,7 +129,30 @@ class Game {
   constructor() {
     this.thePlayer = new Player(20, 180, 20, 60);
     this.thePlayer2 = new Player(560, 180, 20, 60);
-    this.theBall = new Ball(300, 200, 10, 10);
+    this.theBall = new Ball(300, 200, 2, 0, 10, 10);
+  }
+
+  collisionDetection(futureX, futureY) {
+    console.log(this.theBall);
+    // console.log(futureX);
+    // console.log(this.thePlayer2.x);
+    // console.log(this.thePlayer2.width);
+    if (
+      futureX < this.thePlayer.x + this.thePlayer.width &&
+      futureX + this.theBall.width > this.thePlayer.x &&
+      futureY < this.thePlayer.y + this.thePlayer.height &&
+      futureY + this.theBall.height > this.thePlayer.y
+    ) {
+      console.log("collided with player 1");
+      this.theBall.dx *= -1;
+    } else if (
+      futureX < this.thePlayer2.x + this.thePlayer2.width &&
+      futureX + this.theBall.width > this.thePlayer2.x &&
+      futureY < this.thePlayer2.y + this.thePlayer2.height &&
+      futureY + this.theBall.height > this.thePlayer2.y
+    ) {
+      this.theBall.dx *= -1;
+    }
   }
 
 
