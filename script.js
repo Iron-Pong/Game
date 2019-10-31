@@ -43,7 +43,7 @@ function mainLoop(){
 
 // Speed
 
-let speed = 30;
+let speed = 15;
 
 // Paddle controls
 
@@ -62,8 +62,8 @@ function gameControls(e) {
     }
 }
 
-document.onkeypress = gameControls;
 document.onkeydown = gameControls;
+
 
 
 //here is where all the classes are called to create the game
