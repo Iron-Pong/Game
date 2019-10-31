@@ -23,10 +23,7 @@ class Player {
   movePlayer = (direction, value) => {
     this[direction] += value;
   };
-
-  
 }
-
 
 class Ball {
   constructor(x, y, dx, dy, width, height) {
@@ -38,7 +35,7 @@ class Ball {
     this.height = height;
   }
   moveBall(futureX, futureY) {
-    this.x -= this.dx;
+    this.y -= this.dy;
     // setInterval(() => {
     // futureY = this.y;
     //   if (this.x > 500) {
@@ -62,34 +59,33 @@ function draw(u, object) {
     ctx.fillStyle = "black";
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
-  
-  if(theGame.theBall.x<0 ){
-      
-   playerTwoScore += 1;
-   document.querySelector('.player2 > span').innerText = playerTwoScore;
+
+  if (theGame.theBall.x < 0) {
+    playerTwoScore += 1;
+    document.querySelector(".player2 > span").innerText = playerTwoScore;
     theGame.theBall.x += 5;
     startGame();
-}
- if(theGame.theBall.x>600){
-     theGame.theBall.x -= 305;
+  }
+  if (theGame.theBall.x > 600) {
+    theGame.theBall.x -= 305;
 
-   playerOneScore += 1;
-   document.querySelector('.player1 > span').innerText = playerOneScore;
-     startGame();
- }
-  if ((object === "player") && theGame.thePlayer2.y < 0) {
+    playerOneScore += 1;
+    document.querySelector(".player1 > span").innerText = playerOneScore;
+    startGame();
+  }
+  if (object === "player" && theGame.thePlayer2.y < 0) {
     theGame.thePlayer2.y = 0;
   }
 
-  if ((object === "player") && theGame.thePlayer2.y > 330) {
+  if (object === "player" && theGame.thePlayer2.y > 330) {
     theGame.thePlayer2.y = 340;
   }
 
-  if ((object === "player") && theGame.thePlayer.y < 0) {
+  if (object === "player" && theGame.thePlayer.y < 0) {
     theGame.thePlayer.y = 0;
   }
 
-  if ((object === "player") && theGame.thePlayer.y > 330) {
+  if (object === "player" && theGame.thePlayer.y > 330) {
     theGame.thePlayer.y = 340;
   }
 }
@@ -108,7 +104,6 @@ function mainLoop() {
 
   requestAnimationFrame(mainLoop);
 }
-
 
 // Paddle controls
 
@@ -149,7 +144,7 @@ class Game {
   constructor() {
     this.thePlayer = new Player(20, 180, 20, 60);
     this.thePlayer2 = new Player(560, 180, 20, 60);
-    this.theBall = new Ball(300, 200, 2, 0, 10, 10);
+    this.theBall = new Ball(300, 200, 0, 2, 10, 10);
   }
 
   collisionDetection(futureX, futureY) {
@@ -171,30 +166,33 @@ class Game {
       futureY < this.thePlayer2.y + this.thePlayer2.height &&
       futureY + this.theBall.height > this.thePlayer2.y
     ) {
-        this.theBall.dx *= -1;
+      this.theBall.dx *= -1;
+    } else if (this.theBall.y < 0) {
+      this.theBall.dy *= -1;
+    } else if (this.theBall.y > 400) {
+      this.theBall.dy *= -1;
     }
   }
-
-
 }
 
 //Game Over function
 
-function gameOver(){
-    if(playerOneScore===10){
-        message = "Player 1 Wins!"
-        document.getElementById('gameNotifcation').innerText = message;
-        // alert(message);
-    }
+function gameOver() {
+  if (playerOneScore === 10) {
+    message = "Player 1 Wins!";
+    document.getElementById("gameNotifcation").innerText = message;
+    // alert(message);
+  }
 
-    if(playerTwoScore===2){
-        
-      message = "Player 2 Wins!"
-      document.getElementById('gameNotifcation').innerText = message;
-      
-      setTimeout(function(){ location.reload(true) }, 1000);
+  if (playerTwoScore === 2) {
+    message = "Player 2 Wins!";
+    document.getElementById("gameNotifcation").innerText = message;
+
+    setTimeout(function() {
+      location.reload(true);
+    }, 1000);
   }
-  }
+}
 
 //Start Button
 
