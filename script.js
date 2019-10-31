@@ -35,6 +35,7 @@ class Ball {
     this.height = height;
   }
   moveBall(futureX, futureY) {
+    this.y -= this.dy;
     this.x -= this.dx;
     // setInterval(() => {
     // futureY = this.y;
@@ -92,8 +93,11 @@ function draw(u, object) {
 
 // Main Loop - runs animation, draws players
 
+let speed2 = 1;
+
+
 function mainLoop() {
-  frames++;
+  frames+speed2;
   //console.log("clearRect has occured");
   ctx.clearRect(0, 0, 600, 400);
   draw(theGame.thePlayer, "player");
@@ -101,9 +105,9 @@ function mainLoop() {
   draw(theGame.theBall, "ball");
   theGame.theBall.moveBall();
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
-
   requestAnimationFrame(mainLoop);
 }
+
 
 
 /*function loop(timestamp) {
@@ -124,11 +128,11 @@ function mainLoop() {
 
 function gameControls(e) {
   if (e.key === "'") {
-          theGame.thePlayer2.movePlayer("y", -speed);
-      }
+    theGame.thePlayer2.movePlayer("y", -speed);
+  }
   if (e.key === "/") {
-          theGame.thePlayer2.movePlayer("y", +speed);
-      }
+    theGame.thePlayer2.movePlayer("y", +speed);
+  }
   if (e.key === "a" || e.key === "A") {
     theGame.thePlayer.movePlayer("y", -speed);
   }
@@ -137,29 +141,27 @@ function gameControls(e) {
   }
 }
 
-
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
 
 var map = {}; // You could also use an array
-onkeydown = onkeyup = function(e){
-    e = e || event; // to deal with IE
-    map[e.key] = e.type == 'keydown';
-    /* insert conditional here */
-    console.log(map)
-    for(let k in map){
-        if(map[k]){
-            gameControls({key:k})
-        }
+onkeydown = onkeyup = function(e) {
+  e = e || event; // to deal with IE
+  map[e.key] = e.type == "keydown";
+  /* insert conditional here */
+  console.log(map);
+  for (let k in map) {
+    if (map[k]) {
+      gameControls({ key: k });
     }
-    
-}
+  }
+};
 
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
     this.thePlayer = new Player(20, 180, 20, 60);
     this.thePlayer2 = new Player(560, 180, 20, 60);
-    this.theBall = new Ball(300, 200, 0, 2, 10, 10);
+    this.theBall = new Ball(300, 200, 2, 2, 10, 10);
   }
 
   collisionDetection(futureX, futureY) {
