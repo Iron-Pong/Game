@@ -35,8 +35,8 @@ class Ball {
     this.height = height;
   }
   moveBall(futureX, futureY) {
-    this.y -= this.dy;
     this.x -= this.dx;
+    this.y -= this.dy;
     // setInterval(() => {
     // futureY = this.y;
     //   if (this.x > 500) {
@@ -143,7 +143,7 @@ class Game {
   constructor() {
     this.thePlayer = new Player(20, 180, 20, 60);
     this.thePlayer2 = new Player(560, 180, 20, 60);
-    this.theBall = new Ball(300, 200, 2, 2, 10, 10);
+    this.theBall = new Ball(300, 200, 2, -2, 10, 10);
   }
 
   collisionDetection(futureX, futureY) {
