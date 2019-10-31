@@ -1,13 +1,21 @@
 //IronPong JS
 
-const ctx = document.getElementById("main-game").getContext("2d");
+var ctx = document.getElementById("main-game").getContext("2d");
+ctx.width = 600;
+ctx.height = 400;
 
+// variables
+let keys = [];
+let speed = 30;
+let playerOneScore = 0;
+let playerTwoScore = 0;
 class Player {
   constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    this.score = 0;
   }
 
   // Move Player function
@@ -16,7 +24,10 @@ class Player {
     this[direction] += value;
     console.log(this);
   };
+
+  
 }
+
 
 class Ball {
   constructor(x, y, width, height) {
@@ -28,10 +39,11 @@ class Ball {
   moveBall() {
     setInterval(() => {
       this.x -= 2;
-      //   if (this.x > 500) {
-      //     clearInterval(travelDown);
-      //   }
-    }, 600);
+        
+    }, 1000);
+    if (this.x === 0 || this.x === 600) {
+        clearInterval();
+      }
   }
 }
 
@@ -39,14 +51,31 @@ class Ball {
 
 function draw(u, object) {
   if (object === "ball") {
-    ctx.arc(u.x, u.y, u.width, u.height, Math.PI);
+    ctx.beginPath();
+    ctx.arc(u.x, u.y, 10, 0, Math.PI * 2);
     ctx.fillStyle = "red";
     ctx.fill();
+    ctx.closePath();
   }
   if (object === "player") {
     ctx.fillStyle = "black";
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
+  
+  if(theGame.theBall.x<0 ){
+      
+   playerTwoScore += 1;
+   document.querySelector('.player2 > span').innerText = playerTwoScore;
+    theGame.theBall.x += 5;
+    startGame();
+}
+ if(theGame.theBall.x>600){
+     theGame.theBall.x -= 305;
+
+   playerOneScore += 1;
+   document.querySelector('.player1 > span').innerText = playerOneScore;
+     startGame();
+ }
 }
 
 // Main Loop - runs animation, draws players
@@ -63,9 +92,6 @@ function mainLoop() {
   requestAnimationFrame(mainLoop);
 }
 
-// Speed
-let keys = [];
-let speed = 30;
 
 // Paddle controls
 
@@ -113,7 +139,26 @@ class Game {
     this.thePlayer2 = new Player(560, 180, 20, 60);
     this.theBall = new Ball(300, 200, 10, 10);
   }
+
 }
+
+//Game Over function
+
+function gameOver(){
+    if(playerOneScore===10){
+        message = "Player 1 Wins!"
+        document.getElementById('gameNotifcation').innerText = message;
+        // alert(message);
+    }
+
+    if(playerTwoScore===2){
+        
+      message = "Player 2 Wins!"
+      document.getElementById('gameNotifcation').innerText = message;
+      
+      setTimeout(function(){ location.reload(true) }, 1000);
+  }
+  }
 
 //Start Button
 
@@ -123,4 +168,5 @@ let theGame;
 function startGame() {
   theGame = new Game();
   mainLoop();
+  gameOver();
 }
