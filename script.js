@@ -95,7 +95,7 @@ function draw(u, object) {
 
 function mainLoop() {
   frames++;
-  console.log("clearRect has occured");
+  //console.log("clearRect has occured");
   ctx.clearRect(0, 0, 600, 400);
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
@@ -109,12 +109,12 @@ function mainLoop() {
 // Paddle controls
 
 function gameControls(e) {
-  if (e.key === "ArrowUp") {
-    theGame.thePlayer2.movePlayer("y", -speed);
-  }
-  if (e.key === "ArrowDown") {
-    theGame.thePlayer2.movePlayer("y", +speed);
-  }
+  if (e.key === "'") {
+          theGame.thePlayer2.movePlayer("y", -speed);
+      }
+  if (e.key === "/") {
+          theGame.thePlayer2.movePlayer("y", +speed);
+      }
   if (e.key === "a" || e.key === "A") {
     theGame.thePlayer.movePlayer("y", -speed);
   }
@@ -123,29 +123,23 @@ function gameControls(e) {
   }
 }
 
-// function update() {
-//   if (keys[38]) {
-//     theGame.thePlayer2.movePlayer("y", -speed);
-//   }
-//   if (keys[40]) {
-//     theGame.thePlayer2.movePlayer("y", +speed);
-//   }
-//   if (keys[65]) {
-//     theGame.thePlayer.movePlayer("y", -speed);
-//   }
-//   if (keys[90]) {
-//     theGame.thePlayer.movePlayer("y", +speed);
-//   }
-// }
 
-// document.onkeypress = gameControls;
-document.onkeydown = gameControls;
-// document.body.addEventListener("keydown", function(e) {
-//   keys[e.keyCode] = true;
-// });
-// document.body.addEventListener("keyup", function(e) {
-//   keys[e.keyCode] = false;
-// });
+//https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
+
+var map = {}; // You could also use an array
+onkeydown = onkeyup = function(e){
+    e = e || event; // to deal with IE
+    map[e.key] = e.type == 'keydown';
+    /* insert conditional here */
+    console.log(map)
+    for(let k in map){
+        if(map[k]){
+            gameControls({key:k})
+        }
+    }
+    
+}
+
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
@@ -155,7 +149,7 @@ class Game {
   }
 
   collisionDetection(futureX, futureY) {
-    console.log(this.theBall);
+    //console.log(this.theBall);
     // console.log(futureX);
     // console.log(this.thePlayer2.x);
     // console.log(this.thePlayer2.width);
