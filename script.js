@@ -39,9 +39,8 @@ class Ball {
 
 function draw(u, object) {
   if (object === "ball") {
-    ctx.arc(u.x, u.y, u.width, u.height, Math.PI);
     ctx.fillStyle = "red";
-    ctx.fill();
+    ctx.fillRect(u.x, u.y, u.width, u.height);
   }
   if (object === "player") {
     ctx.fillStyle = "black";
@@ -113,6 +112,7 @@ class Game {
     this.thePlayer2 = new Player(560, 180, 20, 60);
     this.theBall = new Ball(300, 200, 10, 10);
   }
+
   collisionDetection() {
     if (
       this.theBall.x < this.thePlayer2.x + this.thePlayer2.width &&
@@ -141,19 +141,3 @@ function startGame() {
   theGame = new Game();
   mainLoop();
 }
-// insert this into collision loop
-// if (
-//   theGame.theBall.x < theGame.thePlayer2.x + theGame.thePlayer2.width &&
-//   theGame.theBall.x + theGame.theBall.width > theGame.thePlayer2.x &&
-//   theGame.theBall.y < theGame.thePlayer2.y + theGame.thePlayer2.height &&
-//   theGame.theBall.y + theGame.theBall.height > theGame.thePlayer2.y
-// ) {
-//   console.log("collision made with player 2!");
-// } else if (
-//   theGame.theBall.x < theGame.thePlayer.x + theGame.thePlayer.width &&
-//   theGame.theBall.x + theGame.theBall.width > theGame.thePlayer.x &&
-//   theGame.theBall.y < theGame.thePlayer.y + theGame.thePlayer.height &&
-//   theGame.theBall.y + theGame.theBall.height > theGame.thePlayer.y
-// ) {
-//   console.log("collision made with player 1!");
-// }
