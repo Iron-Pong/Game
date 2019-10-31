@@ -39,6 +39,7 @@ class Ball {
   }
   moveBall(futureX, futureY) {
     this.x -= this.dx;
+    this.y -= this.dy;
     // setInterval(() => {
     // futureY = this.y;
     //   if (this.x > 500) {
@@ -70,6 +71,7 @@ function draw(u, object) {
     theGame.theBall.x += 5;
     startGame();
 }
+
  if(theGame.theBall.x>600){
      theGame.theBall.x -= 305;
 
@@ -113,10 +115,10 @@ function mainLoop() {
 // Paddle controls
 
 function gameControls(e) {
-  if (e.key === "ArrowUp") {
+  if (e.key === "'") {
           theGame.thePlayer2.movePlayer("y", -speed);
       }
-  if (e.key === "ArrowDown") {
+  if (e.key === "/") {
           theGame.thePlayer2.movePlayer("y", +speed);
       }
   if (e.key === "a" || e.key === "A") {
@@ -143,7 +145,7 @@ function gameControls(e) {
 // }
 
 // document.onkeypress = gameControls;
-document.onkeydown = gameControls;
+document.onkeypress = gameControls;
 // document.body.addEventListener("keydown", function(e) {
 //   keys[e.keyCode] = true;
 // });
@@ -153,8 +155,8 @@ document.onkeydown = gameControls;
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 180, 20, 60);
-    this.thePlayer2 = new Player(560, 180, 20, 60);
+    this.thePlayer = new Player(0, 180, 20, 60);
+    this.thePlayer2 = new Player(580, 180, 20, 60);
     this.theBall = new Ball(300, 200, 2, 0, 10, 10);
   }
 
