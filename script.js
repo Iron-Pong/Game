@@ -166,12 +166,13 @@ class Game {
     console.log(this.thePlayer.x);
     console.log(this.thePlayer.width);
     if (
-      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius * 1.2 &&
+      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
       futureX + this.theBall.radius > this.thePlayer.x &&
       futureY < this.thePlayer.y + this.thePlayer.height &&
       futureY + this.theBall.radius > this.thePlayer.y
     ) {
-      //   console.log("collided with player 1");
+      console.log("collided with player 1");
+      this.theBall.x += 5;
       this.theBall.dx *= -1;
     } else if (
       futureX < this.thePlayer2.x + this.thePlayer2.width &&
@@ -179,8 +180,10 @@ class Game {
       futureY < this.thePlayer2.y + this.thePlayer2.height &&
       futureY + this.theBall.radius > this.thePlayer2.y
     ) {
+      console.log("Collided with player 2");
+      this.theBall.x -= 5;
       this.theBall.dx *= -1;
-      this.theBall.dy *= -1;
+      // this.theBall.dy *= -1;
     } else if (this.theBall.y < 0 || this.theBall.y > 400) this.theBall.dy *= -1;
   }
 }
