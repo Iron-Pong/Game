@@ -37,8 +37,8 @@ class Ball {
   }
 
   moveBall() {
-    this.x -= this.dx * 2.5;
-    this.y -= this.dy * 2.5;
+    this.x -= this.dx * 1.5;
+    this.y -= this.dy * 1.5;
   }
 }
 
@@ -124,10 +124,10 @@ function mainLoop() {
 // Paddle controls
 
 function gameControls(e) {
-  if (e.key === "'") {
+  if (e.key === "ArrowUp") {
     theGame.thePlayer2.movePlayer("y", -speed);
   }
-  if (e.key === "/") {
+  if (e.key === "ArrowDown") {
     theGame.thePlayer2.movePlayer("y", +speed);
   }
   if (e.key === "a" || e.key === "A") {
@@ -177,7 +177,7 @@ class Game {
     console.log(this.thePlayer.x);
     console.log(this.thePlayer.width);
     if (
-      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
+      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius * 1.2 &&
       futureX + this.theBall.radius > this.thePlayer.x &&
       futureY < this.thePlayer.y + this.thePlayer.height &&
       futureY + this.theBall.radius > this.thePlayer.y
