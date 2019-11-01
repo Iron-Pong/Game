@@ -16,7 +16,7 @@ $theme = $_GET['theme'];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- IronPong CSS -->
     <link rel="stylesheet" href="./styles.css" type="text/css">
@@ -24,32 +24,32 @@ $theme = $_GET['theme'];
     <title>IronPong</title>
 </head>
 
-<body>
+<body id="<?php echo $theme; ?>">
     <div class="container-fluid">
-        <div class="row" id="title">
-            <div class="col-12">
-                IronPong
+        <div class="row">
+            <div class="col-12" id="game-notification">
+                <button id="start-game">Start</button>
             </div>
         </div>
         <div class="row" id="main-board">
             <div class="col-3 player-card">
                 <div class="row" id="player1">
-                    <div class="col-12">
-                        <?php echo $player1name; ?>
+                    <div class="col-12" id="name">
+                        <?php echo strtoupper($player1name); ?>
                     </div>
-                    <div class="col-12">
-                        Score <span>0</span>
+                    <div class="col-12" id="player-score">
+                        <span>0</span>
                     </div>
                 </div>
             </div>
-            <div class="col-6" id="game-board">Canvas</div>
+            <div class="col-6"><canvas id="game-board" class="<?php echo $theme; ?>-theme" width="600" height="400"></canvas></div>
             <div class="col-3 player-card">
                 <div class="row" id="player2">
-                    <div class="col-12">
-                        <?php echo $player2name; ?>
+                    <div class="col-12" id="name">
+                        <?php echo strtoupper($player2name); ?>
                     </div>
-                    <div class="col-12">
-                        Score <span>0</span>
+                    <div class="col-12" id="player-score">
+                        <span>0</span>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,9 @@ $theme = $_GET['theme'];
                     </div>
                 </div>
             </div>
-            <div class="col-6" id="gameNotification">Message Box</div>
+            <div class="col-6" id="title">IronPong
+                <input type="hidden" value="<?php echo $theme;?>">
+            </div>
             <div class="col-3 player-controls">
                 <div class="row">
                     <div class="row">
@@ -83,10 +85,9 @@ $theme = $_GET['theme'];
 
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-            </script>
-            <script src="./js/bootstrap.js"></script>
-            <script src="./js/bootstrap.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

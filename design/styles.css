@@ -1,20 +1,72 @@
+@font-face {
+  font-family: "basketball";
+  src: url("./images/fonts/basketball-font.ttf") format("truetype");
+}
 body {
-  margin: 5px;
+  margin: 50px;
   overflow: hidden;
 }
 
+/* Basketball Theme CSS */
+#basketball {
+  background-image: url("./images/basketball-bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.basketball-theme {
+    background-image: url("./images/bballcourt.jpg");
+    background-size: 100% 400px;
+    background-repeat: no-repeat;
+  }
+
+  #basketball #player-score {
+    font-family: basketball;
+  }
+
+#basketball .player-card {
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    border: white 3px solid;
+    background-color: black;
+    color: white;
+    font-size: 1.9em;
+  }
+  #basketball #footer {
+    color: black;
+  }
+
+  #basketball #game-notification {
+      color: white;
+  }
+/* End Basketball CSS */
+
+
+/* Soccer CSS */
+#soccer {
+  background-image: url("./images/soccer-bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* .container-fluid.soccer {
+  background-color: seagreen;
+} */
+
+.soccer-theme {
+    background-image: url("./images/soccerfield.jpg");
+    background-size: 100% 400px;
+    background-repeat: no-repeat;
+  }
+
+/*End Soccer CSS */
+
 #game-board {
-  background-color: gray;
   border: 1px solid black;
   width: 100%;
   height: 400px;
 }
 
-#title {
-  font-size: 3em;
-  text-align: center;
-  padding: 30px;
-}
+
+
 
 .player-card {
   font-size: 2em;
@@ -35,13 +87,19 @@ body {
   justify-content: center;
 }
 
-#footer {
+#game-notification {
+  font-size: 3em;
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  padding: 30px;
 }
 
-#gameNotification {
-  font-size: 2.5em;
-}
+#footer {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #title {
+    font-size: 2em;
+  }
