@@ -11,6 +11,8 @@ let playerOneScore = 0;
 let playerTwoScore = 0;
 var isPlaying; 
 let endGameScore = 3;
+let ballRadius = 10;
+var isPlaying;
 
 class Player {
   constructor(x, y, width, height) {
@@ -28,18 +30,17 @@ class Player {
 }
 
 class Ball {
-  constructor(x, y, dx, dy, width, height) {
+  constructor(x, y, dx, dy, radius) {
     this.x = x;
     this.y = y;
     this.dy = dy;
     this.dx = dx;
-    this.width = width;
-    this.height = height;
+    this.radius = radius;
   }
 
   moveBall() {
-      this.x -= this.dx * 2.5;
-      this.y -= this.dy * 2.5;
+    this.x -= this.dx * 1.5;
+    this.y -= this.dy * 1.5;
   }
 }
 
@@ -48,7 +49,7 @@ class Ball {
 function draw(u, object) {
   if (object === "ball") {
     ctx.beginPath();
-    ctx.arc(u.x, u.y, 10, 0, Math.PI * 2);
+    ctx.arc(u.x, u.y, ballRadius, 0, Math.PI * 2);
     ctx.fillStyle = "red";
     ctx.fill();
     ctx.closePath();
@@ -95,7 +96,6 @@ function draw(u, object) {
 
 let speed2 = 1;
 
-
 function mainLoop() {
   //   frames++;
   //console.log("clearRect has occured");
@@ -107,20 +107,19 @@ function mainLoop() {
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
   gameOver();
 
-  if(isPlaying === true){
-      requestId = requestAnimationFrame(mainLoop);
+  if (isPlaying === true) {
+    requestId = requestAnimationFrame(mainLoop);
   }
 }
-
 
 
 // Paddle controls
 
 function gameControls(e) {
-  if (e.key === "'") {
+  if (e.key === "ArrowUp") {
     theGame.thePlayer2.movePlayer("y", -speed);
   }
-  if (e.key === "/") {
+  if (e.key === "ArrowDown") {
     theGame.thePlayer2.movePlayer("y", +speed);
   }
   if (e.key === "a" || e.key === "A") {
@@ -129,7 +128,7 @@ function gameControls(e) {
   if (e.key === "z" || e.key === "Z") {
     theGame.thePlayer.movePlayer("y", +speed);
   }
-  if (e.key === " " ) {
+  if (e.key === " ") {
     stop();
   }
 }
@@ -150,50 +149,43 @@ onkeydown = onkeyup = function(e) {
 };
 
 function stop() {
+  isPlaying = false;
 
-    isPlaying = false;
-
-    /// kill any request in progress
-    if (mainLoop) cancelAnimationFrame(mainLoop);
+  /// kill any request in progress
+  if (mainLoop) cancelAnimationFrame(mainLoop);
 }
 
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 180, 20, 60);
-    this.thePlayer2 = new Player(560, 180, 20, 60);
-    this.theBall = new Ball(300, 200, 2, -2, 10, 10);
+    this.thePlayer = new Player(20, 180, 20, 60); //left of screen
+    this.thePlayer2 = new Player(560, 180, 20, 60); //right of screen
+    this.theBall = new Ball(70, 200, 2, -2, ballRadius);
   }
 
   collisionDetection(futureX, futureY) {
-    //console.log(this.theBall);
-    // console.log(futureX);
-    // console.log(this.thePlayer2.x);
-    // console.log(this.thePlayer2.width);
+    console.log(this.theBall);
+    console.log(futureX);
+    console.log(this.thePlayer.x);
+    console.log(this.thePlayer.width);
     if (
-      futureX < this.thePlayer.x + this.thePlayer.width &&
-      futureX + this.theBall.width > this.thePlayer.x &&
+      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius * 1.2 &&
+      futureX + this.theBall.radius > this.thePlayer.x &&
       futureY < this.thePlayer.y + this.thePlayer.height &&
-      futureY + this.theBall.height > this.thePlayer.y
+      futureY + this.theBall.radius > this.thePlayer.y
     ) {
       //   console.log("collided with player 1");
       this.theBall.dx *= -1;
     } else if (
       futureX < this.thePlayer2.x + this.thePlayer2.width &&
-      futureX + this.theBall.width > this.thePlayer2.x &&
+      futureX + this.theBall.radius > this.thePlayer2.x &&
       futureY < this.thePlayer2.y + this.thePlayer2.height &&
-      futureY + this.theBall.height > this.thePlayer2.y
+      futureY + this.theBall.radius > this.thePlayer2.y
     ) {
       this.theBall.dx *= -1;
-    } else if (this.theBall.y < 0) {
-      this.theBall.dy *= -1;
-    } else if (this.theBall.y > 400) {
-      this.theBall.dy *= -1;`   `
-    }
+    } else if (this.theBall.y < 0 || this.theBall.y > 400) this.theBall.dy *= -1;
   }
-  
 }
-
 
 //Game Over function
 
