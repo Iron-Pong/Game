@@ -6,11 +6,13 @@ ctx.height = 400;
 
 // variables
 
-let speed = 50;
+let paddleSpeed = 50;
 let playerOneScore = 0;
 let playerTwoScore = 0;
-let ballRadius = 10;
-var isPlaying;
+let isPlaying;
+let endGameScore = 3;
+let ballRadius = 5;
+let ballSpeed = 2;
 
 class Player {
   constructor(x, y, width, height) {
@@ -37,8 +39,8 @@ class Ball {
   }
 
   moveBall() {
-    this.x -= this.dx * 2.5;
-    this.y -= this.dy * 2.5;
+    this.x -= this.dx * ballSpeed;
+    this.y -= this.dy * ballSpeed;
   }
 }
 
@@ -92,8 +94,6 @@ function draw(u, object) {
 
 // Main Loop - runs animation, draws players
 
-let speed2 = 1;
-
 function mainLoop() {
   //   frames++;
   //console.log("clearRect has occured");
@@ -103,38 +103,27 @@ function mainLoop() {
   draw(theGame.theBall, "ball");
   theGame.theBall.moveBall();
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
+  gameOver();
 
   if (isPlaying === true) {
     requestId = requestAnimationFrame(mainLoop);
   }
 }
 
-/*function loop(timestamp) {
-    var progress = timestamp - lastRender
-  
-    update(progress)
-    draw()
-  
-    lastRender = timestamp
-    window.requestAnimationFrame(loop)
-  }
-  var lastRender = 0
-  window.requestAnimationFrame(loop) */
-
 // Paddle controls
 
 function gameControls(e) {
-  if (e.key === "'") {
-    theGame.thePlayer2.movePlayer("y", -speed);
+  if (e.key === "ArrowUp") {
+    theGame.thePlayer2.movePlayer("y", -paddleSpeed);
   }
-  if (e.key === "/") {
-    theGame.thePlayer2.movePlayer("y", +speed);
+  if (e.key === "ArrowDown") {
+    theGame.thePlayer2.movePlayer("y", +paddleSpeed);
   }
   if (e.key === "a" || e.key === "A") {
-    theGame.thePlayer.movePlayer("y", -speed);
+    theGame.thePlayer.movePlayer("y", -paddleSpeed);
   }
   if (e.key === "z" || e.key === "Z") {
-    theGame.thePlayer.movePlayer("y", +speed);
+    theGame.thePlayer.movePlayer("y", +paddleSpeed);
   }
   if (e.key === " ") {
     stop();
@@ -166,8 +155,8 @@ function stop() {
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 180, 20, 60);//left of screen
-    this.thePlayer2 = new Player(560, 180, 20, 60);//right of screen
+    this.thePlayer = new Player(20, 180, 10, 60); //left of screen
+    this.thePlayer2 = new Player(560, 180, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
   }
 
@@ -177,7 +166,7 @@ class Game {
     console.log(this.thePlayer.x);
     console.log(this.thePlayer.width);
     if (
-      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
+      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius * 1.2 &&
       futureX + this.theBall.radius > this.thePlayer.x &&
       futureY < this.thePlayer.y + this.thePlayer.height &&
       futureY + this.theBall.radius > this.thePlayer.y
@@ -198,19 +187,20 @@ class Game {
 //Game Over function
 
 function gameOver() {
-  if (playerOneScore === 3) {
+  if (playerOneScore === endGameScore) {
     message = "Player 1 Wins!";
     document.getElementById("gameNotifcation").innerText = message;
-    // alert(message);
-  }
-
-  if (playerTwoScore === 3) {
-    message = "Player 2 Wins!";
-    document.getElementById("gameNotifcation").innerText = message;
-
     setTimeout(function() {
       location.reload(true);
-    }, 1000);
+    }, 1800);
+  }
+
+  if (playerTwoScore === endGameScore) {
+    message = "Player 2 Wins!";
+    document.getElementById("gameNotifcation").innerText = message;
+    setTimeout(function() {
+      location.reload(true);
+    }, 1800);
   }
 }
 
@@ -222,6 +212,5 @@ let theGame;
 function startGame() {
   isPlaying = true;
   theGame = new Game();
-  gameOver();
   mainLoop();
 }
