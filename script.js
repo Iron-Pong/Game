@@ -10,6 +10,7 @@ let speed = 50;
 let playerOneScore = 0;
 let playerTwoScore = 0;
 var isPlaying; 
+let endGameScore = 3;
 
 class Player {
   constructor(x, y, width, height) {
@@ -104,25 +105,12 @@ function mainLoop() {
   draw(theGame.theBall, "ball");
   theGame.theBall.moveBall();
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
+  gameOver();
 
   if(isPlaying === true){
       requestId = requestAnimationFrame(mainLoop);
   }
 }
-
-
-
-/*function loop(timestamp) {
-    var progress = timestamp - lastRender
-  
-    update(progress)
-    draw()
-  
-    lastRender = timestamp
-    window.requestAnimationFrame(loop)
-  }
-  var lastRender = 0
-  window.requestAnimationFrame(loop) */
 
 
 
@@ -205,25 +193,28 @@ class Game {
   }
   
 }
-        
+
 
 //Game Over function
 
 function gameOver() {
-  if (playerOneScore === 3) {
+  if (playerOneScore === endGameScore) {
     message = "Player 1 Wins!";
     document.getElementById("gameNotifcation").innerText = message;
-    // alert(message);
+    setTimeout(function() {
+        location.reload(true);
+      }, 1800);
+
   }
 
-  if (playerTwoScore === 3) {
+  if (playerTwoScore === endGameScore) {
     message = "Player 2 Wins!";
     document.getElementById("gameNotifcation").innerText = message;
-
     setTimeout(function() {
       location.reload(true);
-    }, 1000);
+    }, 1800);
   }
+
 }
 
 //Start Button
@@ -234,6 +225,5 @@ let theGame;
 function startGame() {
     isPlaying = true;
     theGame = new Game();
-  gameOver();
-  mainLoop();
+    mainLoop();
 }
