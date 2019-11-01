@@ -17,5 +17,5 @@ Pong with a twist
 
 ## Team
 - Robbie Sanchez  [@robbiesanchez](https://www.github.com/robbiesanchez)
-- Saruit Suwunrut [@saurit0105](https://www.github.com/saurit0105)
+- Saruit Suwunrut [@saruit0105](https://www.github.com/saruit0105)
 - Avrahm Kleinholz [@avrahm](https://www.github.com/avrahm)
