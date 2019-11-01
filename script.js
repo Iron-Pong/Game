@@ -5,17 +5,18 @@ ctx.width = 600;
 ctx.height = 400;
 
 // variables
-let keys = [];
-let speed = 30;
+
+let speed = 50;
 let playerOneScore = 0;
 let playerTwoScore = 0;
+var isPlaying; 
+
 class Player {
   constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
-    this.score = 0;
   }
 
   // Move Player function
@@ -34,15 +35,10 @@ class Ball {
     this.width = width;
     this.height = height;
   }
-  moveBall(futureX, futureY) {
-    this.x -= this.dx;
-    this.y -= this.dy;
-    // setInterval(() => {
-    // futureY = this.y;
-    //   if (this.x > 500) {
-    //     clearInterval(travelDown);
-    //   }
-    // }, 1000);
+
+  moveBall() {
+      this.x -= this.dx * 2.5;
+      this.y -= this.dy * 2.5;
   }
 }
 
@@ -61,18 +57,21 @@ function draw(u, object) {
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
 
+  // Restart ball and keep score
   if (theGame.theBall.x < 0) {
+    //   stop()
     playerTwoScore += 1;
     document.querySelector(".player2 > span").innerText = playerTwoScore;
-    theGame.theBall.x += 5;
-    startGame();
+    theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
+    // startGame();
   }
   if (theGame.theBall.x > 600) {
-    theGame.theBall.x -= 305;
-
+    //   stop()
     playerOneScore += 1;
     document.querySelector(".player1 > span").innerText = playerOneScore;
-    startGame();
+
+    theGame.theBall = new Ball(550, 200, 2, -2, 10, 10);
+    // startGame();
   }
   if (object === "player" && theGame.thePlayer2.y < 0) {
     theGame.thePlayer2.y = 0;
@@ -97,15 +96,18 @@ let speed2 = 1;
 
 
 function mainLoop() {
-  frames+speed2;
+  //   frames++;
   //console.log("clearRect has occured");
-  ctx.clearRect(0, 0, 600, 400);
+  ctx.clearRect(0, 0, ctx.width, ctx.height);
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
   draw(theGame.theBall, "ball");
   theGame.theBall.moveBall();
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
-  requestAnimationFrame(mainLoop);
+
+  if(isPlaying === true){
+      requestId = requestAnimationFrame(mainLoop);
+  }
 }
 
 
@@ -139,6 +141,9 @@ function gameControls(e) {
   if (e.key === "z" || e.key === "Z") {
     theGame.thePlayer.movePlayer("y", +speed);
   }
+  if (e.key === " " ) {
+    stop();
+  }
 }
 
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
@@ -155,6 +160,14 @@ onkeydown = onkeyup = function(e) {
     }
   }
 };
+
+function stop() {
+
+    isPlaying = false;
+
+    /// kill any request in progress
+    if (mainLoop) cancelAnimationFrame(mainLoop);
+}
 
 //here is where all the classes are called to create the game
 class Game {
@@ -175,7 +188,7 @@ class Game {
       futureY < this.thePlayer.y + this.thePlayer.height &&
       futureY + this.theBall.height > this.thePlayer.y
     ) {
-      console.log("collided with player 1");
+      //   console.log("collided with player 1");
       this.theBall.dx *= -1;
     } else if (
       futureX < this.thePlayer2.x + this.thePlayer2.width &&
@@ -189,20 +202,21 @@ class Game {
     } else if (this.theBall.y > 400) {
       this.theBall.dy *= -1;`   `
     }
-   }
+  }
+  
 }
         
 
 //Game Over function
 
 function gameOver() {
-  if (playerOneScore === 10) {
+  if (playerOneScore === 3) {
     message = "Player 1 Wins!";
     document.getElementById("gameNotifcation").innerText = message;
     // alert(message);
   }
 
-  if (playerTwoScore === 2) {
+  if (playerTwoScore === 3) {
     message = "Player 2 Wins!";
     document.getElementById("gameNotifcation").innerText = message;
 
@@ -218,7 +232,8 @@ document.getElementById("start-game").onclick = startGame;
 let theGame;
 
 function startGame() {
-  theGame = new Game();
-  mainLoop();
+    isPlaying = true;
+    theGame = new Game();
   gameOver();
+  mainLoop();
 }
