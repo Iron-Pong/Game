@@ -84,23 +84,23 @@ function draw(u, object) {
   }
 
 
- // Restart ball and keep score
- if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
-    playerTwoScore += 0.5;
-    document.querySelector(".player2 > span").innerText = playerTwoScore;
-    message = `${player2name} Scores!`;
-    document.getElementById("game-notification").innerHTML = message;
+//  // Restart ball and keep score
+//  if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
+//     playerTwoScore += 0.5;
+//     document.querySelector(".player2 > span").innerText = playerTwoScore;
+//     message = `${player2name} Scores!`;
+//     document.getElementById("game-notification").innerHTML = message;
     
-    theGame.theBall.x += 0.5;
-    theGame.theBall.dx = 0;
+//     theGame.theBall.x += 0.5;
+//     theGame.theBall.dx = 0;
 
-    setTimeout(function() {
-      // document.querySelector(".player2 > span").innerText = playerTwoScore;
-      theGame.thePlayer = new Player(20, 180, 10, 60);
-      theGame.thePlayer2 = new Player(560, 180, 10, 60);
-      theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
-    }, 1000);
-  }
+//     setTimeout(function() {
+//       // document.querySelector(".player2 > span").innerText = playerTwoScore;
+//       theGame.thePlayer = new Player(20, 180, 10, 60);
+//       theGame.thePlayer2 = new Player(560, 180, 10, 60);
+//       theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
+//     }, 1000);
+//   }
 
 
   if (theGame.theBall.x > 600) {
