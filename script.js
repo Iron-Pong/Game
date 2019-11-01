@@ -184,10 +184,10 @@ class Game {
       futureY + this.theBall.height > this.thePlayer2.y
     ) {
       this.theBall.dx *= -1;
-    } else if (this.theBall.x < 0) {
-      this.theBall.dx *= -1;
-    } else if (this.theBall.x > 600) {
-      this.theBall.dx *= -1;
+    } else if (this.theBall.y < 0) {
+      this.theBall.dy *= -1;
+    } else if (this.theBall.y > 400) {
+      this.theBall.dy *= -1;`   `
     }
    }
 }
