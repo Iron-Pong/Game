@@ -59,8 +59,6 @@ function draw(u, object) {
     // ctx.fill();
     // ctx.closePath();
     ctx.drawImage(soccerballImg, u.x, u.y, 15, 15);
-
-
   }
 
   if (object === "player") {
