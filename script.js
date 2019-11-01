@@ -166,18 +166,18 @@ function stop() {
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 180, 20, 60);
-    this.thePlayer2 = new Player(560, 180, 20, 60);
+    this.thePlayer = new Player(20, 180, 20, 60);//left of screen
+    this.thePlayer2 = new Player(560, 180, 20, 60);//right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
   }
 
   collisionDetection(futureX, futureY) {
-    //console.log(this.theBall);
-    // console.log(futureX);
-    // console.log(this.thePlayer2.x);
-    // console.log(this.thePlayer2.width);
+    console.log(this.theBall);
+    console.log(futureX);
+    console.log(this.thePlayer.x);
+    console.log(this.thePlayer.width);
     if (
-      futureX < this.thePlayer.x + this.thePlayer.width &&
+      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
       futureX + this.theBall.radius > this.thePlayer.x &&
       futureY < this.thePlayer.y + this.thePlayer.height &&
       futureY + this.theBall.radius > this.thePlayer.y
