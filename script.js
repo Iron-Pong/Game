@@ -180,6 +180,7 @@ class Game {
       futureY + this.theBall.radius > this.thePlayer2.y
     ) {
       this.theBall.dx *= -1;
+      this.theBall.dy *= -1;
     } else if (this.theBall.y < 0 || this.theBall.y > 400) this.theBall.dy *= -1;
   }
 }
