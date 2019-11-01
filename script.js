@@ -166,8 +166,8 @@ function stop() {
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 180, 20, 60);//left of screen
-    this.thePlayer2 = new Player(560, 180, 20, 60);//right of screen
+    this.thePlayer = new Player(20, 180, 20, 60); //left of screen
+    this.thePlayer2 = new Player(560, 180, 20, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
   }
 
