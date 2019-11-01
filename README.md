@@ -9,13 +9,15 @@ Pong with a twist
 ## Controls
 
 ### Player 1
+
 - A for up and Z for down
 
-### Player 2 
+### Player 2
+
 - ' for up and / for down
 
-
 ## Team
-- Robbie Sanchez  [@robbiesanchez](https://www.github.com/robbiesanchez)
+
+- Robbie Sanchez [@robbiesanchez](https://www.github.com/robbiesanchez)
 - Saruit Suwunrut [@saruit0105](https://www.github.com/saruit0105)
 - Avrahm Kleinholz [@avrahm](https://www.github.com/avrahm)

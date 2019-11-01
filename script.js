@@ -45,10 +45,10 @@ class Ball {
 }
 
 const basketballImg = new Image();
-basketballImg.src = "/basketball.png";
+basketballImg.src = "basketball.png";
 
 const soccerballImg = new Image();
-soccerballImg.src = "/soccerball.png";
+soccerballImg.src = "soccerball.png";
 
 // Draw Function
 function draw(u, object) {
@@ -67,18 +67,24 @@ function draw(u, object) {
   }
 
   // Restart ball and keep score
-  if (theGame.theBall.x < 0) {
-    //   stop()
-    playerTwoScore += 1;
+  if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
+    playerTwoScore += 0.5;
     document.querySelector(".player2 > span").innerText = playerTwoScore;
-    theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
-    // startGame();
+    theGame.theBall.x += 1;
+    theGame.theBall.dx = 0;
+    setTimeout(function() {
+      // document.querySelector(".player2 > span").innerText = playerTwoScore;
+      theGame.thePlayer = new Player(20, 180, 10, 60);
+      theGame.thePlayer2 = new Player(560, 180, 10, 60);
+      theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
+    }, 1000);
   }
   if (theGame.theBall.x > 600) {
     //   stop()
     playerOneScore += 1;
     document.querySelector(".player1 > span").innerText = playerOneScore;
-
+    theGame.thePlayer = new Player(20, 180, 10, 60); //left of screen
+    theGame.thePlayer2 = new Player(560, 180, 10, 60); //right of screen
     theGame.theBall = new Ball(550, 200, 2, -2, 10, 10);
     // startGame();
   }
@@ -96,6 +102,14 @@ function draw(u, object) {
 
   if (object === "player" && theGame.thePlayer.y > 330) {
     theGame.thePlayer.y = 340;
+  }
+}
+
+function score() {
+  if (theGame.theBall.x < 0) {
+    theGame.playerTwoScore += 1;
+  } else if (theGame.theBall > 600) {
+    theGame.playerOneScore += 1;
   }
 }
 
@@ -190,7 +204,6 @@ class Game {
       console.log("Collided with player 2");
       this.theBall.x -= 5;
       this.theBall.dx *= -1;
-      // this.theBall.dy *= -1;
     } else if (this.theBall.y < 0 || this.theBall.y > 400) this.theBall.dy *= -1;
   }
 }
@@ -203,7 +216,7 @@ function gameOver() {
     document.getElementById("gameNotifcation").innerText = message;
     setTimeout(function() {
       location.reload(true);
-    }, 1800);
+    }, 500);
   }
 
   if (playerTwoScore === endGameScore) {
@@ -211,7 +224,7 @@ function gameOver() {
     document.getElementById("gameNotifcation").innerText = message;
     setTimeout(function() {
       location.reload(true);
-    }, 1800);
+    }, 1000);
   }
 }
 
