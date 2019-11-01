@@ -45,3 +45,13 @@ body {
 #gameNotification {
   font-size: 2.5em;
 }
+
+.bball-background {
+  background-image: url("bball-landing.jpg");
+  background-size: cover;
+}
+
+.soccer-background {
+  background-image: url("soccer-landing.jpg");
+  background-size: cover;
+}
