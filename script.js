@@ -70,7 +70,7 @@ function draw(u, object) {
   if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
     playerTwoScore += 0.5;
     document.querySelector(".player2 > span").innerText = playerTwoScore;
-    theGame.theBall.x += 1;
+    theGame.theBall.x += 0.5;
     theGame.theBall.dx = 0;
     setTimeout(function() {
       // document.querySelector(".player2 > span").innerText = playerTwoScore;
