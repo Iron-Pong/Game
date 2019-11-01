@@ -1,6 +1,6 @@
 //IronPong JS
 
-var ctx = document.getElementById("main-game").getContext("2d");
+var ctx = document.getElementById("soccer-theme").getContext("2d");
 ctx.width = 600;
 ctx.height = 400;
 
@@ -44,16 +44,25 @@ class Ball {
   }
 }
 
-// Draw Function
+const basketballImg = new Image();
+basketballImg.src = "/basketball.png";
 
+const soccerballImg = new Image();
+soccerballImg.src = "/soccerball.png";
+
+// Draw Function
 function draw(u, object) {
   if (object === "ball") {
-    ctx.beginPath();
-    ctx.arc(u.x, u.y, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "red";
-    ctx.fill();
-    ctx.closePath();
+    // ctx.beginPath();
+    // ctx.arc(u.x, u.y, ballRadius, 0, Math.PI * 2);
+    // ctx.fillStyle = "red";
+    // ctx.fill();
+    // ctx.closePath();
+    ctx.drawImage(soccerballImg, u.x, u.y, 15, 15);
+
+
   }
+
   if (object === "player") {
     ctx.fillStyle = "black";
     ctx.fillRect(u.x, u.y, u.width, u.height);
