@@ -9,6 +9,7 @@ let keys = [];
 let speed = 30;
 let playerOneScore = 0;
 let playerTwoScore = 0;
+let ballRadius = 10;
 class Player {
   constructor(x, y, width, height) {
     this.x = x;
@@ -26,13 +27,12 @@ class Player {
 }
 
 class Ball {
-  constructor(x, y, dx, dy, width, height) {
+  constructor(x, y, dx, dy, radius) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.width = width;
-    this.height = height;
+    this.radius = radius;
   }
   moveBall(futureX, futureY) {
     this.x -= this.dx;
@@ -51,7 +51,7 @@ class Ball {
 function draw(u, object) {
   if (object === "ball") {
     ctx.beginPath();
-    ctx.arc(u.x, u.y, 10, 0, Math.PI * 2);
+    ctx.arc(u.x, u.y, ballRadius, 0, Math.PI * 2);
     ctx.fillStyle = "red";
     ctx.fill();
     ctx.closePath();
@@ -143,7 +143,7 @@ class Game {
   constructor() {
     this.thePlayer = new Player(20, 180, 20, 60);
     this.thePlayer2 = new Player(560, 180, 20, 60);
-    this.theBall = new Ball(300, 200, 2, -2, 10, 10);
+    this.theBall = new Ball(70, 200, 2, -2, ballRadius);
   }
 
   collisionDetection(futureX, futureY) {
@@ -153,17 +153,17 @@ class Game {
     // console.log(this.thePlayer2.width);
     if (
       futureX < this.thePlayer.x + this.thePlayer.width &&
-      futureX + this.theBall.width > this.thePlayer.x &&
+      futureX + this.theBall.radius > this.thePlayer.x &&
       futureY < this.thePlayer.y + this.thePlayer.height &&
-      futureY + this.theBall.height > this.thePlayer.y
+      futureY + this.theBall.radius > this.thePlayer.y
     ) {
       console.log("collided with player 1");
       this.theBall.dx *= -1;
     } else if (
       futureX < this.thePlayer2.x + this.thePlayer2.width &&
-      futureX + this.theBall.width > this.thePlayer2.x &&
+      futureX + this.theBall.radius > this.thePlayer2.x &&
       futureY < this.thePlayer2.y + this.thePlayer2.height &&
-      futureY + this.theBall.height > this.thePlayer2.y
+      futureY + this.theBall.radius > this.thePlayer2.y
     ) {
       this.theBall.dx *= -1;
     } else if (this.theBall.y < 0) {
