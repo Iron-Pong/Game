@@ -9,7 +9,7 @@ ctx.height = 400;
 let speed = 50;
 let playerOneScore = 0;
 let playerTwoScore = 0;
-let ballRadius = 10;
+let ballRadius = 5;
 var isPlaying;
 
 class Player {
@@ -166,8 +166,8 @@ function stop() {
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 180, 20, 60); //left of screen
-    this.thePlayer2 = new Player(560, 180, 20, 60); //right of screen
+    this.thePlayer = new Player(20, 180, 10, 60); //left of screen
+    this.thePlayer2 = new Player(560, 180, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
   }
 
