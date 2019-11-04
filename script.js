@@ -219,19 +219,23 @@ let obj = {
     'basketball4': new Audio('./sounds/score.m4a'), // player 2 scores
     'basketball5': new Audio('./sounds/kg2.mov'), // player 1 or 2 wins
     // Soccer Sounds
+    'soccer1': new Audio('./sounds/whistle.mp3'), // opening whistle
     'soccer2': new Audio('./sounds/kick.m4a'), // kick off paddle
     'soccer3': new Audio('./sounds/Goal4.mov'), // play 1 scores
+    'soccer4': new Audio('./sounds/Goal4.mov'), // play 2 scores
+    'soccer5': new Audio('./sounds/ole.mov'), // play 1 or 2 wins
     // Classic Sounds
-    'classic1': new Audio('./sounds/Beep2.wav'), // beep off paddle
+    'classic1': new Audio('./sounds/start.wav'), // beep off paddle
     'classic2': new Audio('./sounds/Beep2.wav'), // beep off paddle
     'classic3': new Audio('./sounds/classicScore.wav'), // player 1 scores
     'classic4': new Audio('./sounds/classicScore.wav'), // player 2 scores
     'classic5': new Audio('./sounds/victory.mp3'), // player 1 or 2 wins
     // Balls of Fury Sounds
+    'ballsoffury1': new Audio('./sounds/whistle.mp3'), // opening whistle
     'ballsoffury2': new Audio('./sounds/pong.mov'), // ping pong paddle
-    'ballsoffury3': new Audio('./sounds/fury2.mov'), // 
-    'ballsoffury4': new Audio('./sounds/backhand.mov'),
-    'ballsoffury5': new Audio('./sounds/furywin.mov'), 
+    'ballsoffury3': new Audio('./sounds/fury2.mov'), // player 1 scores
+    'ballsoffury4': new Audio('./sounds/backhand.mov'), // player 2 scores
+    'ballsoffury5': new Audio('./sounds/furywin.mov'), // player 1 or 2 wins
 }
 
 //here is where all the classes are called to create the game
