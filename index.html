@@ -1,12 +1,3 @@
-<!-- <?php
-$player1name = $_GET['player1name'];
-
-$player2name = $_GET['player2name'];
-
-$theme = $_GET['theme'];
-
-?> -->
-
 <!doctype html>
 <html lang="en">
 
@@ -21,11 +12,11 @@ $theme = $_GET['theme'];
     <!-- IronPong CSS -->
     <link rel="stylesheet" href="./styles.css" type="text/css">
 
+    <script src="./geturl.js"></script>
     <title>IronPong</title>
 </head>
 
 <body id="basketball">
-        <!-- id="<?php echo $theme; ?>" -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-12" id="game-notification">
@@ -36,21 +27,18 @@ $theme = $_GET['theme'];
             <div class="col-3 player-card">
                 <div class="row" id="player1">
                     <div class="col-12" id="name">
-                        <!-- <?php echo strtoupper($player1name); ?> -->
-                        Player 1
+                        
                     </div>
                     <div class="col-12" id="player-score">
                         <span>0</span>
                     </div>
                 </div>
             </div>
-            <!-- class="<?php echo $theme; ?>-theme"  -->
             <div class="col-6"><canvas id="game-board" class="basketball-theme" width="600" height="400"></canvas></div>
             <div class="col-3 player-card">
                 <div class="row" id="player2">
                     <div class="col-12" id="name">
-                        <!-- <?php echo strtoupper($player2name); ?> -->
-                        Player 2
+                        
                     </div>
                     <div class="col-12" id="player-score">
                         <span>0</span>
@@ -59,35 +47,38 @@ $theme = $_GET['theme'];
             </div>
         </div>
         <div class="row" id="footer">
-            <div class="col-3 player-controls">
+            <div class="col-3 player-controls d-flex flex-column">
                 <div class="row">
-                    <div class="col-12">
-                        Button Controls
+                    <div class="col-12">Controls</div>
+                    <div class="col-12  d-flex justify-content-around">
+                        <div><img src="./images/computer_key_A.png"></div>
+                        <div><img src="./images/computer_key_Z.png"></div>
                     </div>
-                    <div class="col-12">
-                        Up and Down
+                    <div class="col-12 d-flex justify-content-around">
+                        <div>Up</div>
+                        <div>Down</div>
                     </div>
                 </div>
             </div>
             <div class="col-6" id="title">IronPong
                 <input type="hidden" value="basketball">
-                <!-- <?php echo $theme;?> -->
             </div>
-            <div class="col-3 player-controls">
+            <div class="col-3 player-controls d-flex flex-column">
                 <div class="row">
-                    <div class="row">
-                        <div class="col-12">
-                            Button Controls
-                        </div>
-                        <div class="col-12">
-                            Up and Down
-                        </div>
+                    <div class="col-12">Controls</div>
+                    <div class="col-12  d-flex justify-content-around">
+                        <div><img src="./images/computer_key_Arrow_Up.png"></div>
+                        <div><img src="./images/computer_key_Arrow_Down.png"></div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-around">
+                        <div>Up</div>
+                        <div>Down</div>
                     </div>
                 </div>
             </div>
             <!-- IronPong JS -->
+            <script src="./powerups.js"></script>
             <script src="./script.js"></script>
-
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
