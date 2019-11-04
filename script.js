@@ -1,8 +1,10 @@
 //IronPong JS
 
-var ctx = document.getElementById("soccer-theme").getContext("2d");
+var ctx = document.getElementById("game-board").getContext("2d");
 ctx.width = 600;
 ctx.height = 400;
+
+// console.log('connected')
 
 // variables
 
@@ -13,6 +15,9 @@ let isPlaying;
 let endGameScore = 3;
 let ballRadius = 5;
 let ballSpeed = 2;
+let theme = document.querySelector('#title > input').value;
+let player1name = document.querySelector('#player1 > #name').innerText;
+let player2name = document.querySelector('#player2 > #name').innerText
 
 class Player {
   constructor(x, y, width, height) {
@@ -44,11 +49,11 @@ class Ball {
   }
 }
 
-const basketballImg = new Image();
-basketballImg.src = "/basketball.png";
+const ballImg = new Image();
+ballImg.src = `./images/${theme}.png`;
 
-const soccerballImg = new Image();
-soccerballImg.src = "/soccerball.png";
+// const soccerballImg = new Image();
+// soccerballImg.src = "./images/soccerball.png";
 
 // Draw Function
 function draw(u, object) {
@@ -58,7 +63,7 @@ function draw(u, object) {
     // ctx.fillStyle = "red";
     // ctx.fill();
     // ctx.closePath();
-    ctx.drawImage(soccerballImg, u.x, u.y, 15, 15);
+    ctx.drawImage(ballImg, u.x, u.y, 15, 15);
   }
 
   if (object === "player") {
@@ -70,15 +75,41 @@ function draw(u, object) {
   if (theGame.theBall.x < 0) {
     //   stop()
     playerTwoScore += 1;
-    document.querySelector(".player2 > span").innerText = playerTwoScore;
+    document.querySelector('.player-card #player2 #player-score span').innerText = playerTwoScore;
+
+    message = `${player2name} Scores!`;
+    document.getElementById("game-notification").innerHTML = message;
     theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
     // startGame();
   }
+
+
+//  // Restart ball and keep score
+//  if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
+//     playerTwoScore += 0.5;
+//     document.querySelector(".player2 > span").innerText = playerTwoScore;
+//     message = `${player2name} Scores!`;
+//     document.getElementById("game-notification").innerHTML = message;
+    
+//     theGame.theBall.x += 0.5;
+//     theGame.theBall.dx = 0;
+
+//     setTimeout(function() {
+//       // document.querySelector(".player2 > span").innerText = playerTwoScore;
+//       theGame.thePlayer = new Player(20, 180, 10, 60);
+//       theGame.thePlayer2 = new Player(560, 180, 10, 60);
+//       theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
+//     }, 1000);
+//   }
+
+
   if (theGame.theBall.x > 600) {
     //   stop()
     playerOneScore += 1;
-    document.querySelector(".player1 > span").innerText = playerOneScore;
+    document.querySelector('.player-card #player1 #player-score span').innerText = playerOneScore;
 
+    message = `${player1name} Scores!`;
+    document.getElementById("game-notification").innerHTML = message;
     theGame.theBall = new Ball(550, 200, 2, -2, 10, 10);
     // startGame();
   }
@@ -144,7 +175,7 @@ onkeydown = onkeyup = function(e) {
   e = e || event; // to deal with IE
   map[e.key] = e.type == "keydown";
   /* insert conditional here */
-  console.log(map);
+//   console.log(map);
   for (let k in map) {
     if (map[k]) {
       gameControls({ key: k });
@@ -168,17 +199,17 @@ class Game {
   }
 
   collisionDetection(futureX, futureY) {
-    console.log(this.theBall);
-    console.log(futureX);
-    console.log(this.thePlayer.x);
-    console.log(this.thePlayer.width);
+    // console.log(this.theBall);
+    // console.log(futureX);
+    // console.log(this.thePlayer.x);
+    // console.log(this.thePlayer.width);
     if (
       futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
       futureX + this.theBall.radius > this.thePlayer.x &&
       futureY < this.thePlayer.y + this.thePlayer.height &&
       futureY + this.theBall.radius > this.thePlayer.y
     ) {
-      console.log("collided with player 1");
+    //   console.log("collided with player 1");
       this.theBall.x += 5;
       this.theBall.dx *= -1;
     } else if (
@@ -187,7 +218,7 @@ class Game {
       futureY < this.thePlayer2.y + this.thePlayer2.height &&
       futureY + this.theBall.radius > this.thePlayer2.y
     ) {
-      console.log("Collided with player 2");
+    //   console.log("Collided with player 2");
       this.theBall.x -= 5;
       this.theBall.dx *= -1;
       // this.theBall.dy *= -1;
@@ -199,19 +230,15 @@ class Game {
 
 function gameOver() {
   if (playerOneScore === endGameScore) {
-    message = "Player 1 Wins!";
-    document.getElementById("gameNotifcation").innerText = message;
-    setTimeout(function() {
-      location.reload(true);
-    }, 1800);
+    message = `${player1name} WON!`;
+    document.getElementById("game-notification").innerHTML = message;
+    stop()
   }
 
   if (playerTwoScore === endGameScore) {
-    message = "Player 2 Wins!";
-    document.getElementById("gameNotifcation").innerText = message;
-    setTimeout(function() {
-      location.reload(true);
-    }, 1800);
+    message = `${player2name} WON!`;
+    document.getElementById("game-notification").innerHTML = message;
+   stop();
   }
 }
 
