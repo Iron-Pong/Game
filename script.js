@@ -15,9 +15,9 @@ let isPlaying;
 let endGameScore = 3;
 let ballRadius = 5;
 let ballSpeed = 2;
-let theme = document.querySelector('#title > input').value;  
-let player1name = document.querySelector('#player1 > #name').innerText;
-let player2name = document.querySelector('#player2 > #name').innerText;
+let theme = document.querySelector("#title > input").value;
+let player1name = document.querySelector("#player1 > #name").innerText;
+let player2name = document.querySelector("#player2 > #name").innerText;
 
 class Player {
   constructor(x, y, width, height) {
@@ -79,8 +79,8 @@ function draw(u, object) {
   if (theGame.theBall.x < 0) {
     //   stop()
     playerTwoScore += 1;
-    document.querySelector('.player-card #player2 #player-score span').innerText = playerTwoScore;
-    obj[theme+'4'].play();
+    document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+    obj[theme + "4"].play();
 
     message = `${player2name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
@@ -109,8 +109,9 @@ function draw(u, object) {
   if (theGame.theBall.x > 600) {
     //   stop()
     playerOneScore += 1;
-    document.querySelector('.player-card #player1 #player-score span').innerText = playerOneScore;
-    obj[theme+'3'].play();
+    ballSpeed = 2;
+    document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+    obj[theme + "3"].play();
 
     message = `${player1name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
@@ -152,7 +153,7 @@ function mainLoop() {
   if (frames % 500 === 0) {
     theGame.spawnPowerUps();
   }
-  if (frames % 900 === 0) {
+  if (frames % 800 === 0) {
     theGame.clearUnusedPowerUps();
   }
 
@@ -210,24 +211,24 @@ function stop() {
 
 // Audio Objects
 let obj = {
-    // Basketball Sounds
-    'basketball1': new Audio('./sounds/buzzer.mp3'), // opening buzzer
-    'basketball2': new Audio('./sounds/bounce.mp3'), // bounce off paddle
-    'basketball3': new Audio('./sounds/Shaq.m4a'), // player 1 scores
-    'basketball4': new Audio('./sounds/score.m4a'), // player 2 scores
-    'basketball5': new Audio('./sounds/kg2.mov'), // player 1 or 2 wins
-    // Soccer Sounds
-    'soccer2': new Audio('./sounds/kick.m4a'), // kick off paddle
-    'soccer3': new Audio('./sounds/Goal4.mov'), // play 1 scores
-    // Classic Sounds
-    'classic2': new Audio('./sounds/Beep2.wav'), // beep off paddle
-    'classic3': new Audio('./sounds/classicScore.wav'), // player 1 scores
-    // Balls of Fury Sounds
-    'ballsoffury2': new Audio('./sounds/pong.mov'), // ping pong paddle
-    'ballsoffury3': new Audio('./sounds/fury2.mov'), // 
-    'ballsoffury4': new Audio('./sounds/backhand.mov'),
-    'ballsoffury5': new Audio('./sounds/furywin.mov'), 
-}
+  // Basketball Sounds
+  basketball1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
+  basketball2: new Audio("./sounds/bounce.mp3"), // bounce off paddle
+  basketball3: new Audio("./sounds/Shaq.m4a"), // player 1 scores
+  basketball4: new Audio("./sounds/score.m4a"), // player 2 scores
+  basketball5: new Audio("./sounds/kg2.mov"), // player 1 or 2 wins
+  // Soccer Sounds
+  soccer2: new Audio("./sounds/kick.m4a"), // kick off paddle
+  soccer3: new Audio("./sounds/Goal4.mov"), // play 1 scores
+  // Classic Sounds
+  classic2: new Audio("./sounds/Beep2.wav"), // beep off paddle
+  classic3: new Audio("./sounds/classicScore.wav"), // player 1 scores
+  // Balls of Fury Sounds
+  ballsoffury2: new Audio("./sounds/pong.mov"), // ping pong paddle
+  ballsoffury3: new Audio("./sounds/fury2.mov"), //
+  ballsoffury4: new Audio("./sounds/backhand.mov"),
+  ballsoffury5: new Audio("./sounds/furywin.mov")
+};
 
 //here is where all the classes are called to create the game
 class Game {
@@ -267,8 +268,7 @@ class Game {
       //   console.log("collided with player 1");
       this.theBall.x += 5;
       this.theBall.dx *= -1;
-      obj[theme+'2'].play();
-
+      obj[theme + "2"].play();
     } else if (
       futureX < this.thePlayer2.x + this.thePlayer2.width &&
       futureX + this.theBall.radius > this.thePlayer2.x &&
@@ -278,7 +278,7 @@ class Game {
       //   console.log("Collided with player 2");
       this.theBall.x -= 5;
       this.theBall.dx *= -1;
-      obj[theme+'2'].play();
+      obj[theme + "2"].play();
       // this.theBall.dy *= -1;
     } else if (this.theBall.y < 0 || this.theBall.y > 400) {
       this.theBall.dy *= -1;
@@ -292,13 +292,12 @@ class Game {
         futureY + this.theBall.radius > this.powerUpsArray[i].y
       ) {
         this.powerUpsArray.splice(i, 1);
-
+        ballSpeed = 5;
         console.log("COLLISION!!");
       }
     }
   }
 }
-
 
 //Game Over function
 
@@ -306,15 +305,15 @@ function gameOver() {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    obj[theme+'5'].play();
+    obj[theme + "5"].play();
     stop();
   }
 
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    obj[theme+'5'].play();
-   stop();
+    obj[theme + "5"].play();
+    stop();
   }
 }
 
@@ -325,7 +324,7 @@ let theGame;
 
 function startGame() {
   isPlaying = true;
-  obj[theme+'1'].play();
+  obj[theme + "1"].play();
   theGame = new Game();
   mainLoop();
 }
