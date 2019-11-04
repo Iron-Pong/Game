@@ -76,6 +76,7 @@ function draw(u, object) {
     //   stop()
     playerTwoScore += 1;
     document.querySelector('.player-card #player2 #player-score span').innerText = playerTwoScore;
+    furyscore.play();
 
     message = `${player2name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
@@ -107,6 +108,7 @@ function draw(u, object) {
     //   stop()
     playerOneScore += 1;
     document.querySelector('.player-card #player1 #player-score span').innerText = playerOneScore;
+    backhand.play();
 
     message = `${player1name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
@@ -190,6 +192,23 @@ function stop() {
   if (mainLoop) cancelAnimationFrame(mainLoop);
 }
 
+// Play audio Function
+
+var bounce = new Audio('./sounds/bounce.mp3');
+var buzzer = new Audio('./sounds/buzzer.mp3');
+var shaq = new Audio('./sounds/Shaq.m4a');
+var score = new Audio('./sounds/score.m4a');
+var kick = new Audio('./sounds/kick.m4a');
+var goal = new Audio('./sounds/Goal4.mov');
+var kg = new Audio('./sounds/kg2.mov');
+var win = new Audio('./sounds/win.mp3');
+var classic = new Audio('./sounds/Beep2.wav');
+var furyscore = new Audio('./sounds/fury2.mov');
+var furywin = new Audio('./sounds/furywin.mov');
+var pong = new Audio('./sounds/pong.mov');
+var backhand = new Audio('./sounds/backhand.mov')
+
+
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
@@ -212,6 +231,7 @@ class Game {
     //   console.log("collided with player 1");
       this.theBall.x += 5;
       this.theBall.dx *= -1;
+      pong.play();
     } else if (
       futureX < this.thePlayer2.x + this.thePlayer2.width &&
       futureX + this.theBall.radius > this.thePlayer2.x &&
@@ -221,10 +241,12 @@ class Game {
     //   console.log("Collided with player 2");
       this.theBall.x -= 5;
       this.theBall.dx *= -1;
+      pong.play();
       // this.theBall.dy *= -1;
     } else if (this.theBall.y < 0 || this.theBall.y > 400) this.theBall.dy *= -1;
   }
 }
+
 
 //Game Over function
 
@@ -232,12 +254,14 @@ function gameOver() {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    stop()
+    furywin.play();
+    stop();
   }
 
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
+    furywin.play();
    stop();
   }
 }
@@ -249,6 +273,7 @@ let theGame;
 
 function startGame() {
   isPlaying = true;
+  buzzer.play();
   theGame = new Game();
   mainLoop();
 }
