@@ -89,22 +89,24 @@ function draw(u, object) {
   }
 
   //  // Restart ball and keep score
-  //  if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
-  //     playerTwoScore += 0.5;
-  //     document.querySelector(".player2 > span").innerText = playerTwoScore;
-  //     message = `${player2name} Scores!`;
-  //     document.getElementById("game-notification").innerHTML = message;
+  // if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
+  //   playerTwoScore += 0.5;
+  //   ballSpeed = 2;
+  //   document.querySelector(".player2 > span").innerText = playerTwoScore;
+  //   message = `${player2name} Scores!`;
+  //   document.getElementById("game-notification").innerHTML = message;
+  //   theGame.clearUnusedPowerUps();
 
-  //     theGame.theBall.x += 0.5;
-  //     theGame.theBall.dx = 0;
+  //   theGame.theBall.x += 0.5;
+  //   theGame.theBall.dx = 0;
 
-  //     setTimeout(function() {
-  //       // document.querySelector(".player2 > span").innerText = playerTwoScore;
-  //       theGame.thePlayer = new Player(20, 180, 10, 60);
-  //       theGame.thePlayer2 = new Player(560, 180, 10, 60);
-  //       theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
-  //     }, 1000);
-  //   }
+  //   setTimeout(function() {
+  //     // document.querySelector(".player2 > span").innerText = playerTwoScore;
+  //     theGame.thePlayer = new Player(20, 180, 10, 60);
+  //     theGame.thePlayer2 = new Player(560, 180, 10, 60);
+  //     theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
+  //   }, 1000);
+  // }
 
   if (theGame.theBall.x > 600) {
     //   stop()
@@ -112,7 +114,7 @@ function draw(u, object) {
     ballSpeed = 2;
     document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
     obj[theme + "3"].play();
-
+    theGame.clearUnusedPowerUps();
     message = `${player1name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
     theGame.theBall = new Ball(550, 200, 2, -2, 10, 10);
