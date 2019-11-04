@@ -19,6 +19,8 @@ let theme = document.querySelector('#title > input').value;
 let player1name = document.querySelector('#player1 > #name').innerText;
 let player2name = document.querySelector('#player2 > #name').innerText;
 
+console.log(theme);
+
 class Player {
   constructor(x, y, width, height) {
     this.x = x;
@@ -214,8 +216,11 @@ let obj = {
     'soccer2': new Audio('./sounds/kick.m4a'), // kick off paddle
     'soccer3': new Audio('./sounds/Goal4.mov'), // play 1 scores
     // Classic Sounds
+    'classic1': new Audio('./sounds/Beep2.wav'), // beep off paddle
     'classic2': new Audio('./sounds/Beep2.wav'), // beep off paddle
     'classic3': new Audio('./sounds/classicScore.wav'), // player 1 scores
+    'classic4': new Audio('./sounds/classicScore.wav'), // player 2 scores
+    'classic5': new Audio('./sounds/victory.mp3'), // player 1 or 2 wins
     // Balls of Fury Sounds
     'ballsoffury2': new Audio('./sounds/pong.mov'), // ping pong paddle
     'ballsoffury3': new Audio('./sounds/fury2.mov'), // 
@@ -299,7 +304,7 @@ let theGame;
 
 function startGame() {
   isPlaying = true;
-  obj[theme+'1'].play();
   theGame = new Game();
   mainLoop();
+  obj[theme+'1'].play();
 }

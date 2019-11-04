@@ -7,9 +7,9 @@ url.forEach(function(queries){
    urlQuery.push(newQuery);
 })
 
-// let theme = urlQuery[2][1];
-// let player1name =  urlQuery[0][1];
-// let player2name =  urlQuery[1][1];
+   // let theme = urlQuery[2][1];
+   // let player1name =  urlQuery[0][1];
+   // let player2name =  urlQuery[1][1];
 
 document.querySelector('#player1 > #name').innerText = player1name;
 document.querySelector('#player2 > #name').innerText = player2name;
