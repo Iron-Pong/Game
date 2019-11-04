@@ -14,7 +14,7 @@ Pong with a twist
 
 ### Player 2
 
-- ' for up and / for down
+- UpArrow for up and DownArrow for down
 
 ## Team
 
