@@ -146,9 +146,13 @@ function mainLoop() {
     draw(eachPowerUps, "powerUps");
   });
 
-  if (frames % 100 === 0) {
+  if (frames % 400 === 0) {
     theGame.spawnPowerUps();
   }
+  if (frames % 550 === 0) {
+    theGame.clearUnusedPowerUps();
+  }
+
   theGame.theBall.moveBall();
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
   gameOver();
@@ -219,31 +223,44 @@ class Game {
     console.log("Spawning!");
   }
 
+  clearUnusedPowerUps() {
+    this.powerUpsArray.splice(0, 1);
+  }
+
   collisionDetection(futureX, futureY) {
     // console.log(this.theBall);
     // console.log(futureX);
     // console.log(this.thePlayer.x);
     // console.log(this.thePlayer.width);
-    if (
-      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
-      futureX + this.theBall.radius > this.thePlayer.x &&
-      futureY < this.thePlayer.y + this.thePlayer.height &&
-      futureY + this.theBall.radius > this.thePlayer.y
-    ) {
-      //   console.log("collided with player 1");
-      this.theBall.x += 5;
-      this.theBall.dx *= -1;
-    } else if (
-      futureX < this.thePlayer2.x + this.thePlayer2.width &&
-      futureX + this.theBall.radius > this.thePlayer2.x &&
-      futureY < this.thePlayer2.y + this.thePlayer2.height &&
-      futureY + this.theBall.radius > this.thePlayer2.y
-    ) {
-      //   console.log("Collided with player 2");
-      this.theBall.x -= 5;
-      this.theBall.dx *= -1;
-      // this.theBall.dy *= -1;
-    } else if (this.theBall.y < 0 || this.theBall.y > 400) this.theBall.dy *= -1;
+    for (let i = 0; i < this.powerUpsArray.length; i++) {
+      if (
+        futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
+        futureX + this.theBall.radius > this.thePlayer.x &&
+        futureY < this.thePlayer.y + this.thePlayer.height &&
+        futureY + this.theBall.radius > this.thePlayer.y
+      ) {
+        //   console.log("collided with player 1");
+        this.theBall.x += 5;
+        this.theBall.dx *= -1;
+      } else if (
+        futureX < this.thePlayer2.x + this.thePlayer2.width &&
+        futureX + this.theBall.radius > this.thePlayer2.x &&
+        futureY < this.thePlayer2.y + this.thePlayer2.height &&
+        futureY + this.theBall.radius > this.thePlayer2.y
+      ) {
+        //   console.log("Collided with player 2");
+        this.theBall.x -= 5;
+        this.theBall.dx *= -1;
+        // this.theBall.dy *= -1;
+      } else if (
+        futureX < this.powerUpsArray[i].x + this.powerUpsArray[i].width &&
+        futureX + this.theBall.radius > this.powerUpsArray[i].x &&
+        futureY < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
+        futureY + this.theBall.radius > this.powerUpsArray[i].y
+      ) {
+        console.log("COLLISION!!");
+      } else if (this.theBall.y < 0 || this.theBall.y > 400) this.theBall.dy *= -1;
+    }
   }
 }
 
