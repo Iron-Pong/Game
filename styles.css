@@ -2,10 +2,101 @@
   font-family: "basketball";
   src: url("./images/fonts/basketball-font.ttf") format("truetype");
 }
+@font-face {
+  font-family: "pong";
+  src: url("./images/fonts/pong.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "pong-normal";
+  src: url("./images/fonts/pongnormal.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "pong-score";
+  src: url("./images/fonts/pong-score.ttf") format("truetype");
+}
+
 body {
-  margin: 50px;
+  margin: 0 50px;
   overflow: hidden;
 }
+
+#game-board {
+  border: 1px solid black;
+  width: 100%;
+  height: 400px;
+}
+
+.player-card {
+  font-size: 2em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.player-card > .row {
+  border: 1px black solid;
+}
+
+.player-controls {
+  font-size: 1.4em;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-controls img {
+  height: 100px;
+  padding: 10px 10px;
+}
+
+#game-notification {
+  font-size: 3em;
+  text-align: center;
+  padding: 30px;
+}
+
+#footer {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#title {
+  font-size: 2em;
+}
+
+.modal-content {
+  color: black;
+}
+
+/* Classic CSS */
+#classic {
+  background-color: black;
+  color: white;
+  font-family: pong;
+}
+
+.classic-theme {
+  background-image: url("./images/classic.png");
+  background-size: 100% 400px;
+  background-repeat: no-repeat;
+}
+
+.classic-background {
+  background-image: url("./images/classic-bg.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#classic #player-score {
+  font-family: pong-score !important;
+}
+/*End Soccer CSS */
 
 /* Basketball Theme CSS */
 #basketball {
@@ -17,6 +108,8 @@ body {
 .bball-background {
   background-image: url("./images/bball-landing.jpg");
   background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .basketball-theme {
@@ -51,9 +144,10 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 /* .container-fluid.soccer {
-  background-color: seagreen;
-} */
+    background-color: seagreen;
+  } */
 
 .soccer-theme {
   background-image: url("./images/soccerfield.jpg");
@@ -64,47 +158,73 @@ body {
 .soccer-background {
   background-image: url("./images/soccer-landing.jpg");
   background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 /*End Soccer CSS */
 
-#game-board {
-  border: 1px solid black;
-  width: 100%;
-  height: 400px;
+/* Balls Of Fury CSS */
+#ballsoffury {
+  background-image: url("./images/ballsoffury-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.player-card {
+/* .container-fluid.soccer {
+  background-color: seagreen;
+} */
+
+.ballsoffury-theme {
+  background-image: url("./images/ballsoffury.png");
+  background-size: 100% 400px;
+  background-repeat: no-repeat;
+}
+
+.ballsoffury-background {
+  background-image: url("./images/ballsoffury-landing.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+/*End Soccer CSS */
+
+/* Landing Page */
+#landing {
+  background-color: black;
+  color: white;
+  text-align: center;
+  background-image: url("./images/atari-logo-bg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: 175px;
+}
+
+#landing #title {
+  font-family: pong;
+  font-size: 5em;
+}
+
+#landing #title b {
+  font-family: pong-normal !important;
+}
+
+#landing #sub-title {
   font-size: 2em;
-  text-align: center;
+}
+
+#landing #theme-picker {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 40px;
+  align-content: center;
   justify-content: center;
 }
 
-.player-card > .row {
-  border: 1px black solid;
+#landing #theme-picker button {
+  padding: 50px;
+  margin: 20px;
+  border-radius: 20px;
+  height: 160px;
 }
-
-.player-controls {
-  font-size: 1.4em;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-
-#game-notification {
-  font-size: 3em;
-  text-align: center;
-  padding: 30px;
-}
-
-#footer {
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-#title {
-  font-size: 2em;
-}
+/* END Landing  */

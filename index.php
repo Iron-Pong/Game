@@ -55,28 +55,32 @@ $theme = $_GET['theme'];
             </div>
         </div>
         <div class="row" id="footer">
-            <div class="col-3 player-controls">
+            <div class="col-3 player-controls d-flex flex-column">
                 <div class="row">
-                    <div class="col-12">
-                        Button Controls
+                    <div class="col-12">Controls</div>
+                    <div class="col-12  d-flex justify-content-around">
+                        <div><img src="./images/computer_key_A.png"></div>
+                        <div><img src="./images/computer_key_Z.png"></div>
                     </div>
-                    <div class="col-12">
-                        Up and Down
+                    <div class="col-12 d-flex justify-content-around">
+                        <div>Up</div>
+                        <div>Down</div>
                     </div>
                 </div>
             </div>
             <div class="col-6" id="title">IronPong
-                <input type="hidden" value="<?php echo $theme;?>">
+                <input type="hidden" value="<?php echo $theme; ?>">
             </div>
-            <div class="col-3 player-controls">
+            <div class="col-3 player-controls d-flex flex-column">
                 <div class="row">
-                    <div class="row">
-                        <div class="col-12">
-                            Button Controls
-                        </div>
-                        <div class="col-12">
-                            Up and Down
-                        </div>
+                    <div class="col-12">Controls</div>
+                    <div class="col-12  d-flex justify-content-around">
+                        <div><img src="./images/computer_key_Arrow_Up.png"></div>
+                        <div><img src="./images/computer_key_Arrow_Down.png"></div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-around">
+                        <div>Up</div>
+                        <div>Down</div>
                     </div>
                 </div>
             </div>
