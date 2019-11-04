@@ -81,7 +81,8 @@ function draw(u, object) {
     playerTwoScore += 1;
     document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
     obj[theme + "4"].play();
-
+    ballSpeed = 2;
+    theGame.clearUnusedPowerUps();
     message = `${player2name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
     theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
