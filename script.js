@@ -1,8 +1,8 @@
 //IronPong JS
 
 var ctx = document.getElementById("game-board").getContext("2d");
-ctx.width = 600;
-ctx.height = 400;
+ctx.width = 800;
+ctx.height = 450;
 
 // console.log('connected')
 
@@ -12,41 +12,31 @@ let paddleSpeed = 50;
 let playerOneScore = 0;
 let playerTwoScore = 0;
 let isPlaying;
-let endGameScore = 3;
+let endGameScore = 2;
 let ballRadius = 5;
 let ballSpeed = 2;
 let theme = "";
 let player1name = "";
 let player2name = "";
-
-// console.log('connected geturl.js')
-
-let url = window.location.search.substring(1).split("&");
+let url = window.location.search;
+let urlSplit = url.substring(1).split("&");
 let urlQuery = [];
 
-url.forEach(function(queries) {
+urlSplit.forEach(function(queries) {
   newQuery = queries.split("=");
   urlQuery.push(newQuery);
 });
 
-player1name = urlQuery[0][1]
-  .split("+")
-  .join(" ")
-  .toUpperCase();
-player2name = urlQuery[1][1]
-  .split("+")
-  .join(" ")
-  .toUpperCase();
+player1name = urlQuery[0][1].split("+").join(" ").toUpperCase();
+player2name = urlQuery[1][1].split("+").join(" ").toUpperCase();
 theme = urlQuery[2][1];
 
 document.body.classList.add(theme);
-
 document.querySelector("canvas").classList.add(`${theme}-theme`);
-
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
-// function getPlayerNames(){
-//   }
+
+console.log(theme);
 
 class Player {
   constructor(x, y, width, height) {
@@ -81,17 +71,9 @@ class Ball {
 const ballImg = new Image();
 ballImg.src = `./images/${theme}.png`;
 
-// const soccerballImg = new Image();
-// soccerballImg.src = "./images/soccerball.png";
-
 // Draw Function
 function draw(u, object) {
   if (object === "ball") {
-    // ctx.beginPath();
-    // ctx.arc(u.x, u.y, ballRadius, 0, Math.PI * 2);
-    // ctx.fillStyle = "red";
-    // ctx.fill();
-    // ctx.closePath();
     ctx.drawImage(ballImg, u.x, u.y, 15, 15);
   }
 
@@ -131,7 +113,7 @@ function draw(u, object) {
   //   playerTwoScore += 0.5;
   //   ballSpeed = 2;
   //   document.querySelector(".player2 > span").innerText = playerTwoScore;
-  //   message = `${player2name} Scores!`;
+  //   message = `${player2name} !`;
   //   document.getElementById("game-notification").innerHTML = message;
   //   theGame.clearUnusedPowerUps();
 
@@ -146,7 +128,7 @@ function draw(u, object) {
   //   }, 1000);
   // }
 
-  if (theGame.theBall.x > 600) {
+  if (theGame.theBall.x > 800) {
     //   stop()
     playerOneScore += 1;
     ballSpeed = 2;
@@ -164,16 +146,16 @@ function draw(u, object) {
     theGame.thePlayer2.y = 0;
   }
 
-  if (object === "player" && theGame.thePlayer2.y > 330) {
-    theGame.thePlayer2.y = 340;
+  if (object === "player" && theGame.thePlayer2.y > 375) {
+    theGame.thePlayer2.y = 395;
   }
 
   if (object === "player" && theGame.thePlayer.y < 0) {
     theGame.thePlayer.y = 0;
   }
 
-  if (object === "player" && theGame.thePlayer.y > 330) {
-    theGame.thePlayer.y = 340;
+  if (object === "player" && theGame.thePlayer.y > 375) {
+    theGame.thePlayer.y = 395;
   }
 }
 
@@ -224,9 +206,6 @@ function gameControls(e) {
   if (e.key === "z" || e.key === "Z") {
     theGame.thePlayer.movePlayer("y", +paddleSpeed);
   }
-  if (e.key === " ") {
-    stop();
-  }
 }
 
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
@@ -248,7 +227,9 @@ function stop() {
   isPlaying = false;
 
   /// kill any request in progress
-  if (mainLoop) cancelAnimationFrame(mainLoop);
+  if (mainLoop){
+    cancelAnimationFrame(mainLoop)
+  };
 }
 
 // Audio Objects
@@ -260,26 +241,30 @@ let obj = {
   basketball4: new Audio("./sounds/score.m4a"), // player 2 scores
   basketball5: new Audio("./sounds/kg2.mov"), // player 1 or 2 wins
   // Soccer Sounds
-  soccer1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
+  soccer1: new Audio("./sounds/whistle.mp3"), // opening whistle
   soccer2: new Audio("./sounds/kick.m4a"), // kick off paddle
   soccer3: new Audio("./sounds/Goal4.mov"), // play 1 scores
+  soccer4: new Audio("./sounds/Goal4.mov"), // play 2 scores
+  soccer5: new Audio("./sounds/ole.mov"), // play 1 or 2 wins
   // Classic Sounds
-  classic1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
+  classic1: new Audio("./sounds/start.wav"), // beep off paddle
   classic2: new Audio("./sounds/Beep2.wav"), // beep off paddle
   classic3: new Audio("./sounds/classicScore.wav"), // player 1 scores
+  classic4: new Audio("./sounds/classicScore.wav"), // player 2 scores
+  classic5: new Audio("./sounds/victory.mp3"), // player 1 or 2 wins
   // Balls of Fury Sounds
-  ballsoffury1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
+  ballsoffury1: new Audio("./sounds/whistle.mp3"), // opening whistle
   ballsoffury2: new Audio("./sounds/pong.mov"), // ping pong paddle
-  ballsoffury3: new Audio("./sounds/fury2.mov"), //
-  ballsoffury4: new Audio("./sounds/backhand.mov"),
-  ballsoffury5: new Audio("./sounds/furywin.mov")
+  ballsoffury3: new Audio("./sounds/fury2.mov"), // player 1 scores
+  ballsoffury4: new Audio("./sounds/backhand.mov"), // player 2 scores
+  ballsoffury5: new Audio("./sounds/furywin.mov") // player 1 or 2 wins
 };
 
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 180, 10, 60); //left of screen
-    this.thePlayer2 = new Player(560, 180, 10, 60); //right of screen
+    this.thePlayer = new Player(20, 225, 10, 60); //left of screen
+    this.thePlayer2 = new Player(770, 225, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
     this.theBall2 = new Ball(70, 200, -2, 2, ballRadius);
     this.powerUpsArray = [];
@@ -325,7 +310,7 @@ class Game {
       this.theBall.dx *= -1;
       obj[theme + "2"].play();
       // this.theBall.dy *= -1;
-    } else if (this.theBall.y < 0 || this.theBall.y > 400) {
+    } else if (this.theBall.y < 0 || this.theBall.y > 435) {
       this.theBall.dy *= -1;
     }
 
@@ -344,32 +329,64 @@ class Game {
   }
 }
 
+function resetPlayerScores(){
+  playerOneScore = 0;
+  playerTwoScore = 0;
+
+  document.querySelector(".player-card #player1 #player-score span" ).innerText = playerOneScore;
+  document.querySelector(".player-card #player2 #player-score span" ).innerText = playerTwoScore;
+}
+
+// function countDown(){
+//   resetPlayerScores();
+//   let counter = 3;
+//   let timer = setInterval(function() {
+//     startCountDown(counter);
+//   }, 1000);
+  
+//   function startCountDown() {
+//     if (counter === 0) {
+//       clearInterval(timer);
+//       startGame();
+//       document.getElementById("game-screen-message").innerHTML = "";
+//     } else {
+//       document.getElementById("game-screen-message").innerHTML = counter;
+//       counter--;
+//     }
+//   }
+// }
+
 //Game Over function
 
 function gameOver() {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
+    // document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
     obj[theme + "5"].play();
-    stop();
+    // stop();
+    startGame;
   }
 
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
-    document.getElementById("game-notification").innerHTML = message + '<button id="start-game" class="btn-sm">Restart</button>';
+    document.getElementById("game-notification").innerHTML = message;
+    // document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
     obj[theme + "5"].play();
-    stop();
+    // stop();
+    startGame;
   }
 }
 
 //Start Button
 
+// document.getElementById("start-game").onclick = countDown;
 document.getElementById("start-game").onclick = startGame;
 let theGame;
 
 function startGame() {
   isPlaying = true;
-  obj[theme + "1"].play();
   theGame = new Game();
   mainLoop();
+  obj[theme + "1"].play();
 }

@@ -13,8 +13,8 @@
 }
 
 @font-face {
-  font-family: "pong-score";
-  src: url("./images/fonts/pong-score.ttf") format("truetype");
+  font-family: "pongscore";
+  src: url("./images/fonts/pongscore2.ttf") format("truetype");
 }
 
 body {
@@ -22,10 +22,22 @@ body {
   overflow: hidden;
 }
 
-#game-board {
-  border: 1px solid black;
+#game-screen {
   width: 100%;
   height: 400px;
+  text-align: center;
+}
+
+#game-board {
+  width: 100%;
+  height: 400px;
+}
+
+#game-screen-message {
+  position: absolute;
+  left: 45%;
+  top: 135px;
+  font-size: 6em;
 }
 
 .player-card {
@@ -66,11 +78,17 @@ body {
 }
 
 #title {
-  font-size: 2em;
+  font-size: 2.5em;
 }
 
 .modal-content {
   color: black;
+}
+
+#start-game {
+  max-height: 55px;
+  font-size: 30px;
+  margin: auto;
 }
 
 /* Classic CSS */
@@ -84,7 +102,9 @@ body {
   background-image: url("./images/classic-canvas.png");
   background-size: 100% 400px;
   background-repeat: no-repeat;
-  border: 4px solid white;
+  background-position: center center;
+  border-top: 4px white solid;
+  border-bottom: 4px white solid;
 }
 
 .classic-background {
@@ -95,9 +115,9 @@ body {
 }
 
 .classic #player-score {
-  font-family: pong-score !important;
+  font-size: 3em;
 }
-/*End Soccer CSS */
+/*End Classic CSS */
 
 /* Basketball Theme CSS */
 .basketball, modal > #basketball {
@@ -119,16 +139,21 @@ body {
   background-repeat: no-repeat;
 }
 
-.basketball #player-score {
-  font-family: basketball;
-}
-
 .basketball .player-card {
   font-family: "Arial Narrow", Arial, sans-serif;
+  color: white;
+  font-size: 3em;
+  text-align: center;
+  font-weight: 600;
+}
+
+.basketball #player-score {
+  font-family: basketball;
+  font-size: 3em;
   border: white 3px solid;
   background-color: black;
-  color: white;
-  font-size: 1.9em;
+  padding: 20px;
+  color: red;
 }
 
 .basketball #footer {
