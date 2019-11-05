@@ -15,9 +15,9 @@ let isPlaying;
 let endGameScore = 3;
 let ballRadius = 5;
 let ballSpeed = 2;
-let theme = document.querySelector('#title > input').value;  
-let player1name = document.querySelector('#player1 > #name').innerText;
-let player2name = document.querySelector('#player2 > #name').innerText;
+let theme = document.querySelector("#title > input").value;
+let player1name = document.querySelector("#player1 > #name").innerText;
+let player2name = document.querySelector("#player2 > #name").innerText;
 
 console.log(theme);
 
@@ -81,9 +81,10 @@ function draw(u, object) {
   if (theGame.theBall.x < 0) {
     //   stop()
     playerTwoScore += 1;
-    document.querySelector('.player-card #player2 #player-score span').innerText = playerTwoScore;
-    obj[theme+'4'].play();
-
+    document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+    obj[theme + "4"].play();
+    ballSpeed = 2;
+    theGame.clearUnusedPowerUps();
     message = `${player2name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
     theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
@@ -91,29 +92,32 @@ function draw(u, object) {
   }
 
   //  // Restart ball and keep score
-  //  if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
-  //     playerTwoScore += 0.5;
-  //     document.querySelector(".player2 > span").innerText = playerTwoScore;
-  //     message = `${player2name} Scores!`;
-  //     document.getElementById("game-notification").innerHTML = message;
+  // if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
+  //   playerTwoScore += 0.5;
+  //   ballSpeed = 2;
+  //   document.querySelector(".player2 > span").innerText = playerTwoScore;
+  //   message = `${player2name} Scores!`;
+  //   document.getElementById("game-notification").innerHTML = message;
+  //   theGame.clearUnusedPowerUps();
 
-  //     theGame.theBall.x += 0.5;
-  //     theGame.theBall.dx = 0;
+  //   theGame.theBall.x += 0.5;
+  //   theGame.theBall.dx = 0;
 
-  //     setTimeout(function() {
-  //       // document.querySelector(".player2 > span").innerText = playerTwoScore;
-  //       theGame.thePlayer = new Player(20, 180, 10, 60);
-  //       theGame.thePlayer2 = new Player(560, 180, 10, 60);
-  //       theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
-  //     }, 1000);
-  //   }
+  //   setTimeout(function() {
+  //     // document.querySelector(".player2 > span").innerText = playerTwoScore;
+  //     theGame.thePlayer = new Player(20, 180, 10, 60);
+  //     theGame.thePlayer2 = new Player(560, 180, 10, 60);
+  //     theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
+  //   }, 1000);
+  // }
 
   if (theGame.theBall.x > 600) {
     //   stop()
     playerOneScore += 1;
-    document.querySelector('.player-card #player1 #player-score span').innerText = playerOneScore;
-    obj[theme+'3'].play();
-
+    ballSpeed = 2;
+    document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+    obj[theme + "3"].play();
+    theGame.clearUnusedPowerUps();
     message = `${player1name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
     theGame.theBall = new Ball(550, 200, 2, -2, 10, 10);
@@ -154,7 +158,7 @@ function mainLoop() {
   if (frames % 500 === 0) {
     theGame.spawnPowerUps();
   }
-  if (frames % 900 === 0) {
+  if (frames % 800 === 0) {
     theGame.clearUnusedPowerUps();
   }
 
@@ -276,8 +280,7 @@ class Game {
       //   console.log("collided with player 1");
       this.theBall.x += 5;
       this.theBall.dx *= -1;
-      obj[theme+'2'].play();
-
+      obj[theme + "2"].play();
     } else if (
       futureX < this.thePlayer2.x + this.thePlayer2.width &&
       futureX + this.theBall.radius > this.thePlayer2.x &&
@@ -287,7 +290,7 @@ class Game {
       //   console.log("Collided with player 2");
       this.theBall.x -= 5;
       this.theBall.dx *= -1;
-      obj[theme+'2'].play();
+      obj[theme + "2"].play();
       // this.theBall.dy *= -1;
     } else if (this.theBall.y < 0 || this.theBall.y > 400) {
       this.theBall.dy *= -1;
@@ -301,13 +304,12 @@ class Game {
         futureY + this.theBall.radius > this.powerUpsArray[i].y
       ) {
         this.powerUpsArray.splice(i, 1);
-
+        ballSpeed = 5;
         console.log("COLLISION!!");
       }
     }
   }
 }
-
 
 //Game Over function
 
@@ -315,15 +317,15 @@ function gameOver() {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    obj[theme+'5'].play();
+    obj[theme + "5"].play();
     stop();
   }
 
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    obj[theme+'5'].play();
-   stop();
+    obj[theme + "5"].play();
+    stop();
   }
 }
 
