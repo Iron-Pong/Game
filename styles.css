@@ -244,6 +244,8 @@ body {
 }
 /* END Landing  */
 
+/* Video CSS */
+
 #myVideo {
   position: fixed;
   display: flex;
@@ -253,6 +255,8 @@ body {
   padding-left: 5%;
 }
 
+
+/*Logo Flip CSS */
 
 /* entire container, keeps perspective */
 .flip-container {
