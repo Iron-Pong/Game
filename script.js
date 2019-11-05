@@ -185,13 +185,15 @@ function mainLoop() {
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
   draw(theGame.theBall, "ball");
-  draw(theGame.theBall2, "ball");
+  theGame.theBallArray.forEach(eachBalls => {
+    draw(eachBalls, "ball");
+  });
   theGame.powerUpsArray.forEach(eachPowerUps => {
     draw(eachPowerUps, "powerUps");
     // console.log(eachPowerUps.name);
   });
 
-  if (frames % 20 === 0) {
+  if (frames % 500 === 0) {
     theGame.spawnPowerUps();
   }
   if (frames % 800 === 0) {
@@ -199,6 +201,9 @@ function mainLoop() {
   }
 
   theGame.theBall.moveBall();
+  theGame.theBallArray.forEach(eachBalls => {
+    eachBalls.moveBall();
+  });
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
 
   gameOver();
@@ -284,7 +289,7 @@ class Game {
     this.thePlayer = new Player(20, 180, 10, 60); //left of screen
     this.thePlayer2 = new Player(560, 180, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
-    this.theBall2 = new Ball(70, 200, -2, 2, ballRadius);
+    this.theBallArray = [];
     this.powerUpsArray = [];
   }
   spawnPowerUps() {
@@ -360,6 +365,8 @@ class Game {
             }
             break;
           case "twoBalls":
+            let newBalls = new Ball(70, 200, -2, 2, ballRadius);
+            this.theBallArray.push(newBalls);
             break;
           case "mouseControl":
             break;
