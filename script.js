@@ -356,7 +356,7 @@ function gameOver() {
 
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
-    document.getElementById("game-notification").innerHTML = message;
+    document.getElementById("game-notification").innerHTML = message + '<button id="start-game" class="btn-sm">Restart</button>';
     obj[theme + "5"].play();
     stop();
   }

@@ -74,7 +74,7 @@ body {
 }
 
 /* Classic CSS */
-.classic {
+.classic, modal > #classic {
   background-color: black;
   color: white;
   font-family: pong;
@@ -100,7 +100,7 @@ body {
 /*End Soccer CSS */
 
 /* Basketball Theme CSS */
-.basketball {
+.basketball, modal > #basketball {
   background-image: url("./images/basketball-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -141,7 +141,7 @@ body {
 /* End Basketball CSS */
 
 /* Soccer CSS */
-.soccer {
+.soccer, modal > #soccer {
   background-image: url("./images/soccer-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -166,7 +166,7 @@ body {
 /*End Soccer CSS */
 
 /* Balls Of Fury CSS */
-.ballsoffury {
+.ballsoffury, modal > #ballsoffury {
   background-image: url("./images/ballsoffury-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
