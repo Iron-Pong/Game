@@ -185,7 +185,7 @@ function mainLoop() {
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
   draw(theGame.theBall, "ball");
-  // draw(theGame.theBall2, "ball");
+  draw(theGame.theBall2, "ball");
   theGame.powerUpsArray.forEach(eachPowerUps => {
     draw(eachPowerUps, "powerUps");
     // console.log(eachPowerUps.name);
@@ -277,7 +277,7 @@ let obj = {
   ballsoffury4: new Audio("./sounds/backhand.mov"), // player 2 scores
   ballsoffury5: new Audio("./sounds/furywin.mov") // player 1 or 2 wins
 };
-let powerUpsName = ["speedUp", "slowDown"];
+let powerUpsName = ["twoBalls"];
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
@@ -340,13 +340,33 @@ class Game {
         futureY < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
         futureY + this.theBall.radius > this.powerUpsArray[i].y
       ) {
-        this.powerUpsArray.splice(i, 1);
-        console.log(this.powerUpsArray[i]);
-        if (this.powerUpsArray.name === "slowDown") {
-          ballSpeed = 1;
-        } else if (this.powerUpsArray.name === "speedUp") {
-          ballspeed = 10;
+        console.log(this.powerUpsArray[i], i);
+        switch (this.powerUpsArray[i].name) {
+          case "slowDown":
+            ballSpeed = 1;
+            alert("slowing down");
+            break;
+          case "speedUp":
+            ballSpeed = 4;
+            break;
+          case "barLarge":
+            if (this.theBall.dx === -2) {
+              this.thePlayer.height = 200;
+              setTimeout(function() {
+                this.thePlayer.height = 60;
+              }, 1000);
+            } else if (this.theBall.dx === 2) {
+              this.thePlayer2.height = 200;
+            }
+            break;
+          case "twoBalls":
+            break;
+          case "mouseControl":
+            break;
+          default:
+            break;
         }
+        this.powerUpsArray.splice(i, 1);
         console.log("COLLISION!!");
       }
     }
