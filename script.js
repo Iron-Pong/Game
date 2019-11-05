@@ -15,9 +15,38 @@ let isPlaying;
 let endGameScore = 3;
 let ballRadius = 5;
 let ballSpeed = 2;
-let theme = document.querySelector("#title > input").value;
-let player1name = document.querySelector("#player1 > #name").innerText;
-let player2name = document.querySelector("#player2 > #name").innerText;
+let theme = "";
+let player1name = "";
+let player2name = "";
+
+// console.log('connected geturl.js')
+
+let url = window.location.search.substring(1).split("&");
+let urlQuery = [];
+
+url.forEach(function(queries) {
+  newQuery = queries.split("=");
+  urlQuery.push(newQuery);
+});
+
+player1name = urlQuery[0][1]
+  .split("+")
+  .join(" ")
+  .toUpperCase();
+player2name = urlQuery[1][1]
+  .split("+")
+  .join(" ")
+  .toUpperCase();
+theme = urlQuery[2][1];
+
+document.body.classList.add(theme);
+
+document.querySelector("canvas").classList.add(`${theme}-theme`);
+
+document.querySelector("#player1 > #name").innerText = player1name;
+document.querySelector("#player2 > #name").innerText = player2name;
+// function getPlayerNames(){
+//   }
 
 class Player {
   constructor(x, y, width, height) {
@@ -67,7 +96,13 @@ function draw(u, object) {
   }
 
   if (object === "player") {
-    ctx.fillStyle = "black";
+    if (theme === "classic") {
+      ctx.fillStyle = "white";
+    } else if (theme === "ballsoffury") {
+      ctx.fillStyle = "red";
+    } else {
+      ctx.fillStyle = "black";
+    }
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
   if (object === "powerUps") {
@@ -79,7 +114,9 @@ function draw(u, object) {
   if (theGame.theBall.x < 0) {
     //   stop()
     playerTwoScore += 1;
-    document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+    document.querySelector(
+      ".player-card #player2 #player-score span"
+    ).innerText = playerTwoScore;
     obj[theme + "4"].play();
     ballSpeed = 2;
     theGame.clearUnusedPowerUps();
@@ -113,7 +150,9 @@ function draw(u, object) {
     //   stop()
     playerOneScore += 1;
     ballSpeed = 2;
-    document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+    document.querySelector(
+      ".player-card #player1 #player-score span"
+    ).innerText = playerOneScore;
     obj[theme + "3"].play();
     theGame.clearUnusedPowerUps();
     message = `${player1name} Scores!`;
@@ -221,12 +260,15 @@ let obj = {
   basketball4: new Audio("./sounds/score.m4a"), // player 2 scores
   basketball5: new Audio("./sounds/kg2.mov"), // player 1 or 2 wins
   // Soccer Sounds
+  soccer1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
   soccer2: new Audio("./sounds/kick.m4a"), // kick off paddle
   soccer3: new Audio("./sounds/Goal4.mov"), // play 1 scores
   // Classic Sounds
+  classic1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
   classic2: new Audio("./sounds/Beep2.wav"), // beep off paddle
   classic3: new Audio("./sounds/classicScore.wav"), // player 1 scores
   // Balls of Fury Sounds
+  ballsoffury1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
   ballsoffury2: new Audio("./sounds/pong.mov"), // ping pong paddle
   ballsoffury3: new Audio("./sounds/fury2.mov"), //
   ballsoffury4: new Audio("./sounds/backhand.mov"),

@@ -5,85 +5,187 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <title>IronPong</title>
     <!-- IronPong CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css" type="text/css">
 
-    <script src="./geturl.js"></script>
-    <title>IronPong</title>
 </head>
 
-<body id="basketball">
+<body id="landing">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12" id="game-notification">
-                <button id="start-game">Start</button>
+        <div class="row" id="title">
+            <div class="col-12">
+                IRON<b>PONG</b>
             </div>
         </div>
-        <div class="row" id="main-board">
-            <div class="col-3 player-card">
-                <div class="row" id="player1">
-                    <div class="col-12" id="name">
-                        
-                    </div>
-                    <div class="col-12" id="player-score">
-                        <span>0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6"><canvas id="game-board" class="basketball-theme" width="600" height="400"></canvas></div>
-            <div class="col-3 player-card">
-                <div class="row" id="player2">
-                    <div class="col-12" id="name">
-                        
-                    </div>
-                    <div class="col-12" id="player-score">
-                        <span>0</span>
-                    </div>
-                </div>
+        <div class="row" id="sub-title">
+            <div class="col-12">
+                Choose A Theme
             </div>
         </div>
-        <div class="row" id="footer">
-            <div class="col-3 player-controls d-flex flex-column">
-                <div class="row">
-                    <div class="col-12">Controls</div>
-                    <div class="col-12  d-flex justify-content-around">
-                        <div><img src="./images/computer_key_A.png"></div>
-                        <div><img src="./images/computer_key_Z.png"></div>
-                    </div>
-                    <div class="col-12 d-flex justify-content-around">
-                        <div>Up</div>
-                        <div>Down</div>
-                    </div>
+        <div class="row" id="theme-picker">
+            <!-- Button trigger modal -->
+            <button type="button" class="col-4 border border-dark classic-background" data-toggle="modal"
+                data-target="#classic">
+            </button>
+            <!-- Button trigger modal -->
+            <button type="button" class="col-4 border border-dark bball-background" data-toggle="modal"
+                data-target="#basketball">
+            </button>
+            <!-- Button trigger modal -->
+            <button type="button" class="col-4 border border-dark soccer-background" data-toggle="modal"
+                data-target="#soccer">
+            </button>
+            <!-- Button trigger modal -->
+            <button type="button" class="col-4 border border-dark ballsoffury-background" data-toggle="modal"
+                data-target="#ballsoffury">
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Classic Modal -->
+    <div class="modal fade" id="classic" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Classic Mode</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="col-6" id="title">IronPong
-                <input type="hidden" value="basketball">
-            </div>
-            <div class="col-3 player-controls d-flex flex-column">
-                <div class="row">
-                    <div class="col-12">Controls</div>
-                    <div class="col-12  d-flex justify-content-around">
-                        <div><img src="./images/computer_key_Arrow_Up.png"></div>
-                        <div><img src="./images/computer_key_Arrow_Down.png"></div>
+                <form action="game.html" method="GET">
+                    <div class="modal-body">
+                        <h4>Enter Player Info</h4>
+                        <label id="player1name">Player 1 Name</label>
+                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <br>
+                        <label id="player2name">Player 2 Name</label>
+                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <br>
+                        <input type="hidden" id="theme" name="theme" value="classic">
                     </div>
-                    <div class="col-12 d-flex justify-content-around">
-                        <div>Up</div>
-                        <div>Down</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Basketball Modal -->
+    <div class="modal fade" id="basketball" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Basketball Mode</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+
+                <form action="game.html" method="GET">
+                    <div class="modal-body">
+                        <h4>Enter Player Info</h4>
+                        <label id="player1name">Player 1 Name</label>
+                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <br>
+                        <label id="player2name">Player 2 Name</label>
+                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <br>
+                        <input type="hidden" id="theme" name="theme" value="basketball">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
+                    </div>
+                </form>
             </div>
-            <!-- IronPong JS -->
-            <script src="./powerups.js"></script>
-            <script src="./script.js"></script>
-            <!-- Optional JavaScript -->
-            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        </div>
+    </div>
+
+    <!-- Soccer Modal -->
+    <div class="modal fade" id="soccer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Soccer Mode</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="game.html" method="GET">
+                    <div class="modal-body">
+                        <h4>Enter Player Info</h4>
+                        <label id="player1name">Player 1 Name</label>
+                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <br>
+                        <label id="player2name">Player 2 Name</label>
+                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <br>
+                        <input type="hidden" id="theme" name="theme" value="soccer">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Balls of Fury Modal -->
+    <div class="modal fade" id="ballsoffury" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Balls of Fury Mode</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="game.html" method="GET">
+                    <div class="modal-body">
+                        <h4>Enter Player Info</h4>
+                        <label id="player1name">Player 1 Name</label>
+                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <br>
+                        <label id="player2name">Player 2 Name</label>
+                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <br>
+                        <input type="hidden" id="theme" name="theme" value="ballsoffury">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- IronPong JS -->
+    <script src="./script.js"></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

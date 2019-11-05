@@ -74,16 +74,17 @@ body {
 }
 
 /* Classic CSS */
-#classic {
+.classic {
   background-color: black;
   color: white;
   font-family: pong;
 }
 
 .classic-theme {
-  background-image: url("./images/classic.png");
+  background-image: url("./images/classic-canvas.png");
   background-size: 100% 400px;
   background-repeat: no-repeat;
+  border: 4px solid white;
 }
 
 .classic-background {
@@ -93,53 +94,54 @@ body {
   background-repeat: no-repeat;
 }
 
-#classic #player-score {
+.classic #player-score {
   font-family: pong-score !important;
 }
 /*End Soccer CSS */
 
 /* Basketball Theme CSS */
-#basketball {
+.basketball {
   background-image: url("./images/basketball-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .bball-background {
-  background-image: url("./images/bball-landing.jpg");
+  background-image: url("./images/basketball-landing.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .basketball-theme {
-  background-image: url("./images/bballcourt.jpg");
+  background-image: url("./images/basketball-canvas.jpg");
   background-size: 100% 400px;
   background-repeat: no-repeat;
 }
 
-#basketball #player-score {
+.basketball #player-score {
   font-family: basketball;
 }
 
-#basketball .player-card {
+.basketball .player-card {
   font-family: "Arial Narrow", Arial, sans-serif;
   border: white 3px solid;
   background-color: black;
   color: white;
   font-size: 1.9em;
 }
-#basketball #footer {
+
+.basketball #footer {
   color: black;
 }
 
-#basketball #game-notification {
+.basketball #game-notification {
   color: white;
 }
 /* End Basketball CSS */
 
 /* Soccer CSS */
-#soccer {
+.soccer {
   background-image: url("./images/soccer-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -150,7 +152,7 @@ body {
   } */
 
 .soccer-theme {
-  background-image: url("./images/soccerfield.jpg");
+  background-image: url("./images/soccer-canvas.jpg");
   background-size: 100% 400px;
   background-repeat: no-repeat;
 }
@@ -164,18 +166,14 @@ body {
 /*End Soccer CSS */
 
 /* Balls Of Fury CSS */
-#ballsoffury {
+.ballsoffury {
   background-image: url("./images/ballsoffury-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-/* .container-fluid.soccer {
-  background-color: seagreen;
-} */
-
 .ballsoffury-theme {
-  background-image: url("./images/ballsoffury.png");
+  background-image: url("./images/ballsoffury-canvas.png");
   background-size: 100% 400px;
   background-repeat: no-repeat;
 }
