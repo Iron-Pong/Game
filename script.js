@@ -96,9 +96,7 @@ function draw(u, object) {
   if (theGame.theBall.x < 0) {
     //   stop()
     playerTwoScore += 1;
-    document.querySelector(
-      ".player-card #player2 #player-score span"
-    ).innerText = playerTwoScore;
+    document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
     obj[theme + "4"].play();
     ballSpeed = 2;
     theGame.clearUnusedPowerUps();
@@ -132,9 +130,7 @@ function draw(u, object) {
     //   stop()
     playerOneScore += 1;
     ballSpeed = 2;
-    document.querySelector(
-      ".player-card #player1 #player-score span"
-    ).innerText = playerOneScore;
+    document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
     obj[theme + "3"].play();
     theGame.clearUnusedPowerUps();
     message = `${player1name} Scores!`;
@@ -169,9 +165,12 @@ function mainLoop() {
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
   draw(theGame.theBall, "ball");
-  // draw(theGame.theBall2, "ball");
+  theGame.theBallArray.forEach(eachBalls => {
+    draw(eachBalls, "ball");
+  });
   theGame.powerUpsArray.forEach(eachPowerUps => {
     draw(eachPowerUps, "powerUps");
+    // console.log(eachPowerUps.name);
   });
 
   if (frames % 500 === 0) {
@@ -182,6 +181,9 @@ function mainLoop() {
   }
 
   theGame.theBall.moveBall();
+  theGame.theBallArray.forEach(eachBalls => {
+    eachBalls.moveBall();
+  });
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
 
   gameOver();
@@ -259,23 +261,24 @@ let obj = {
   ballsoffury4: new Audio("./sounds/backhand.mov"), // player 2 scores
   ballsoffury5: new Audio("./sounds/furywin.mov") // player 1 or 2 wins
 };
-
+let powerUpsName = ["twoBalls"];
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
     this.thePlayer = new Player(20, 225, 10, 60); //left of screen
     this.thePlayer2 = new Player(770, 225, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
-    this.theBall2 = new Ball(70, 200, -2, 2, ballRadius);
+    this.theBallArray = [];
     this.powerUpsArray = [];
   }
   spawnPowerUps() {
+    let rName = powerUpsName[Math.floor(Math.random() * powerUpsName.length)];
     let rX = Math.floor(Math.random() * 400) + 65;
     let rY = 180;
     let rWidth = 45;
     let rHeight = 45;
 
-    let newPowerUps = new PowerUps(rX, rY, rWidth, rHeight);
+    let newPowerUps = new PowerUps(rName, rX, rY, rWidth, rHeight);
     this.powerUpsArray.push(newPowerUps);
     console.log("Spawning!");
   }
@@ -321,13 +324,41 @@ class Game {
         futureY < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
         futureY + this.theBall.radius > this.powerUpsArray[i].y
       ) {
+        console.log(this.powerUpsArray[i], i);
+        switch (this.powerUpsArray[i].name) {
+          case "slowDown":
+            ballSpeed = 1;
+            alert("slowing down");
+            break;
+          case "speedUp":
+            ballSpeed = 4;
+            break;
+          case "barLarge":
+            if (this.theBall.dx === -2) {
+              this.thePlayer.height = 200;
+              setTimeout(function() {
+                this.thePlayer.height = 60;
+              }, 1000);
+            } else if (this.theBall.dx === 2) {
+              this.thePlayer2.height = 200;
+            }
+            break;
+          case "twoBalls":
+            let newBalls = new Ball(70, 200, -2, 2, ballRadius);
+            this.theBallArray.push(newBalls);
+            break;
+          case "mouseControl":
+            break;
+          default:
+            break;
+        }
         this.powerUpsArray.splice(i, 1);
-        ballSpeed = 5;
         console.log("COLLISION!!");
       }
     }
   }
 }
+// ""speedUp", "slowDown", "barLarge", "twoBalls", "mouseControl""
 
 function resetPlayerScores(){
   playerOneScore = 0;

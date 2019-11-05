@@ -14,35 +14,42 @@
 
 </head>
 
-<body id="landing">
+<body id="landing">    
     <div class="container-fluid">
         <div class="row" id="title">
             <div class="col-12">
-                IRON<b>PONG</b>
+                <img src="./images/pong-logo3.png" height="170px">
             </div>
         </div>
         <div class="row" id="sub-title">
-            <div class="col-12">
-                Choose A Theme
+            <div class="col-12" id="title">
+                Choose A Mode
             </div>
         </div>
         <div class="row" id="theme-picker">
             <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark classic-background" data-toggle="modal"
+            <button type="button" class="col-2 border border-dark classic-background" data-toggle="modal"
                 data-target="#classic">
             </button>
+            <div class="col-6"> 
+              <video autoplay loop id="myVideo">
+                <source src="./images/pong-video.mp4" type="video/mp4"></video>  
+            </div>
             <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark bball-background" data-toggle="modal"
+            <button type="button" class="col-2 border border-dark bball-background" data-toggle="modal"
                 data-target="#basketball">
             </button>
-            <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark soccer-background" data-toggle="modal"
-                data-target="#soccer">
-            </button>
-            <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark ballsoffury-background" data-toggle="modal"
-                data-target="#ballsoffury">
-            </button>
+        </div>
+        <div class="row" id="theme-picker">
+          <!-- Button trigger modal -->
+          <button type="button" class="col-2 border border-dark soccer-background" data-toggle="modal"
+          data-target="#soccer">
+          </button>
+          <div class="col-6"></div>
+          <!-- Button trigger modal -->
+          <button type="button" class="col-2 border border-dark ballsoffury-background" data-toggle="modal"
+              data-target="#ballsoffury">
+          </button>
         </div>
     </div>
 

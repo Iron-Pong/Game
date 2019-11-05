@@ -70,6 +70,10 @@ body {
   padding: 30px;
 }
 
+#back-button {
+  padding: 20px 20px 0px 0px;
+}
+
 #footer {
   text-align: center;
   display: flex;
@@ -78,7 +82,9 @@ body {
 }
 
 #title {
-  font-size: 2.5em;
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
 }
 
 .modal-content {
@@ -216,16 +222,14 @@ body {
   background-color: black;
   color: white;
   text-align: center;
-  background-image: url("./images/atari-logo-bg.png");
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
-  background-position-y: 175px;
 }
 
 #landing #title {
   font-family: pong;
-  font-size: 5em;
+  font-size: 1em;
+  padding: 10px;
 }
 
 #landing #title b {
@@ -238,16 +242,22 @@ body {
 
 #landing #theme-picker {
   display: flex;
-  flex-wrap: wrap;
-  padding: 40px;
   align-content: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 #landing #theme-picker button {
-  padding: 50px;
   margin: 20px;
   border-radius: 20px;
-  height: 160px;
+  height: 120px;
 }
 /* END Landing  */
+
+#myVideo {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  padding-left: 5%;
+}
