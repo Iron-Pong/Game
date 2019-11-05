@@ -116,9 +116,7 @@ function draw(u, object) {
   if (theGame.theBall.x < 0) {
     //   stop()
     playerTwoScore += 1;
-    document.querySelector(
-      ".player-card #player2 #player-score span"
-    ).innerText = playerTwoScore;
+    document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
     obj[theme + "4"].play();
     ballSpeed = 2;
     theGame.clearUnusedPowerUps();
@@ -152,9 +150,7 @@ function draw(u, object) {
     //   stop()
     playerOneScore += 1;
     ballSpeed = 2;
-    document.querySelector(
-      ".player-card #player1 #player-score span"
-    ).innerText = playerOneScore;
+    document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
     obj[theme + "3"].play();
     theGame.clearUnusedPowerUps();
     message = `${player1name} Scores!`;
@@ -192,9 +188,10 @@ function mainLoop() {
   // draw(theGame.theBall2, "ball");
   theGame.powerUpsArray.forEach(eachPowerUps => {
     draw(eachPowerUps, "powerUps");
+    // console.log(eachPowerUps.name);
   });
 
-  if (frames % 500 === 0) {
+  if (frames % 20 === 0) {
     theGame.spawnPowerUps();
   }
   if (frames % 800 === 0) {
@@ -255,32 +252,32 @@ function stop() {
 
 // Audio Objects
 let obj = {
-    // Basketball Sounds
-    'basketball1': new Audio('./sounds/buzzer.mp3'), // opening buzzer
-    'basketball2': new Audio('./sounds/bounce.mp3'), // bounce off paddle
-    'basketball3': new Audio('./sounds/Shaq.m4a'), // player 1 scores
-    'basketball4': new Audio('./sounds/score.m4a'), // player 2 scores
-    'basketball5': new Audio('./sounds/kg2.mov'), // player 1 or 2 wins
-    // Soccer Sounds
-    'soccer1': new Audio('./sounds/whistle.mp3'), // opening whistle
-    'soccer2': new Audio('./sounds/kick.m4a'), // kick off paddle
-    'soccer3': new Audio('./sounds/Goal4.mov'), // play 1 scores
-    'soccer4': new Audio('./sounds/Goal4.mov'), // play 2 scores
-    'soccer5': new Audio('./sounds/ole.mov'), // play 1 or 2 wins
-    // Classic Sounds
-    'classic1': new Audio('./sounds/start.wav'), // beep off paddle
-    'classic2': new Audio('./sounds/Beep2.wav'), // beep off paddle
-    'classic3': new Audio('./sounds/classicScore.wav'), // player 1 scores
-    'classic4': new Audio('./sounds/classicScore.wav'), // player 2 scores
-    'classic5': new Audio('./sounds/victory.mp3'), // player 1 or 2 wins
-    // Balls of Fury Sounds
-    'ballsoffury1': new Audio('./sounds/whistle.mp3'), // opening whistle
-    'ballsoffury2': new Audio('./sounds/pong.mov'), // ping pong paddle
-    'ballsoffury3': new Audio('./sounds/fury2.mov'), // player 1 scores
-    'ballsoffury4': new Audio('./sounds/backhand.mov'), // player 2 scores
-    'ballsoffury5': new Audio('./sounds/furywin.mov'), // player 1 or 2 wins
-}
-
+  // Basketball Sounds
+  basketball1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
+  basketball2: new Audio("./sounds/bounce.mp3"), // bounce off paddle
+  basketball3: new Audio("./sounds/Shaq.m4a"), // player 1 scores
+  basketball4: new Audio("./sounds/score.m4a"), // player 2 scores
+  basketball5: new Audio("./sounds/kg2.mov"), // player 1 or 2 wins
+  // Soccer Sounds
+  soccer1: new Audio("./sounds/whistle.mp3"), // opening whistle
+  soccer2: new Audio("./sounds/kick.m4a"), // kick off paddle
+  soccer3: new Audio("./sounds/Goal4.mov"), // play 1 scores
+  soccer4: new Audio("./sounds/Goal4.mov"), // play 2 scores
+  soccer5: new Audio("./sounds/ole.mov"), // play 1 or 2 wins
+  // Classic Sounds
+  classic1: new Audio("./sounds/start.wav"), // beep off paddle
+  classic2: new Audio("./sounds/Beep2.wav"), // beep off paddle
+  classic3: new Audio("./sounds/classicScore.wav"), // player 1 scores
+  classic4: new Audio("./sounds/classicScore.wav"), // player 2 scores
+  classic5: new Audio("./sounds/victory.mp3"), // player 1 or 2 wins
+  // Balls of Fury Sounds
+  ballsoffury1: new Audio("./sounds/whistle.mp3"), // opening whistle
+  ballsoffury2: new Audio("./sounds/pong.mov"), // ping pong paddle
+  ballsoffury3: new Audio("./sounds/fury2.mov"), // player 1 scores
+  ballsoffury4: new Audio("./sounds/backhand.mov"), // player 2 scores
+  ballsoffury5: new Audio("./sounds/furywin.mov") // player 1 or 2 wins
+};
+let powerUpsName = ["speedUp", "slowDown"];
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
@@ -291,12 +288,13 @@ class Game {
     this.powerUpsArray = [];
   }
   spawnPowerUps() {
+    let rName = powerUpsName[Math.floor(Math.random() * powerUpsName.length)];
     let rX = Math.floor(Math.random() * 400) + 65;
     let rY = 180;
     let rWidth = 45;
     let rHeight = 45;
 
-    let newPowerUps = new PowerUps(rX, rY, rWidth, rHeight);
+    let newPowerUps = new PowerUps(rName, rX, rY, rWidth, rHeight);
     this.powerUpsArray.push(newPowerUps);
     console.log("Spawning!");
   }
@@ -343,12 +341,18 @@ class Game {
         futureY + this.theBall.radius > this.powerUpsArray[i].y
       ) {
         this.powerUpsArray.splice(i, 1);
-        ballSpeed = 5;
+        console.log(this.powerUpsArray[i]);
+        if (this.powerUpsArray.name === "slowDown") {
+          ballSpeed = 1;
+        } else if (this.powerUpsArray.name === "speedUp") {
+          ballspeed = 10;
+        }
         console.log("COLLISION!!");
       }
     }
   }
 }
+// ""speedUp", "slowDown", "barLarge", "twoBalls", "mouseControl""
 
 //Game Over function
 
@@ -377,5 +381,5 @@ function startGame() {
   isPlaying = true;
   theGame = new Game();
   mainLoop();
-  obj[theme+'1'].play();
+  obj[theme + "1"].play();
 }
