@@ -83,6 +83,9 @@ class Ball {
 const ballImg = new Image();
 ballImg.src = `./images/${theme}.png`;
 
+const speedUpImg = new Image();
+speedUpImg.src = './images/powerups/${theme}1.png';
+
 // const soccerballImg = new Image();
 // soccerballImg.src = "./images/soccerball.png";
 
@@ -107,9 +110,8 @@ function draw(u, object) {
     }
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
-  if (object === "powerUps") {
-    ctx.fillStyle = "red";
-    ctx.fillRect(u.x, u.y, u.width, u.height);
+  if (object === "speedUp") {
+    ctx.drawImage(speedUpImg, u.x, u.y, 40, 40)
   }
 
   // Restart ball and keep score
@@ -189,7 +191,7 @@ function mainLoop() {
     draw(eachBalls, "ball");
   });
   theGame.powerUpsArray.forEach(eachPowerUps => {
-    draw(eachPowerUps, "powerUps");
+        draw(eachPowerUps, "speedUp")
     // console.log(eachPowerUps.name);
   });
 
@@ -282,7 +284,8 @@ let obj = {
   ballsoffury4: new Audio("./sounds/backhand.mov"), // player 2 scores
   ballsoffury5: new Audio("./sounds/furywin.mov") // player 1 or 2 wins
 };
-let powerUpsName = ["twoBalls"];
+
+let powerUpsName = ["speedUp"];
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
