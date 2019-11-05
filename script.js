@@ -27,8 +27,14 @@ urlSplit.forEach(function(queries) {
   urlQuery.push(newQuery);
 });
 
-player1name = urlQuery[0][1].split("+").join(" ").toUpperCase();
-player2name = urlQuery[1][1].split("+").join(" ").toUpperCase();
+player1name = urlQuery[0][1]
+  .split("+")
+  .join(" ")
+  .toUpperCase();
+player2name = urlQuery[1][1]
+  .split("+")
+  .join(" ")
+  .toUpperCase();
 theme = urlQuery[2][1];
 
 document.body.classList.add(theme);
@@ -36,7 +42,7 @@ document.querySelector("canvas").classList.add(`${theme}-theme`);
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
 
-console.log(theme);
+// console.log(theme);
 
 class Player {
   constructor(x, y, width, height) {
@@ -52,6 +58,8 @@ class Player {
     this[direction] += value;
   };
 }
+
+
 
 class Ball {
   constructor(x, y, dx, dy, radius) {
@@ -96,7 +104,9 @@ function draw(u, object) {
   if (theGame.theBall.x < 0) {
     //   stop()
     playerTwoScore += 1;
-    document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+    document.querySelector(
+      ".player-card #player2 #player-score span"
+    ).innerText = playerTwoScore;
     obj[theme + "4"].play();
     ballSpeed = 2;
     theGame.clearUnusedPowerUps();
@@ -130,7 +140,9 @@ function draw(u, object) {
     //   stop()
     playerOneScore += 1;
     ballSpeed = 2;
-    document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+    document.querySelector(
+      ".player-card #player1 #player-score span"
+    ).innerText = playerOneScore;
     obj[theme + "3"].play();
     theGame.clearUnusedPowerUps();
     message = `${player1name} Scores!`;
@@ -210,6 +222,7 @@ function gameControls(e) {
   }
 }
 
+//allow two player keydown strokes
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
 
 var map = {}; // You could also use an array
@@ -229,9 +242,9 @@ function stop() {
   isPlaying = false;
 
   /// kill any request in progress
-  if (mainLoop){
-    cancelAnimationFrame(mainLoop)
-  };
+  if (mainLoop) {
+    cancelAnimationFrame(mainLoop);
+  }
 }
 
 // Audio Objects
@@ -265,7 +278,8 @@ let obj = {
 //powerup array for the game
 let powerUpsName = [
   // 'slowDown','speedUp',
-'barLarge'];
+  "barLarge"
+];
 
 //here is where all the classes are called to create the game
 class Game {
@@ -285,7 +299,7 @@ class Game {
 
     let newPowerUps = new PowerUps(rName, rX, rY, rWidth, rHeight);
     this.powerUpsArray.push(newPowerUps);
-    console.log("Spawning!");
+    // console.log("Spawning!");
   }
 
   clearUnusedPowerUps() {
@@ -329,7 +343,7 @@ class Game {
         futureY < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
         futureY + this.theBall.radius > this.powerUpsArray[i].y
       ) {
-        console.log(this.powerUpsArray[i], i);
+        // console.log(this.powerUpsArray[i], i);
         switch (this.powerUpsArray[i].name) {
           case "slowDown":
             ballSpeed = 1;
@@ -361,39 +375,43 @@ class Game {
             break;
         }
         this.powerUpsArray.splice(i, 1);
-        console.log("COLLISION!!");
+        // console.log("COLLISION!!");
       }
     }
   }
 }
 // ""speedUp", "slowDown", "barLarge", "twoBalls", "mouseControl""
 
-function resetPlayerScores(){
+function resetPlayerScores() {
   playerOneScore = 0;
   playerTwoScore = 0;
 
-  document.querySelector(".player-card #player1 #player-score span" ).innerText = playerOneScore;
-  document.querySelector(".player-card #player2 #player-score span" ).innerText = playerTwoScore;
+  document.querySelector(
+    ".player-card #player1 #player-score span"
+  ).innerText = playerOneScore;
+  document.querySelector(
+    ".player-card #player2 #player-score span"
+  ).innerText = playerTwoScore;
 }
 
-// function countDown(){
-//   resetPlayerScores();
-//   let counter = 3;
-//   let timer = setInterval(function() {
-//     startCountDown(counter);
-//   }, 1000);
-  
-//   function startCountDown() {
-//     if (counter === 0) {
-//       clearInterval(timer);
-//       startGame();
-//       document.getElementById("game-screen-message").innerHTML = "";
-//     } else {
-//       document.getElementById("game-screen-message").innerHTML = counter;
-//       counter--;
-//     }
-//   }
-// }
+function countDown(){
+  resetPlayerScores();
+  let counter = 3;
+  let timer = setInterval(function() {
+    startCountDown(counter);
+  }, 1000);
+
+  function startCountDown() {
+    if (counter === 0) {
+      clearInterval(timer);
+      startGame();
+      document.getElementById("game-screen-message").innerHTML = "";
+    } else {
+      document.getElementById("game-screen-message").innerHTML = counter;
+      counter--;
+    }
+  }
+}
 
 //Game Over function
 
@@ -401,26 +419,26 @@ function gameOver() {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    // document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+    document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
     obj[theme + "5"].play();
-    // stop();
-    startGame;
+    stop();
+    // startGame;
   }
 
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    // document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+    document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
     obj[theme + "5"].play();
-    // stop();
-    startGame;
+    stop();
+    // startGame;
   }
 }
 
 //Start Button
 
-// document.getElementById("start-game").onclick = countDown;
-document.getElementById("start-game").onclick = startGame;
+document.getElementById("start-game").onclick = countDown;
+// document.getElementById("start-game").onclick = startGame;
 let theGame;
 
 function startGame() {
