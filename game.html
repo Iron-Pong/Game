@@ -1,12 +1,3 @@
-<?php
-$player1name = $_GET['player1name'];
-
-$player2name = $_GET['player2name'];
-
-$theme = $_GET['theme'];
-
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -24,7 +15,7 @@ $theme = $_GET['theme'];
     <title>IronPong</title>
 </head>
 
-<body id="<?php echo $theme; ?>">
+<body>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12" id="game-notification">
@@ -35,18 +26,18 @@ $theme = $_GET['theme'];
             <div class="col-3 player-card">
                 <div class="row" id="player1">
                     <div class="col-12" id="name">
-                        <?php echo strtoupper($player1name); ?>
+                        
                     </div>
                     <div class="col-12" id="player-score">
                         <span>0</span>
                     </div>
                 </div>
             </div>
-            <div class="col-6"><canvas id="game-board" class="<?php echo $theme; ?>-theme" width="600" height="400"></canvas></div>
+            <div class="col-6"><canvas id="game-board" width="600" height="400"></canvas></div>
             <div class="col-3 player-card">
                 <div class="row" id="player2">
                     <div class="col-12" id="name">
-                        <?php echo strtoupper($player2name); ?>
+                        
                     </div>
                     <div class="col-12" id="player-score">
                         <span>0</span>
@@ -69,7 +60,6 @@ $theme = $_GET['theme'];
                 </div>
             </div>
             <div class="col-6" id="title">IronPong
-                <input type="hidden" value="<?php echo $theme; ?>">
             </div>
             <div class="col-3 player-controls d-flex flex-column">
                 <div class="row">
@@ -85,8 +75,9 @@ $theme = $_GET['theme'];
                 </div>
             </div>
             <!-- IronPong JS -->
+            <script src="./powerups.js"></script>
             <script src="./script.js"></script>
-
+            
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
