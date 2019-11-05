@@ -261,7 +261,12 @@ let obj = {
   ballsoffury4: new Audio("./sounds/backhand.mov"), // player 2 scores
   ballsoffury5: new Audio("./sounds/furywin.mov") // player 1 or 2 wins
 };
-let powerUpsName = ["twoBalls"];
+
+//powerup array for the game
+let powerUpsName = [
+  // 'slowDown','speedUp',
+'barLarge'];
+
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
@@ -328,19 +333,22 @@ class Game {
         switch (this.powerUpsArray[i].name) {
           case "slowDown":
             ballSpeed = 1;
-            alert("slowing down");
+            // alert("slowing down");
             break;
           case "speedUp":
-            ballSpeed = 4;
+            ballSpeed = 3;
             break;
           case "barLarge":
             if (this.theBall.dx === -2) {
               this.thePlayer.height = 200;
               setTimeout(function() {
-                this.thePlayer.height = 60;
-              }, 1000);
+                theGame.thePlayer.height = 60;
+              }, 5000);
             } else if (this.theBall.dx === 2) {
               this.thePlayer2.height = 200;
+              setTimeout(function() {
+                theGame.thePlayer2.height = 60;
+              }, 5000);
             }
             break;
           case "twoBalls":

@@ -17,9 +17,20 @@
   src: url("./images/fonts/pongscore2.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "soccer2";
+  src: url("./images/fonts/soccer2.ttf") format("truetype");
+}
+
 body {
   margin: 0 50px;
   overflow: hidden;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 #game-screen {
@@ -50,6 +61,7 @@ body {
 
 .player-card > .row {
   border: 1px black solid;
+  text-align: center;
 }
 
 .player-controls {
@@ -70,8 +82,10 @@ body {
   padding: 30px;
 }
 
-#back-button {
+#back-button, #back-button a {
   padding: 20px 20px 0px 0px;
+  font-size: 1.5em;
+  color: white;
 }
 
 #footer {
@@ -98,7 +112,7 @@ body {
 }
 
 /* Classic CSS */
-.classic, modal > #classic {
+.classic, .modal#classic {
   background-color: black;
   color: white;
   font-family: pong;
@@ -126,10 +140,11 @@ body {
 /*End Classic CSS */
 
 /* Basketball Theme CSS */
-.basketball, modal > #basketball {
+.basketball, .modal#basketball {
   background-image: url("./images/basketball-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  font-family: "Arial Narrow", Arial, sans-serif;
 }
 
 .bball-background {
@@ -146,7 +161,6 @@ body {
 }
 
 .basketball .player-card {
-  font-family: "Arial Narrow", Arial, sans-serif;
   color: white;
   font-size: 3em;
   text-align: center;
@@ -172,20 +186,18 @@ body {
 /* End Basketball CSS */
 
 /* Soccer CSS */
-.soccer, modal > #soccer {
+.soccer, .modal#soccer {
   background-image: url("./images/soccer-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-/* .container-fluid.soccer {
-    background-color: seagreen;
-  } */
-
 .soccer-theme {
   background-image: url("./images/soccer-canvas.jpg");
   background-size: 100% 400px;
   background-repeat: no-repeat;
+  border-radius: 30px;
+  border: 2px white solid;
 }
 
 .soccer-background {
@@ -194,10 +206,34 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
 }
+
+.soccer .player-controls {
+  /* background-color: rgba(00, 00, 00, 0.4); */
+  color: white;
+}
+
+.soccer .player-card > .row {
+  border: 0;
+}
+
+.soccer #player-score {
+  font-family: soccer2;
+  font-size: 3em;
+  background-color: rgba(00, 00, 00, 0.4);
+  padding: 20px;
+  color: yellow;
+  text-align: center;
+  border-radius: 30px;
+  border: 1px black solid;
+}
+
+.soccer #back-button a {
+  color: black;
+}
 /*End Soccer CSS */
 
 /* Balls Of Fury CSS */
-.ballsoffury, modal > #ballsoffury {
+.ballsoffury, .modal#ballsoffury {
   background-image: url("./images/ballsoffury-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -214,6 +250,13 @@ body {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+.ballsoffury #player-score {
+  /* font-family: comic san; */
+  font-size: 3em;
+  background-color: rgba(00, 00, 00, 0.4);
+  color: white;
 }
 /*End Soccer CSS */
 
