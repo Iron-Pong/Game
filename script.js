@@ -22,6 +22,7 @@ let singlePlayerToggle = false;
 let url = window.location.search;
 let urlSplit = url.substring(1).split("&");
 let urlQuery = [];
+let theTimer = 120;
 
 urlSplit.forEach(function(queries) {
   newQuery = queries.split("=");
@@ -62,8 +63,6 @@ let timerMode = false;
     timerMode = false;
     document.querySelector("#header > div:nth-child(3)").innerHTML = "";
     }
-
-
 
 document.body.classList.add(theme);
 document.querySelector("canvas").classList.add(`${theme}-theme`);
@@ -542,7 +541,7 @@ function timerToggle() {
 }
 
 function timerFuction(){
-    let counter1 = 10;
+    let counter1 = theTimer;
     // let counter2 = 0;
     
     let timer1 = setInterval(function() {
