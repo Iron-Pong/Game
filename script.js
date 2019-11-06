@@ -36,20 +36,20 @@ player2name = urlQuery[1][1]
   .split("+")
   .join(" ")
   .toUpperCase();
-  theme = urlQuery[2][1];
-  
-  if(urlQuery.length===4){
+theme = urlQuery[2][1];
+
+if (urlQuery.length === 4) {
   singlePlayerMode = urlQuery[3][1];
-  } else {
-    singlePlayerMode=false;
-  }
+} else {
+  singlePlayerMode = false;
+}
 
 document.body.classList.add(theme);
 document.querySelector("canvas").classList.add(`${theme}-theme`);
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
 
-if(singlePlayerMode==="true"){
+if (singlePlayerMode === "true") {
   singlePlayerToggle = true;
 }
 
@@ -67,11 +67,11 @@ class Player {
 
   movePlayer(direction, value) {
     this[direction] += value;
-  };
+  }
 
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
-    if(singlePlayerToggle === true){
+    if (singlePlayerToggle === true) {
       this.y = theGame.theBall.y;
     }
   }
@@ -90,15 +90,14 @@ class Ball {
     this.x -= this.dx * ballSpeed;
     this.y -= this.dy * ballSpeed;
   }
-
 }
 
-//function to increase ball speed every 5.5 secs 
-function ballSpeedIncrease(){
-  setInterval(()=>{
+//function to increase ball speed every 5.5 secs
+function ballSpeedIncrease() {
+  setInterval(() => {
     ballSpeed += 0.5;
     // console.log('ballspeed increase')
-  },5500)
+  }, 5500);
 }
 
 const ballImg = new Image();
@@ -189,27 +188,30 @@ function mainLoop() {
   ctx.clearRect(0, 0, ctx.width, ctx.height);
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
-  draw(theGame.theBall, "ball");
+  // draw(theGame.theBall, "ball");
   theGame.theBallArray.forEach(eachBalls => {
     draw(eachBalls, "ball");
   });
   theGame.powerUpsArray.forEach(eachPowerUps => {
-        draw(eachPowerUps, "powerUps")
+    draw(eachPowerUps, "powerUps");
     // console.log(eachPowerUps.name);
   });
 
-  if (frames % 500 === 0) {
+  if (frames % 50 === 0) {
     theGame.spawnPowerUps();
   }
   if (frames % 800 === 0) {
     theGame.clearUnusedPowerUps();
   }
   theGame.thePlayer2.singlePlayer();
-  theGame.theBall.moveBall();
   theGame.theBallArray.forEach(eachBalls => {
     eachBalls.moveBall();
   });
-  theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
+  // theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
+  theGame.theBallArray.forEach(eachBalls => {
+    console.log(theGame, eachBalls);
+    theGame.handleCollision(eachBalls);
+  });
 
   gameOver();
 
@@ -291,8 +293,10 @@ let obj = {
 
 //powerup array for the game
 let powerUpsName = [
-  // 'slowDown','speedUp',
-  'barLarge'
+  // "slowDown",
+  //  "speedUp",
+  // "barLarge",
+  "twoBalls"
 ];
 
 //here is where all the classes are called to create the game
@@ -301,7 +305,7 @@ class Game {
     this.thePlayer = new Player(20, 225, 10, 60); //left of screen
     this.thePlayer2 = new Player(770, 225, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
-    this.theBallArray = [];
+    this.theBallArray = [this.theBall];
     this.powerUpsArray = [];
   }
 
@@ -320,43 +324,69 @@ class Game {
   clearUnusedPowerUps() {
     this.powerUpsArray.splice(0, 1);
   }
-
-  collisionDetection(futureX, futureY) {
-    // console.log(this.theBall);
-    // console.log(futureX);
-    // console.log(this.thePlayer.x);
-    // console.log(this.thePlayer.width);
+  handleCollision(eachBall) {
+    console.log(eachBall.x, eachBall.y);
     if (
-      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
-      futureX + this.theBall.radius > this.thePlayer.x &&
-      futureY < this.thePlayer.y + this.thePlayer.height &&
-      futureY + this.theBall.radius > this.thePlayer.y
+      eachBall.x < this.thePlayer.x + this.thePlayer.width + eachBall.radius * 1.1 &&
+      eachBall.x + eachBall.radius > this.thePlayer.x &&
+      eachBall.y < this.thePlayer.y + this.thePlayer.height &&
+      eachBall.y + eachBall.radius > this.thePlayer.y
     ) {
-      //   console.log("collided with player 1");
-      this.theBall.x += 5;
-      this.theBall.dx *= -1;
       obj[theme + "2"].play();
+      eachBall.x += 5;
+      eachBall.dx *= -1;
     } else if (
-      futureX < this.thePlayer2.x + this.thePlayer2.width &&
-      futureX + this.theBall.radius > this.thePlayer2.x &&
-      futureY < this.thePlayer2.y + this.thePlayer2.height &&
-      futureY + this.theBall.radius > this.thePlayer2.y
+      eachBall.x < this.thePlayer2.x + this.thePlayer2.width + eachBall.radius * 2 &&
+      eachBall.x + eachBall.radius * 2 > this.thePlayer2.x &&
+      eachBall.y < this.thePlayer2.y + this.thePlayer2.height &&
+      eachBall.y + eachBall.radius * 2 > this.thePlayer2.y
     ) {
-      //   console.log("Collided with player 2");
-      this.theBall.x -= 5;
-      this.theBall.dx *= -1;
+      eachBall.x -= 5;
+      eachBall.dx *= -1;
       obj[theme + "2"].play();
-      // this.theBall.dy *= -1;
-    } else if (this.theBall.y < 0 || this.theBall.y > 435) {
-      this.theBall.dy *= -1;
+      // } else if (eachBall.x < 0 || eachBall.x > 800) {
+      //   eachBall.dx *= -1;
+      //   console.log("hit x walls");
+    } else if (eachBall.y < 0 || eachBall.y > 450) {
+      eachBall.dy *= -1;
     }
-
+    // Restart ball and keep score
+    for (let i = 0; i < this.theBallArray.length; i++) {
+      if (eachBall.x < 0) {
+        //   stop()
+        playerTwoScore += 1;
+        ballSpeed = 2;
+        document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+        obj[theme + "4"].play();
+        this.clearUnusedPowerUps();
+        let message = `${player2name} Scores!`;
+        document.getElementById("game-notification").innerHTML = message;
+        this.theBallArray.splice(i, this.theBallArray.length);
+        let newBalls = new Ball(70, 200, -2, 2, ballRadius);
+        this.theBallArray.push(newBalls);
+        // startGame();
+      }
+      if (eachBall.x > 800) {
+        //   stop()
+        playerOneScore += 1;
+        ballSpeed = 2;
+        document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+        obj[theme + "3"].play();
+        this.clearUnusedPowerUps();
+        let message = `${player1name} Scores!`;
+        document.getElementById("game-notification").innerHTML = message;
+        this.theBallArray.splice(i, this.theBallArray.length);
+        let newBalls = new Ball(760, 200, 2, 2, ballRadius);
+        this.theBallArray.push(newBalls);
+        // startGame();
+      }
+    }
     for (let i = 0; i < this.powerUpsArray.length; i++) {
       if (
-        futureX < this.powerUpsArray[i].x + this.powerUpsArray[i].width &&
-        futureX + this.theBall.radius > this.powerUpsArray[i].x &&
-        futureY < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
-        futureY + this.theBall.radius > this.powerUpsArray[i].y
+        eachBall.x < this.powerUpsArray[i].x + this.powerUpsArray[i].width &&
+        eachBall.x + eachBall.radius > this.powerUpsArray[i].x &&
+        eachBall.y < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
+        eachBall.y + eachBall.radius > this.powerUpsArray[i].y
       ) {
         // console.log(this.powerUpsArray[i], i);
         switch (this.powerUpsArray[i].name) {
@@ -368,12 +398,9 @@ class Game {
             ballSpeed = 3;
             break;
           case "barLarge":
-            if (this.theBall.dx === -2) {
+            if (eachBall.dx === -2) {
               this.thePlayer.height = 200;
-              setTimeout(function() {
-                theGame.thePlayer.height = 60;
-              }, 5000);
-            } else if (this.theBall.dx === 2) {
+            } else if (eachBall.dx === 2) {
               this.thePlayer2.height = 200;
               setTimeout(function() {
                 theGame.thePlayer2.height = 60;
@@ -381,10 +408,13 @@ class Game {
             }
             break;
           case "twoBalls":
-            let newBalls = new Ball(70, 200, -2, 2, ballRadius);
-            this.theBallArray.push(newBalls);
-            break;
-          case "mouseControl":
+            if (eachBall.dx === -2) {
+              let newBalls = new Ball(750, 425, 2, 2, ballRadius);
+              this.theBallArray.push(newBalls);
+            } else if (eachBall.dx === 2) {
+              let newBalls = new Ball(50, 25, -2, 2, ballRadius);
+              this.theBallArray.push(newBalls);
+            }
             break;
           default:
             break;
@@ -395,21 +425,18 @@ class Game {
     }
   }
 }
+
 // ""speedUp", "slowDown", "barLarge", "twoBalls", "mouseControl""
 
 function resetPlayerScores() {
   playerOneScore = 0;
   playerTwoScore = 0;
 
-  document.querySelector(
-    ".player-card #player1 #player-score span"
-  ).innerText = playerOneScore;
-  document.querySelector(
-    ".player-card #player2 #player-score span"
-  ).innerText = playerTwoScore;
+  document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+  document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
 }
 
-function countDown(){
+function countDown() {
   resetPlayerScores();
   let counter = 3;
   let timer = setInterval(function() {
@@ -434,7 +461,9 @@ function gameOver() {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+    document.getElementById(
+      "game-screen-message"
+    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
     obj[theme + "5"].play();
     stop();
     // startGame;
@@ -443,7 +472,9 @@ function gameOver() {
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+    document.getElementById(
+      "game-screen-message"
+    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
     obj[theme + "5"].play();
     stop();
     // startGame;
