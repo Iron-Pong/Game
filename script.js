@@ -72,7 +72,11 @@ class Player {
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
     if (singlePlayerToggle === true) {
-      this.y = theGame.theBall.y;
+      for (let i = 0; i < this.theBallArray.length; i++) {
+        if (theGame.theBallArray[i].dx === -2) {
+          this.y = theGame.theBall.y;
+        }
+      }
     }
   }
 }
@@ -273,8 +277,8 @@ class Game {
 
   spawnPowerUps() {
     let rName = powerUpsName[Math.floor(Math.random() * powerUpsName.length)];
-    let rX = Math.floor(Math.random() * 400) + 65;
-    let rY = 180;
+    let rX = Math.floor(Math.random() * 600) + 65;
+    let rY = Math.floor(Math.random() * 300) + 25;
     let rWidth = 45;
     let rHeight = 45;
 
