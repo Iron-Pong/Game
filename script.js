@@ -255,7 +255,9 @@ let obj = {
 
 //powerup array for the game
 let powerUpsName = [
-  // 'slowDown','speedUp',
+  // "slowDown",
+  //  "speedUp",
+  // "barLarge",
   "twoBalls"
 ];
 
@@ -368,10 +370,13 @@ class Game {
             }
             break;
           case "twoBalls":
-            let newBalls = new Ball(400, 200, -2, 2, ballRadius);
-            this.theBallArray.push(newBalls);
-            break;
-          case "mouseControl":
+            if (eachBall.dx === -2) {
+              let newBalls = new Ball(750, 425, 2, 2, ballRadius);
+              this.theBallArray.push(newBalls);
+            } else if (eachBall.dx === 2) {
+              let newBalls = new Ball(50, 25, -2, 2, ballRadius);
+              this.theBallArray.push(newBalls);
+            }
             break;
           default:
             break;
