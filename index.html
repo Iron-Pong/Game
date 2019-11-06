@@ -143,18 +143,30 @@
                         <h4>Enter Player Info</h4>
                         <label id="player1name">Player 1 Name</label>
                         <input value="Name" required type="text" id="player1name" name="player1name"
-                            placeholder="Player 1 Name">
-                        <br>
-                        <label id="player2name">Player 2 Name</label>
-                        <input value="Name 2" required type="text" id="player2name" name="player2name"
+                        placeholder="Player 1 Name">
+                        <div id="twoPlayerDetails">
+                            <br>
+                            <label id="player2name">Player 2 Name</label>
+                            <input value="Name 2" required type="text" id="player2name" name="player2name"
                             placeholder="Player 2 Name">
+                        </div>
+                        <input type="hidden" id="theme" name="theme" value="soccer">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary">
+                                  <input type="radio" name="singlePlayerMode" value="true" checked> Single Player
+                                </label>
+                                <label class="btn btn-secondary">
+                                  <input type="radio" name="singlePlayerMode" value="false"> Two Players
+                                </label>
+                              </div>
                         <br>
-                        <!-- <div class="container d-flex flex-column align-contents-flex-start" id="instructions">
+                        <div class="container d-flex justify-content-start" id="instructions">
                             <div class="row">
                                 <div class="col-12">
                                     HOW TO PLAY THE GAME:<br>
                                     <ul>
                                         <li>Battle a friend or the computer</li>
+                                        <li>Select Single Player or Two Players</li>
                                     </ul>
                                 </div>
                                 <div class="col-12">
@@ -164,9 +176,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div> -->
-                        <input type="hidden" id="theme" name="theme" value="soccer">
-                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

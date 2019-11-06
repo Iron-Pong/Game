@@ -345,6 +345,10 @@ body {
   border-radius: 20px;
   height: 120px;
 }
+
+#landing #instructions {
+  text-align: left !important;
+}
 /* END Landing  */
 
 /* Video CSS */
