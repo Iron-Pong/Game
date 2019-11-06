@@ -14,10 +14,11 @@ let playerTwoScore = 0;
 let isPlaying;
 let endGameScore = 2;
 let ballRadius = 5;
-let ballSpeed = 2;
+let ballSpeed = 2.5;
 let theme = "";
 let player1name = "";
 let player2name = "";
+let singlePlayerToggle = false;
 let url = window.location.search;
 let urlSplit = url.substring(1).split("&");
 let urlQuery = [];
@@ -35,12 +36,22 @@ player2name = urlQuery[1][1]
   .split("+")
   .join(" ")
   .toUpperCase();
-theme = urlQuery[2][1];
+  theme = urlQuery[2][1];
+  
+  if(urlQuery.length===4){
+  singlePlayerMode = urlQuery[3][1];
+  } else {
+    singlePlayerMode=false;
+  }
 
 document.body.classList.add(theme);
 document.querySelector("canvas").classList.add(`${theme}-theme`);
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
+
+if(singlePlayerMode==="true"){
+  singlePlayerToggle = true;
+}
 
 // console.log(theme);
 
@@ -54,9 +65,16 @@ class Player {
 
   // Move Player function
 
-  movePlayer = (direction, value) => {
+  movePlayer(direction, value) {
     this[direction] += value;
   };
+
+  // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
+  singlePlayer() {
+    if(singlePlayerToggle === true){
+      this.y = theGame.theBall.y;
+    }
+  }
 }
 
 
@@ -74,6 +92,15 @@ class Ball {
     this.x -= this.dx * ballSpeed;
     this.y -= this.dy * ballSpeed;
   }
+
+}
+
+//function to increase ball speed every 5.5 secs 
+function ballSpeedIncrease(){
+  setInterval(()=>{
+    ballSpeed += 0.5;
+    // console.log('ballspeed increase')
+  },5500)
 }
 
 const ballImg = new Image();
@@ -108,7 +135,7 @@ function draw(u, object) {
       ".player-card #player2 #player-score span"
     ).innerText = playerTwoScore;
     obj[theme + "4"].play();
-    ballSpeed = 2;
+    ballSpeed = 2.5;
     theGame.clearUnusedPowerUps();
     message = `${player2name} Scores!`;
     document.getElementById("game-notification").innerHTML = message;
@@ -191,7 +218,7 @@ function mainLoop() {
   if (frames % 800 === 0) {
     theGame.clearUnusedPowerUps();
   }
-
+  theGame.thePlayer2.singlePlayer();
   theGame.theBall.moveBall();
   theGame.theBallArray.forEach(eachBalls => {
     eachBalls.moveBall();
@@ -206,13 +233,14 @@ function mainLoop() {
 }
 
 // Paddle controls
-
 function gameControls(e) {
+  if(singlePlayerMode===false){
   if (e.key === "ArrowUp") {
     theGame.thePlayer2.movePlayer("y", -paddleSpeed);
   }
   if (e.key === "ArrowDown") {
     theGame.thePlayer2.movePlayer("y", +paddleSpeed);
+  }
   }
   if (e.key === "a" || e.key === "A") {
     theGame.thePlayer.movePlayer("y", -paddleSpeed);
@@ -278,18 +306,19 @@ let obj = {
 //powerup array for the game
 let powerUpsName = [
   // 'slowDown','speedUp',
-  "barLarge"
+  'barLarge'
 ];
 
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 225, 10, 60); //left of screen
+    this.thePlayer = new Player(20, 225, 10, 200); //left of screen
     this.thePlayer2 = new Player(770, 225, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
     this.theBallArray = [];
     this.powerUpsArray = [];
   }
+
   spawnPowerUps() {
     let rName = powerUpsName[Math.floor(Math.random() * powerUpsName.length)];
     let rX = Math.floor(Math.random() * 400) + 65;
@@ -445,5 +474,6 @@ function startGame() {
   isPlaying = true;
   theGame = new Game();
   mainLoop();
+  ballSpeedIncrease();
   obj[theme + "1"].play();
 }
