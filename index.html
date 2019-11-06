@@ -10,36 +10,51 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css" type="text/css">
+    <script src="https://kit.fontawesome.com/ea74f168d9.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body id="landing">
     <div class="container-fluid">
         <div class="row" id="title">
-            <div class="col-12">
-                IRON<b>PONG</b>
+            <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                <div class="flipper">
+                    <div class="front">
+                        <img src="./images/pong-logo3.png" height="170px">
+                    </div>
+                    <div class="back">
+                        <img src="./images/pong-logo4.png" height="170px">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row" id="sub-title">
-            <div class="col-12">
-                Choose A Theme
+            <div class="col-12" id="title">
+                Choose A Mode
             </div>
         </div>
         <div class="row" id="theme-picker">
             <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark classic-background" data-toggle="modal"
+            <button type="button" class="col-2 border border-dark classic-background" data-toggle="modal"
                 data-target="#classic">
             </button>
+            <div class="col-6">
+                <video autoplay loop id="myVideo">
+                    <source src="./images/pong-video.mp4" type="video/mp4"></video>
+            </div>
             <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark bball-background" data-toggle="modal"
+            <button type="button" class="col-2 border border-dark bball-background" data-toggle="modal"
                 data-target="#basketball">
             </button>
+        </div>
+        <div class="row" id="theme-picker">
             <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark soccer-background" data-toggle="modal"
+            <button type="button" class="col-2 border border-dark soccer-background" data-toggle="modal"
                 data-target="#soccer">
             </button>
+            <div class="col-6"></div>
             <!-- Button trigger modal -->
-            <button type="button" class="col-4 border border-dark ballsoffury-background" data-toggle="modal"
+            <button type="button" class="col-2 border border-dark ballsoffury-background" data-toggle="modal"
                 data-target="#ballsoffury">
             </button>
         </div>
@@ -61,12 +76,15 @@
                     <div class="modal-body">
                         <h4>Enter Player Info</h4>
                         <label id="player1name">Player 1 Name</label>
-                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <input value="Name" required type="text" id="player1name" name="player1name"
+                            placeholder="Player 1 Name">
                         <br>
                         <label id="player2name">Player 2 Name</label>
-                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <input value="Name 2" required type="text" id="player2name" name="player2name"
+                            placeholder="Player 2 Name">
                         <br>
                         <input type="hidden" id="theme" name="theme" value="classic">
+                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -93,12 +111,15 @@
                     <div class="modal-body">
                         <h4>Enter Player Info</h4>
                         <label id="player1name">Player 1 Name</label>
-                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <input value="Name" required type="text" id="player1name" name="player1name"
+                            placeholder="Player 1 Name">
                         <br>
                         <label id="player2name">Player 2 Name</label>
-                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <input value="Name" required type="text" id="player2name" name="player2name"
+                            placeholder="Player 2 Name">
                         <br>
                         <input type="hidden" id="theme" name="theme" value="basketball">
+                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -124,12 +145,31 @@
                     <div class="modal-body">
                         <h4>Enter Player Info</h4>
                         <label id="player1name">Player 1 Name</label>
-                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <input value="Name" required type="text" id="player1name" name="player1name"
+                            placeholder="Player 1 Name">
                         <br>
                         <label id="player2name">Player 2 Name</label>
-                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <input value="Name" required type="text" id="player2name" name="player2name"
+                            placeholder="Player 2 Name">
                         <br>
+                        <!-- <div class="container d-flex flex-column align-contents-flex-start" id="instructions">
+                            <div class="row">
+                                <div class="col-12">
+                                    HOW TO PLAY THE GAME:<br>
+                                    <ul>
+                                        <li>Battle a friend or the computer</li>
+                                    </ul>
+                                </div>
+                                <div class="col-12">
+                                    POWERUPS<br>
+                                    <ul>
+                                        <li>Red - Increase the ball speed by 5</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
                         <input type="hidden" id="theme" name="theme" value="soccer">
+                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -155,12 +195,15 @@
                     <div class="modal-body">
                         <h4>Enter Player Info</h4>
                         <label id="player1name">Player 1 Name</label>
-                        <input type="text" id="player1name" name="player1name" placeholder="Player 1 Name">
+                        <input value="Name" required type="text" id="player1name" name="player1name"
+                            placeholder="Player 1 Name">
                         <br>
                         <label id="player2name">Player 2 Name</label>
-                        <input type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
+                        <input value="Name" required type="text" id="player2name" name="player2name"
+                            placeholder="Player 2 Name">
                         <br>
                         <input type="hidden" id="theme" name="theme" value="ballsoffury">
+                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
