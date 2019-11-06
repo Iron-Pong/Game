@@ -82,7 +82,8 @@ body {
   padding: 30px;
 }
 
-#back-button, #back-button a {
+#back-button,
+#back-button a {
   padding: 20px 20px 0px 0px;
   font-size: 1.5em;
   color: white;
@@ -112,7 +113,8 @@ body {
 }
 
 /* Classic CSS */
-.classic, .modal#classic {
+.classic,
+.modal#classic {
   background-color: black;
   color: white;
   font-family: pong;
@@ -134,7 +136,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.classic-background:hover{
+.classic-background:hover {
   -webkit-transform: scale(1.1);
 }
 
@@ -144,7 +146,8 @@ body {
 /*End Classic CSS */
 
 /* Basketball Theme CSS */
-.basketball, .modal#basketball {
+.basketball,
+.modal#basketball {
   background-image: url("./images/basketball-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -158,7 +161,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.bball-background:hover{
+.bball-background:hover {
   -webkit-transform: scale(1.1);
 }
 
@@ -194,7 +197,8 @@ body {
 /* End Basketball CSS */
 
 /* Soccer CSS */
-.soccer, .modal#soccer {
+.soccer,
+.modal#soccer {
   background-image: url("./images/soccer-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -215,7 +219,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.soccer-background:hover{
+.soccer-background:hover {
   -webkit-transform: scale(1.1);
 }
 
@@ -245,7 +249,8 @@ body {
 /*End Soccer CSS */
 
 /* Balls Of Fury CSS */
-.ballsoffury, .modal#ballsoffury {
+.ballsoffury,
+.modal#ballsoffury {
   background-image: url("./images/ballsoffury-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -264,7 +269,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.ballsoffury-background:hover{
+.ballsoffury-background:hover {
   -webkit-transform: scale(1.1);
 }
 
@@ -323,48 +328,51 @@ body {
   padding-left: 5%;
 }
 
-
 /*Logo Flip CSS */
 
 /* entire container, keeps perspective */
 .flip-container {
-	perspective: 1000px;
+  perspective: 1000px;
 }
-	/* flip the pane when hovered */
-	.flip-container:hover .flipper, .flip-container.hover .flipper {
-		transform: rotateY(180deg);
-	}
+/* flip the pane when hovered */
+.flip-container:hover .flipper,
+.flip-container.hover .flipper {
+  transform: rotateY(180deg);
+}
 
-.flip-container, .front, .back {
-	width: 320px;
-	height: 150px;
+.flip-container,
+.front,
+.back {
+  width: 320px;
+  height: 150px;
 }
 
 /* flip speed goes here */
 .flipper {
-	transition: 0.6s;
-	transform-style: preserve-3d;
+  transition: 0.6s;
+  transform-style: preserve-3d;
 
-	position: relative;
+  position: relative;
 }
 
 /* hide back of pane during swap */
-.front, .back {
-	backface-visibility: hidden;
+.front,
+.back {
+  backface-visibility: hidden;
 
-	position: absolute;
-	top: 0;
-	left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* front pane, placed above back */
 .front {
-	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
 }
 
 /* back, initially hidden pane */
 .back {
-	transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
