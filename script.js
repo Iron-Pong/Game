@@ -38,22 +38,43 @@ player2name = urlQuery[1][1]
   .toUpperCase();
   theme = urlQuery[2][1];
   
-  if(urlQuery.length===4){
-  singlePlayerMode = urlQuery[3][1];
-  } else {
+let singlePlayerMode = false;
+
+  if(urlQuery.length===4 && urlQuery[3][0]==="singlePlayerMode"){
+  singlePlayerMode = true;
+  } else if (urlQuery.length===5) {
+    singlePlayerMode = true;}
+  else {
     singlePlayerMode=false;
   }
+
+
+let timerMode = false;
+
+  if(urlQuery.length===4 && urlQuery[3][0]==="timedMode"){
+  timerMode = true;
+  console.log(timerMode);
+  } 
+  else if (urlQuery.length===5) {
+    timerMode = true;
+    console.log(timerMode); }
+    else {
+    timerMode = false;
+    document.querySelector("#header > div:nth-child(3)").innerHTML = "";
+    }
+
+
 
 document.body.classList.add(theme);
 document.querySelector("canvas").classList.add(`${theme}-theme`);
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
 
-if(singlePlayerMode==="true"){
+if(singlePlayerMode===true){
   singlePlayerToggle = true;
 }
 
-// console.log(theme);
+console.log(theme);
 
 class Player {
   constructor(x, y, width, height) {
@@ -71,7 +92,7 @@ class Player {
 
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
-    if(singlePlayerToggle === true){
+    if(singlePlayerMode === true){
       this.y = theGame.theBall.y;
     }
   }
@@ -225,7 +246,9 @@ function mainLoop() {
   });
   theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
 
-  gameOver();
+  if (timerMode === false) {
+      gameOver();
+  } 
 
   if (isPlaying === true) {
     requestId = requestAnimationFrame(mainLoop);
@@ -464,6 +487,86 @@ function gameOver() {
   }
 }
 
+//Timed Game Over Function
+
+function gameOver2() {
+
+    if (playerOneScore > playerTwoScore) {
+        message = `${player1name} WON!`;
+        document.getElementById("game-notification").innerHTML = message;
+        document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+        obj[theme + "5"].play();
+        stop();
+    } else if (playerTwoScore > playerOneScore) {
+        message = `${player2name} WON!`;
+        document.getElementById("game-notification").innerHTML = message;
+        document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+        obj[theme + "5"].play();
+        stop();
+    } else { 
+        message = `${player2name} and ${player1name} TIED!`;
+        document.getElementById("game-notification").innerHTML = message;
+        document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+        obj[theme + "5"].play();
+        stop();
+    }
+
+}
+
+// Timer Function
+
+
+function timerToggle() {
+    if (timerMode === true) {
+        timerFuction();
+    } else {
+        gameOver();
+    }
+}
+
+function timerFuction(){
+    let counter1 = 10;
+    // let counter2 = 0;
+    
+    let timer1 = setInterval(function() {
+      startCountUp(counter1);
+    }, 1000);
+    
+    // let timer2 = setInterval(function() {
+    //     startCountUp(counter2);
+    //   }, 100);
+  
+    function startCountUp() {
+      if (counter1 === 0) {
+        
+        clearInterval(timer1);
+        // clearInterval(timer2);
+        document.querySelector("#header > div:nth-child(3) > span").innerHTML = 0;
+        gameOver2();
+      } else {
+        counter1--;
+        document.querySelector("#header > div:nth-child(3) > span").innerHTML = counter1 
+    }
+  }
+}
+
+  //
+
+
+
+// var startTime = Date.now();
+// function countUp() {
+//     setInterval(function() {
+//         var elapsedTime = Date.now() - startTime;
+//         if (playerOneScore === endGameScore || playerTwoScore === endGameScore) {
+//             elapsedTime = 0;
+//             document.querySelector("#header > div:nth-child(3) > span").innerHTML = 0; } else {
+//                 document.querySelector("#header > div:nth-child(3) > span").innerHTML = (elapsedTime / 1000).toFixed(2);
+//             }
+//     }, 100);
+// }
+
+
 //Start Button
 
 document.getElementById("start-game").onclick = countDown;
@@ -473,7 +576,9 @@ let theGame;
 function startGame() {
   isPlaying = true;
   theGame = new Game();
+  timerToggle();
   mainLoop();
-  ballSpeedIncrease();
+//   ballSpeedIncrease();
   obj[theme + "1"].play();
 }
+
