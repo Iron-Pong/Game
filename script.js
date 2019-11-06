@@ -423,7 +423,7 @@ function gameOver() {
   }
 
   if (playerTwoScore === endGameScore) {
-    message = `${player2name} WON!`;
+    message = `${player2name} WN!`;
     document.getElementById("game-notification").innerHTML = message;
     document.getElementById(
       "game-screen-message"
