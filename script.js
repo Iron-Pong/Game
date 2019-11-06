@@ -336,7 +336,7 @@ class Game {
         let message = `${player1name} Scores!`;
         document.getElementById("game-notification").innerHTML = message;
         this.theBallArray.splice(i, this.theBallArray.length);
-        let newBalls = new Ball(70, 200, -2, 2, ballRadius);
+        let newBalls = new Ball(760, 200, 2, 2, ballRadius);
         this.theBallArray.push(newBalls);
         // startGame();
       }
@@ -368,7 +368,7 @@ class Game {
             }
             break;
           case "twoBalls":
-            let newBalls = new Ball(70, 200, -2, 2, ballRadius);
+            let newBalls = new Ball(400, 200, -2, 2, ballRadius);
             this.theBallArray.push(newBalls);
             break;
           case "mouseControl":
