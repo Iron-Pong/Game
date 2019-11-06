@@ -72,9 +72,10 @@ class Player {
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
     if (singlePlayerToggle === true) {
-      for (let i = 0; i < this.theBallArray.length; i++) {
-        if (theGame.theBallArray[i].dx === -2) {
-          this.y = theGame.theBall.y;
+      this.y = theGame.theBall.y;
+      for (let i = 0; i < theGame.theBallArray.length - 1; i++) {
+        if (theGame.theBallArray[i].dx === -2 && theGame.theBallArray[i].x > theGame.theBallArray[i + 1].x) {
+          this.y = theGame.theBallArray[i].y;
         }
       }
     }
@@ -163,7 +164,7 @@ function mainLoop() {
     // console.log(eachPowerUps.name);
   });
 
-  if (frames % 50 === 0) {
+  if (frames % 500 === 0) {
     theGame.spawnPowerUps();
   }
   if (frames % 800 === 0) {
@@ -317,6 +318,7 @@ class Game {
       eachBall.dy *= -1;
     }
     // Restart ball and keep score
+
     for (let i = 0; i < this.theBallArray.length; i++) {
       if (eachBall.x < 0) {
         //   stop()
@@ -330,6 +332,7 @@ class Game {
         this.theBallArray.splice(i, this.theBallArray.length);
         let newBalls = new Ball(70, 200, -2, 2, ballRadius);
         this.theBallArray.push(newBalls);
+
         // startGame();
       }
       if (eachBall.x > 800) {
@@ -344,6 +347,7 @@ class Game {
         this.theBallArray.splice(i, this.theBallArray.length);
         let newBalls = new Ball(760, 200, 2, 2, ballRadius);
         this.theBallArray.push(newBalls);
+        return;
         // startGame();
       }
     }
