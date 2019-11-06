@@ -222,21 +222,21 @@ function mainLoop() {
 function gameControls(e) {
   if(singlePlayerMode===false){
   if (e.key === "ArrowUp") {
-    theGame.thePlayer2.movePlayer("y", -paddleSpeed);
+    theGame.thePlayer2.movePlayer("y", - paddleSpeed);
   }
   if (e.key === "ArrowDown") {
-    theGame.thePlayer2.movePlayer("y", +paddleSpeed);
+    theGame.thePlayer2.movePlayer("y", + paddleSpeed);
   }
   }
   if (e.key === "a" || e.key === "A") {
-    theGame.thePlayer.movePlayer("y", -paddleSpeed);
+    theGame.thePlayer.movePlayer("y", - paddleSpeed);
   }
   if (e.key === "z" || e.key === "Z") {
-    theGame.thePlayer.movePlayer("y", +paddleSpeed);
+    theGame.thePlayer.movePlayer("y", + paddleSpeed);
   }
 }
 
-//allow two player keydown strokes
+//allow two player keydown presses
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
 
 var map = {}; // You could also use an array
@@ -298,7 +298,7 @@ let powerUpsName = [
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 225, 10, 200); //left of screen
+    this.thePlayer = new Player(20, 225, 10, 60); //left of screen
     this.thePlayer2 = new Player(770, 225, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
     this.theBallArray = [];
