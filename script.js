@@ -112,52 +112,6 @@ function draw(u, object) {
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
 
-  // Restart ball and keep score
-  if (theGame.theBall.x < 0) {
-    //   stop()
-    playerTwoScore += 1;
-    document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
-    obj[theme + "4"].play();
-    ballSpeed = 2;
-    theGame.clearUnusedPowerUps();
-    message = `${player2name} Scores!`;
-    document.getElementById("game-notification").innerHTML = message;
-    theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
-    // startGame();
-  }
-
-  //  // Restart ball and keep score
-  // if (theGame.theBall.x < 0 && theGame.theBall.x > -3) {
-  //   playerTwoScore += 0.5;
-  //   ballSpeed = 2;
-  //   document.querySelector(".player2 > span").innerText = playerTwoScore;
-  //   message = `${player2name} Scores!`;
-  //   document.getElementById("game-notification").innerHTML = message;
-  //   theGame.clearUnusedPowerUps();
-
-  //   theGame.theBall.x += 0.5;
-  //   theGame.theBall.dx = 0;
-
-  //   setTimeout(function() {
-  //     // document.querySelector(".player2 > span").innerText = playerTwoScore;
-  //     theGame.thePlayer = new Player(20, 180, 10, 60);
-  //     theGame.thePlayer2 = new Player(560, 180, 10, 60);
-  //     theGame.theBall = new Ball(50, 200, -2, 2, 10, 10);
-  //   }, 1000);
-  // }
-
-  if (theGame.theBall.x > 600) {
-    //   stop()
-    playerOneScore += 1;
-    ballSpeed = 2;
-    document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
-    obj[theme + "3"].play();
-    theGame.clearUnusedPowerUps();
-    message = `${player1name} Scores!`;
-    document.getElementById("game-notification").innerHTML = message;
-    theGame.theBall = new Ball(550, 200, 2, -2, 10, 10);
-    // startGame();
-  }
   if (object === "player" && theGame.thePlayer2.y < 0) {
     theGame.thePlayer2.y = 0;
   }
@@ -184,7 +138,7 @@ function mainLoop() {
   ctx.clearRect(0, 0, ctx.width, ctx.height);
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
-  draw(theGame.theBall, "ball");
+  // draw(theGame.theBall, "ball");
   theGame.theBallArray.forEach(eachBalls => {
     draw(eachBalls, "ball");
   });
@@ -193,7 +147,7 @@ function mainLoop() {
     // console.log(eachPowerUps.name);
   });
 
-  if (frames % 500 === 0) {
+  if (frames % 50 === 0) {
     theGame.spawnPowerUps();
   }
   if (frames % 800 === 0) {
@@ -204,7 +158,11 @@ function mainLoop() {
   theGame.theBallArray.forEach(eachBalls => {
     eachBalls.moveBall();
   });
-  theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
+  // theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
+  theGame.theBallArray.forEach(eachBalls => {
+    console.log(theGame, eachBalls);
+    theGame.handleCollision(eachBalls);
+  });
 
   gameOver();
 
@@ -289,7 +247,7 @@ class Game {
     this.thePlayer = new Player(20, 180, 10, 60); //left of screen
     this.thePlayer2 = new Player(560, 180, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
-    this.theBallArray = [];
+    this.theBallArray = [this.theBall];
     this.powerUpsArray = [];
   }
   spawnPowerUps() {
@@ -307,43 +265,64 @@ class Game {
   clearUnusedPowerUps() {
     this.powerUpsArray.splice(0, 1);
   }
-
-  collisionDetection(futureX, futureY) {
-    // console.log(this.theBall);
-    // console.log(futureX);
-    // console.log(this.thePlayer.x);
-    // console.log(this.thePlayer.width);
+  handleCollision(eachBall) {
+    console.log(eachBall.x, eachBall.y);
     if (
-      futureX < this.thePlayer.x + this.thePlayer.width + this.theBall.radius &&
-      futureX + this.theBall.radius > this.thePlayer.x &&
-      futureY < this.thePlayer.y + this.thePlayer.height &&
-      futureY + this.theBall.radius > this.thePlayer.y
+      eachBall.x < this.thePlayer.x + this.thePlayer.width + eachBall.radius &&
+      eachBall.x + eachBall.radius > this.thePlayer.x &&
+      eachBall.y < this.thePlayer.y + this.thePlayer.height &&
+      eachBall.y + eachBall.radius > this.thePlayer.y
     ) {
-      //   console.log("collided with player 1");
-      this.theBall.x += 5;
-      this.theBall.dx *= -1;
       obj[theme + "2"].play();
+      eachBall.x += 5;
+      eachBall.dx *= -1;
     } else if (
-      futureX < this.thePlayer2.x + this.thePlayer2.width &&
-      futureX + this.theBall.radius > this.thePlayer2.x &&
-      futureY < this.thePlayer2.y + this.thePlayer2.height &&
-      futureY + this.theBall.radius > this.thePlayer2.y
+      eachBall.x < this.thePlayer2.x + this.thePlayer2.width + eachBall.radius &&
+      eachBall.x + eachBall.radius > this.thePlayer2.x &&
+      eachBall.y < this.thePlayer2.y + this.thePlayer2.height &&
+      eachBall.y + eachBall.radius > this.thePlayer2.y
     ) {
-      //   console.log("Collided with player 2");
-      this.theBall.x -= 5;
-      this.theBall.dx *= -1;
+      eachBall.x -= 5;
+      eachBall.dx *= -1;
       obj[theme + "2"].play();
-      // this.theBall.dy *= -1;
-    } else if (this.theBall.y < 0 || this.theBall.y > 400) {
-      this.theBall.dy *= -1;
+    } else if (eachBall.x < 0 || eachBall.x > 600) {
+      eachBall.dx *= -1;
+      console.log("hit x walls");
+    } else if (eachBall.y < 0 || eachBall.y > 400) {
+      eachBall.dy *= -1;
+    }
+    // Restart ball and keep score
+    if (eachBall.x < 0) {
+      //   stop()
+      playerTwoScore += 1;
+      document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+      obj[theme + "4"].play();
+      ballSpeed = 2;
+      this.clearUnusedPowerUps();
+      let message = `${player2name} Scores!`;
+      document.getElementById("game-notification").innerHTML = message;
+      eachBall = new Ball(50, 200, -2, 2, 10, 10);
+      // startGame();
     }
 
+    if (eachBall.x > 600) {
+      //   stop()
+      playerOneScore += 1;
+      ballSpeed = 2;
+      document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+      obj[theme + "3"].play();
+      this.clearUnusedPowerUps();
+      let message = `${player1name} Scores!`;
+      document.getElementById("game-notification").innerHTML = message;
+      eachBall = new Ball(550, 200, 2, -2, 10, 10);
+      // startGame();
+    }
     for (let i = 0; i < this.powerUpsArray.length; i++) {
       if (
-        futureX < this.powerUpsArray[i].x + this.powerUpsArray[i].width &&
-        futureX + this.theBall.radius > this.powerUpsArray[i].x &&
-        futureY < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
-        futureY + this.theBall.radius > this.powerUpsArray[i].y
+        eachBall.x < this.powerUpsArray[i].x + this.powerUpsArray[i].width &&
+        eachBall.x + eachBall.radius > this.powerUpsArray[i].x &&
+        eachBall.y < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
+        eachBall.y + eachBall.radius > this.powerUpsArray[i].y
       ) {
         console.log(this.powerUpsArray[i], i);
         switch (this.powerUpsArray[i].name) {
@@ -355,18 +334,15 @@ class Game {
             ballSpeed = 4;
             break;
           case "barLarge":
-            if (this.theBall.dx === -2) {
+            if (eachBall.dx === -2) {
               this.thePlayer.height = 200;
-              setTimeout(function() {
-                this.thePlayer.height = 60;
-              }, 1000);
-            } else if (this.theBall.dx === 2) {
+            } else if (eachBall.dx === 2) {
               this.thePlayer2.height = 200;
             }
             break;
           case "twoBalls":
-            let newBalls = new Ball(70, 200, -2, 2, ballRadius);
-            this.theBallArray.push(newBalls);
+            //let newBalls = new Ball(70, 200, -2, 2, ballRadius);
+            //this.theBallArray.push(newBalls);
             break;
           case "mouseControl":
             break;
@@ -379,6 +355,7 @@ class Game {
     }
   }
 }
+
 // ""speedUp", "slowDown", "barLarge", "twoBalls", "mouseControl""
 
 //Game Over function
