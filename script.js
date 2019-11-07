@@ -22,7 +22,7 @@ let singlePlayerToggle = false;
 let url = window.location.search;
 let urlSplit = url.substring(1).split("&");
 let urlQuery = [];
-let theTimer = 120;
+let theTimer = 10;
 
 urlSplit.forEach(function(queries) {
   newQuery = queries.split("=");
@@ -133,7 +133,8 @@ class Ball {
 
 //function to increase ball speed every 5.5 secs
 function ballSpeedIncrease() {
-  setInterval(() => {
+    ballSpeed = 2.5;
+    setInterval(() => {
     ballSpeed += 0.5;
     // console.log('ballspeed increase')
   }, 5500);
@@ -328,9 +329,9 @@ let obj = {
 
 //powerup array for the game
 let powerUpsName = [
-//   "slowDown",
-//    "speedUp",
-//   "barLarge",
+  "slowDown",
+   "speedUp",
+  "barLarge",
   "twoBalls"
 ];
 
@@ -469,6 +470,8 @@ function resetPlayerScores() {
 
   document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
   document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+  document.querySelector("#game-notification").innerText = "New Game";
+  ballSpeed = 2.5;
 }
 
 function countDown() {
@@ -533,7 +536,7 @@ function gameOver2() {
         obj[theme + "5"].play();
         stop();
     } else { 
-        message = `${player2name} and ${player1name} TIED!`;
+        message = `TIE GAME!`;
         document.getElementById("game-notification").innerHTML = message;
         document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
         obj[theme + "5"].play();
