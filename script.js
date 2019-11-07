@@ -50,6 +50,7 @@ let singlePlayerMode = false;
   }
 
 
+
 let timerMode = false;
 
   if(urlQuery.length===4 && urlQuery[3][0]==="timedMode"){
@@ -73,7 +74,7 @@ if (theme === "ballsoffury") {
         vid.height = 0;
     }
 } else {vid.width = 0;
-    vid.height = 0;}
+    vid.height = 0;3}
 
 
 
@@ -83,7 +84,7 @@ document.querySelector("canvas").classList.add(`${theme}-theme`);
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
 
-if (singlePlayerMode === "true") {
+if (singlePlayerMode === true) {
   singlePlayerToggle = true;
 }
 
@@ -106,9 +107,9 @@ class Player {
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
     if (singlePlayerToggle === true) {
-      for (let i = 0; i < this.theBallArray.length; i++) {
+      for (let i = 0; i < theGame.theBallArray.length; i++) {
         if (theGame.theBallArray[i].dx === -2) {
-          this.y = theGame.theBall.y;
+          this.y = theGame.theBallArray[i].y;
         }
       }
     }
@@ -227,13 +228,13 @@ function mainLoop() {
     }
   });
 
-  if (frames % 50 === 0) {
+  if (frames % 150 === 0) {
     theGame.spawnPowerUps();
   }
   if (frames % 800 === 0) {
     theGame.clearUnusedPowerUps();
   }
-  theGame.thePlayer2.singlePlayer();
+
   theGame.theBallArray.forEach(eachBalls => {
     eachBalls.moveBall();
   });
@@ -242,6 +243,8 @@ function mainLoop() {
     console.log(theGame, eachBalls);
     theGame.handleCollision(eachBalls);
   });
+
+  theGame.thePlayer2.singlePlayer();
 
   if (timerMode === false) {
       gameOver();
@@ -325,9 +328,9 @@ let obj = {
 
 //powerup array for the game
 let powerUpsName = [
-  "slowDown",
-   "speedUp",
-  "barLarge",
+//   "slowDown",
+//    "speedUp",
+//   "barLarge",
   "twoBalls"
 ];
 
