@@ -27,6 +27,11 @@
   src: url("./images/fonts/EASPORTS15.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "bof";
+  src: url("./images/fonts/bof.ttf") format("truetype");
+}
+
 body {
   margin: 0 50px;
   overflow: hidden;
@@ -68,7 +73,7 @@ body {
 }
 
 .player-card > .row {
-  border: 1px black solid;
+  /* border: 1px black solid; */
   text-align: center;
 }
 
@@ -88,6 +93,24 @@ body {
   font-size: 3em;
   text-align: center;
   padding: 30px;
+  height: 140px;
+}
+
+.modal img {
+  width: 50px;
+  height: 50px;
+}
+
+.modal ul li {
+  list-style-type: none;
+  padding: 4px;
+}
+
+#instructions {
+  border: 1px black solid;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.9em;
 }
 
 #back-button,
@@ -99,6 +122,13 @@ body {
 
 #timer {
   font-size: 2em;
+}
+
+.modal,
+.options {
+  font-size: 1.2em;
+  /* padding: 5px 0 ; */
+  text-align: center;
 }
 
 #title {
@@ -121,6 +151,7 @@ body {
 
 #footer {
   text-align: center;
+  font-size: 1.3em;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -129,26 +160,31 @@ body {
 /* Shake animation https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
 
 .score-shake {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
 
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
-  
-  20%, 80% {
+
+  20%,
+  80% {
     transform: translate3d(2px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-4px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(4px, 0, 0);
   }
 }
@@ -177,6 +213,10 @@ body {
   background-repeat: no-repeat;
 }
 
+.modal#classic img {
+  background-color:  black;
+}
+
 .classic-background:hover {
   -webkit-transform: scale(1.1);
 }
@@ -189,7 +229,7 @@ body {
 /* Basketball Theme CSS */
 .basketball,
 .modal#basketball {
-  background-image: url("./images/basketball-bg.jpg");
+  background-image: url("./images/basketball-bg2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Arial Narrow", Arial, sans-serif;
@@ -210,7 +250,7 @@ body {
   color: white;
 }
 
-.basketball #timer span{
+.basketball #timer span {
   font-family: basketball;
   color: yellow;
 }
@@ -219,6 +259,7 @@ body {
   background-image: url("./images/basketball-canvas.jpg");
   background-size: 100% 400px;
   background-repeat: no-repeat;
+  border-radius: 10px;
 }
 
 .basketball #game-screen-message {
@@ -245,7 +286,7 @@ body {
   color: black;
 }
 
-.basketball #game-notification {
+.basketball #game-notification, .basketball .player-controls {
   color: white;
 }
 /* End Basketball CSS */
@@ -311,8 +352,7 @@ body {
   color: white;
 }
 
-
-.soccer #timer span{
+.soccer #timer span {
   font-family: basketball;
   color: red;
 }
@@ -330,6 +370,12 @@ body {
   background-image: url("./images/ballsoffury-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
+  font-family: bof;
+}
+
+.ballsoffury #game-screen-message,
+.ballsoffury #game-notification {
+  color: red;
 }
 
 .ballsoffury-theme {
@@ -353,6 +399,13 @@ body {
   /* font-family: comic san; */
   font-size: 3em;
   background-color: rgba(00, 00, 00, 0.4);
+  color: white;
+}
+
+.ballsoffury .player-card,
+.ballsoffury #footer,
+.ballsoffury #timer {
+  /* background-color: rgba(00, 00, 00, 0.4); */
   color: white;
 }
 
@@ -461,4 +514,12 @@ body {
 /* back, initially hidden pane */
 .back {
   transform: rotateY(180deg);
+}
+
+.highscores div {
+  padding: 20px;
+}
+
+.highscores #title {
+  height: 250px !important;
 }
