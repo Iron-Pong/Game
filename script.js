@@ -126,7 +126,6 @@ function ballSpeedIncrease() {
   ballSpeed = 2.5;
   setInterval(() => {
     ballSpeed += 0.5;
-    // // console.log('ballspeed increase')
   }, 5500);
 }
 
@@ -147,9 +146,7 @@ slowDownImg.src = `./images/powerups/${theme}4.png`;
 
 // Draw Function
 function draw(u, object) {
-  if (object === "ball") {
-    ctx.drawImage(ballImg, u.x, u.y, 15, 15);
-  }
+  if (object === "ball") ctx.drawImage(ballImg, u.x, u.y, 15, 15);
 
   if (object === "player") {
     if (theme === "classic") ctx.fillStyle = "white";
@@ -255,13 +252,18 @@ let obj = {
 };
 
 //powerup array for the game
-let powerUpsName = ["slowDown", "speedUp", "barLarge", "twoBalls"];
+let powerUpsName = [
+  // "slowDown",
+  "speedUp",
+  // "barLarge",
+  "twoBalls"
+];
 
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 225, 10, 200); //left of screen
-    this.thePlayer2 = new Player(770, 225, 10, 60); //right of screen
+    this.thePlayer = new Player(20, 225, 10, 600); //left of screen
+    this.thePlayer2 = new Player(770, 225, 10, 600); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
     this.theBallArray = [this.theBall];
     this.powerUpsArray = [];
@@ -276,14 +278,12 @@ class Game {
 
     let newPowerUps = new PowerUps(rName, rX, rY, rWidth, rHeight);
     this.powerUpsArray.push(newPowerUps);
-    // // console.log("Spawning!");
   }
 
   clearUnusedPowerUps() {
     this.powerUpsArray.splice(0, 1);
   }
   handleCollision(eachBall) {
-    // console.log(eachBall.x, eachBall.y);
     if (
       eachBall.x < this.thePlayer.x + this.thePlayer.width + eachBall.radius * 1.1 &&
       eachBall.x + eachBall.radius > this.thePlayer.x &&
@@ -306,6 +306,7 @@ class Game {
 
     // Restart ball and keep score
     for (let i = 0; i < this.theBallArray.length; i++) {
+      let randomY = Math.floor(Math.random() * 300) + 65;
       if (eachBall.x < 0) {
         playerTwoScore += 1;
         ballSpeed = 2;
@@ -319,7 +320,7 @@ class Game {
           document.querySelector("canvas").classList.remove("score-shake");
         }, 600);
         this.theBallArray.splice(i, this.theBallArray.length);
-        let newBalls = new Ball(70, 200, -2, 2, ballRadius);
+        let newBalls = new Ball(70, randomY, -2, 2, ballRadius);
         this.theBallArray.push(newBalls);
       }
       if (eachBall.x > 800) {
@@ -335,7 +336,7 @@ class Game {
           document.querySelector("canvas").classList.remove("score-shake");
         }, 600);
         this.theBallArray.splice(i, this.theBallArray.length);
-        let newBalls = new Ball(760, 200, 2, 2, ballRadius);
+        let newBalls = new Ball(760, randomY, 2, 2, ballRadius);
         this.theBallArray.push(newBalls);
       }
     }
@@ -363,11 +364,14 @@ class Game {
             }
             break;
           case "twoBalls":
+            let randomXOne = Math.floor(Math.random() * 400);
+            let randomXTwo = Math.floor(Math.random() * 390) + 400;
+            let randomY = Math.floor(Math.random() * 300) + 65;
             if (eachBall.dx === -2) {
-              let newBalls = new Ball(750, 425, 2, 2, ballRadius);
+              let newBalls = new Ball(randomXTwo, randomY, 2, 2, ballRadius);
               this.theBallArray.push(newBalls);
             } else if (eachBall.dx === 2) {
-              let newBalls = new Ball(50, 25, -2, 2, ballRadius);
+              let newBalls = new Ball(randomXOne, randomY, -2, 2, ballRadius);
               this.theBallArray.push(newBalls);
             }
             break;
@@ -491,7 +495,6 @@ function timerFuction() {
 //Start Button
 
 document.getElementById("start-game").onclick = countDown;
-// document.getElementById("start-game").onclick = startGame;
 let theGame;
 
 function startGame() {
