@@ -7,5 +7,3 @@ class PowerUps {
     this.height = height;
   }
 }
-// let randomNumber = Math.floor(Math.random() * this.name.length);
-// name = ["speedUp", "slowDown", "barLarge", "twoBalls", "mouseControl"];
