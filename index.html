@@ -36,7 +36,7 @@
         <div class="row" id="theme-picker">
             <div class="col-3 d-flex flex-column">
                 <button type="button" class="border border-dark classic-background" data-toggle="modal"
-                    data-target="#classic">
+                    data-target="#classic">CLASSIC
                 </button>
                 <button type="button" class="border border-dark soccer-background" data-toggle="modal"
                     data-target="#soccer">
@@ -145,24 +145,13 @@
                         <h4>Enter Player Info</h4>
                         <label id="player1name">Player 1 Name</label>
                         <input value="Name" required type="text" id="player1name" name="player1name"
-                        placeholder="Player 1 Name">
+                            placeholder="Player 1 Name">
                         <div id="twoPlayerDetails">
-                            <br>
                             <label id="player2name">Player 2 Name</label>
                             <input value="Name 2" required type="text" id="player2name" name="player2name"
-                            placeholder="Player 2 Name">
+                                placeholder="Player 2 Name">
                         </div>
-                        <input type="hidden" id="theme" name="theme" value="soccer">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary">
-                                  <input type="radio" name="singlePlayerMode" value="true" checked> Single Player
-                                </label>
-                                <label class="btn btn-secondary">
-                                  <input type="radio" name="singlePlayerMode" value="false"> Two Players
-                                </label>
-                              </div>
-                        <br>
-                        <div class="container d-flex justify-content-start" id="instructions">
+                        <!-- <div class="container d-flex justify-content-start" id="instructions">
                             <div class="row">
                                 <div class="col-12">
                                     HOW TO PLAY THE GAME:<br>
@@ -178,7 +167,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div> 
+                        </div> -->
                         <input type="hidden" id="theme" name="theme" value="soccer">
                         <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
                         <input type="checkbox" id="timedMode" name="timedMode" value="true"> Timed Game

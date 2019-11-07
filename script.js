@@ -4,7 +4,7 @@ var ctx = document.getElementById("game-board").getContext("2d");
 ctx.width = 800;
 ctx.height = 450;
 
-// console.log('connected')
+// // console.log('connected')
 
 // variables
 
@@ -49,28 +49,35 @@ if (urlQuery.length === 4 && urlQuery[3][0] === "singlePlayerMode") {
   singlePlayerMode = false;
 }
 
+
 let timerMode = false;
 
 if (urlQuery.length === 4 && urlQuery[3][0] === "timedMode") {
   timerMode = true;
-  console.log(timerMode);
+  // console.log(timerMode);
 } else if (urlQuery.length === 5) {
   timerMode = true;
-  console.log(timerMode);
+  // console.log(timerMode);
 } else {
   timerMode = false;
   document.querySelector("#header > div:nth-child(3)").innerHTML = "";
 }
 
-var vid = document.getElementById("myVideo");
 
+
+var vid = document.getElementById("myVideo");
 if (theme === "ballsoffury") {
   vid.play();
-  vid.onended = function() {
-    vid.style.display = "block";
-  };
 } else {
   vid.style.display = "none";
+  document.getElementById("skip-video-button").style.display = "none";
+  vid.pause();
+}
+
+function skipVideo(){
+  vid.style.display = "none";
+  document.getElementById("skip-video-button").style.display = "none";
+  vid.pause();
 }
 
 document.body.classList.add(theme);
@@ -78,11 +85,11 @@ document.querySelector("canvas").classList.add(`${theme}-theme`);
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
 
-if (singlePlayerMode === "true") {
+if (singlePlayerMode === true) {
   singlePlayerToggle = true;
 }
 
-// console.log(theme);
+// // console.log(theme);
 
 class Player {
   constructor(x, y, width, height) {
@@ -101,9 +108,9 @@ class Player {
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
     if (singlePlayerToggle === true) {
-      for (let i = 0; i < this.theBallArray.length; i++) {
+      for (let i = 0; i < theGame.theBallArray.length; i++) {
         if (theGame.theBallArray[i].dx === -2) {
-          this.y = theGame.theBall.y;
+          this.y = theGame.theBallArray[i].y;
         }
       }
     }
@@ -129,7 +136,7 @@ class Ball {
 function ballSpeedIncrease() {
   setInterval(() => {
     ballSpeed += 0.5;
-    // console.log('ballspeed increase')
+    // // console.log('ballspeed increase')
   }, 5500);
 }
 
@@ -200,9 +207,9 @@ function draw(u, object) {
 // Main Loop - runs animation, draws players
 let frames = 0;
 function mainLoop() {
-  // console.log(frames);
+  // // console.log(frames);
   frames++;
-  //console.log("clearRect has occured");
+  //// console.log("clearRect has occured");
   ctx.clearRect(0, 0, ctx.width, ctx.height);
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
@@ -225,21 +232,23 @@ function mainLoop() {
     }
   });
 
-  if (frames % 50 === 0) {
+  if (frames % 150 === 0) {
     theGame.spawnPowerUps();
   }
   if (frames % 800 === 0) {
     theGame.clearUnusedPowerUps();
   }
-  theGame.thePlayer2.singlePlayer();
+
   theGame.theBallArray.forEach(eachBalls => {
     eachBalls.moveBall();
   });
   // theGame.collisionDetection(theGame.theBall.x, theGame.theBall.y);
   theGame.theBallArray.forEach(eachBalls => {
-    console.log(theGame, eachBalls);
+    // console.log(theGame, eachBalls);
     theGame.handleCollision(eachBalls);
   });
+
+  theGame.thePlayer2.singlePlayer();
 
   if (timerMode === false) {
     gameOver();
@@ -276,7 +285,7 @@ onkeydown = onkeyup = function(e) {
   e = e || event; // to deal with IE
   map[e.key] = e.type == "keydown";
   /* insert conditional here */
-  //   console.log(map);
+  //   // console.log(map);
   for (let k in map) {
     if (map[k]) {
       gameControls({ key: k });
@@ -322,7 +331,12 @@ let obj = {
 };
 
 //powerup array for the game
-let powerUpsName = ["slowDown", "speedUp", "barLarge", "twoBalls"];
+let powerUpsName = [
+  "slowDown",
+   "speedUp",
+  "barLarge",
+  "twoBalls"
+];
 
 //here is where all the classes are called to create the game
 class Game {
@@ -343,14 +357,14 @@ class Game {
 
     let newPowerUps = new PowerUps(rName, rX, rY, rWidth, rHeight);
     this.powerUpsArray.push(newPowerUps);
-    // console.log("Spawning!");
+    // // console.log("Spawning!");
   }
 
   clearUnusedPowerUps() {
     this.powerUpsArray.splice(0, 1);
   }
   handleCollision(eachBall) {
-    console.log(eachBall.x, eachBall.y);
+    // console.log(eachBall.x, eachBall.y);
     if (
       eachBall.x <
         this.thePlayer.x + this.thePlayer.width + eachBall.radius * 1.1 &&
@@ -373,7 +387,7 @@ class Game {
       obj[theme + "2"].play();
       // } else if (eachBall.x < 0 || eachBall.x > 800) {
       //   eachBall.dx *= -1;
-      //   console.log("hit x walls");
+      //   // console.log("hit x walls");
     } else if (eachBall.y < 0 || eachBall.y > 450) {
       eachBall.dy *= -1;
     }
@@ -427,7 +441,7 @@ class Game {
         eachBall.y < this.powerUpsArray[i].y + this.powerUpsArray[i].height &&
         eachBall.y + eachBall.radius > this.powerUpsArray[i].y
       ) {
-        // console.log(this.powerUpsArray[i], i);
+        // // console.log(this.powerUpsArray[i], i);
         switch (this.powerUpsArray[i].name) {
           case "slowDown":
             ballSpeed = 1;
@@ -459,7 +473,7 @@ class Game {
             break;
         }
         this.powerUpsArray.splice(i, 1);
-        // console.log("COLLISION!!");
+        // // console.log("COLLISION!!");
       }
     }
   }
