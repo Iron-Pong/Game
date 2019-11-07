@@ -22,7 +22,7 @@ let singlePlayerToggle = false;
 let url = window.location.search;
 let urlSplit = url.substring(1).split("&");
 let urlQuery = [];
-let theTimer = 120;
+let theTimer = 10;
 
 urlSplit.forEach(function(queries) {
   newQuery = queries.split("=");
@@ -48,7 +48,6 @@ if (urlQuery.length === 4 && urlQuery[3][0] === "singlePlayerMode") {
 } else {
   singlePlayerMode = false;
 }
-
 
 let timerMode = false;
 
@@ -108,9 +107,18 @@ class Player {
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
     if (singlePlayerToggle === true) {
-      for (let i = 0; i < theGame.theBallArray.length; i++) {
+      console.log(theGame.theBallArray[0].y);
+      this.y = theGame.theBallArray[0].y;
+      for (let i = 0; i < theGame.theBallArray.length - 1; i++) {
         if (theGame.theBallArray[i].dx === -2) {
           this.y = theGame.theBallArray[i].y;
+          if (theGame.theBallArray.length > 1) {
+            console.log(theGame.theBallArray[i].x);
+            console.log(theGame.theBallArray[i + 1].x);
+            if (theGame.theBallArray[i].x > theGame.theBallArray[i + 1].x) {
+              this.y = theGame.theBallArray[i].y;
+            }
+          }
         }
       }
     }
@@ -134,7 +142,8 @@ class Ball {
 
 //function to increase ball speed every 5.5 secs
 function ballSpeedIncrease() {
-  setInterval(() => {
+    ballSpeed = 2.5;
+    setInterval(() => {
     ballSpeed += 0.5;
     // // console.log('ballspeed increase')
   }, 5500);
@@ -485,12 +494,10 @@ function resetPlayerScores() {
   playerOneScore = 0;
   playerTwoScore = 0;
 
-  document.querySelector(
-    ".player-card #player1 #player-score span"
-  ).innerText = playerOneScore;
-  document.querySelector(
-    ".player-card #player2 #player-score span"
-  ).innerText = playerTwoScore;
+  document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
+  document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
+  document.querySelector("#game-notification").innerText = "New Game";
+  ballSpeed = 2.5;
 }
 
 function countDown() {
@@ -541,31 +548,27 @@ function gameOver() {
 //Timed Game Over Function
 
 function gameOver2() {
-  if (playerOneScore > playerTwoScore) {
-    message = `${player1name} WON!`;
-    document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
-    stop();
-  } else if (playerTwoScore > playerOneScore) {
-    message = `${player2name} WON!`;
-    document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
-    stop();
-  } else {
-    message = `${player2name} and ${player1name} TIED!`;
-    document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
-    stop();
-  }
+
+    if (playerOneScore > playerTwoScore) {
+        message = `${player1name} WON!`;
+        document.getElementById("game-notification").innerHTML = message;
+        document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+        obj[theme + "5"].play();
+        stop();
+    } else if (playerTwoScore > playerOneScore) {
+        message = `${player2name} WON!`;
+        document.getElementById("game-notification").innerHTML = message;
+        document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+        obj[theme + "5"].play();
+        stop();
+    } else { 
+        message = `TIE GAME!`;
+        document.getElementById("game-notification").innerHTML = message;
+        document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
+        obj[theme + "5"].play();
+        stop();
+    }
+
 }
 
 // Timer Function
@@ -598,9 +601,7 @@ function timerFuction() {
       gameOver2();
     } else {
       counter1--;
-      document.querySelector(
-        "#header > div:nth-child(3) > span"
-      ).innerHTML = counter1;
+      document.querySelector("#header > div:nth-child(3) > span").innerHTML = counter1;
     }
   }
 }
