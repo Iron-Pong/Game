@@ -4,8 +4,6 @@ var ctx = document.getElementById("game-board").getContext("2d");
 ctx.width = 800;
 ctx.height = 450;
 
-// // console.log('connected')
-
 // variables
 
 let paddleSpeed = 50;
@@ -75,8 +73,6 @@ document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
 
 if (singlePlayerMode === true) singlePlayerToggle = true;
-
-// // console.log(theme);
 
 class Player {
   constructor(x, y, width, height) {
@@ -193,7 +189,6 @@ function mainLoop() {
     eachBalls.moveBall();
   });
   theGame.theBallArray.forEach(eachBalls => {
-    // console.log(theGame, eachBalls);
     theGame.handleCollision(eachBalls);
   });
   theGame.thePlayer2.singlePlayer();
@@ -219,7 +214,6 @@ onkeydown = onkeyup = function(e) {
   e = e || event; // to deal with IE
   map[e.key] = e.type == "keydown";
   /* insert conditional here */
-  //   // console.log(map);
   for (let k in map) {
     if (map[k]) gameControls({ key: k });
   }
@@ -229,7 +223,7 @@ function stop() {
   isPlaying = false;
 
   /// kill any request in progress
-  if (mainLoop) cancelAnimationFrame(mainLoop);
+  mainLoop ? cancelAnimationFrame : false;
 }
 
 // Audio Objects
@@ -360,9 +354,8 @@ class Game {
             ballSpeed = 3;
             break;
           case "barLarge":
-            if (eachBall.dx === -2) {
-              this.thePlayer.height = 200;
-            } else if (eachBall.dx === 2) {
+            if (eachBall.dx === -2) this.thePlayer.height = 200;
+            else if (eachBall.dx === 2) {
               this.thePlayer2.height = 200;
               setTimeout(function() {
                 theGame.thePlayer2.height = 60;
