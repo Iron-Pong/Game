@@ -159,23 +159,15 @@ function draw(u, object) {
     if (theme === "classic") ctx.fillStyle = "white";
     else if (theme === "ballsoffury") ctx.fillStyle = "red";
     else ctx.fillStyle = "black";
-
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
   if (object === "twoBalls") ctx.drawImage(twoBallsImg, u.x, u.y, u.width, u.height);
-
   if (object === "speedUp") ctx.drawImage(speedUpImg, u.x, u.y, u.width, u.height);
-
   if (object === "barLarge") ctx.drawImage(barLargeImg, u.x, u.y, u.width, u.height);
-
   if (object === "slowDown") ctx.drawImage(slowDownImg, u.x, u.y, u.width, u.height);
-
   if (object === "player" && theGame.thePlayer2.y < 0) theGame.thePlayer2.y = 0;
-
   if (object === "player" && theGame.thePlayer2.y > 375) theGame.thePlayer2.y = 395;
-
   if (object === "player" && theGame.thePlayer.y < 0) theGame.thePlayer.y = 0;
-
   if (object === "player" && theGame.thePlayer.y > 375) theGame.thePlayer.y = 395;
 }
 
@@ -191,18 +183,12 @@ function mainLoop() {
   });
   theGame.powerUpsArray.forEach(eachPowerUps => {
     if (eachPowerUps.name === "twoBalls") draw(eachPowerUps, "twoBalls");
-
     if (eachPowerUps.name === "speedUp") draw(eachPowerUps, "speedUp");
-
     if (eachPowerUps.name === "barLarge") draw(eachPowerUps, "barLarge");
-
     if (eachPowerUps.name === "slowDown") draw(eachPowerUps, "slowDown");
   });
-
   if (frames % 150 === 0) theGame.spawnPowerUps();
-
   if (frames % 800 === 0) theGame.clearUnusedPowerUps();
-
   theGame.theBallArray.forEach(eachBalls => {
     eachBalls.moveBall();
   });
@@ -210,11 +196,8 @@ function mainLoop() {
     // console.log(theGame, eachBalls);
     theGame.handleCollision(eachBalls);
   });
-
   theGame.thePlayer2.singlePlayer();
-
   if (timerMode === false) gameOver();
-
   if (isPlaying === true) requestId = requestAnimationFrame(mainLoop);
 }
 
@@ -222,7 +205,6 @@ function mainLoop() {
 function gameControls(e) {
   if (singlePlayerMode === false) {
     if (e.key === "ArrowUp") theGame.thePlayer2.movePlayer("y", -paddleSpeed);
-
     if (e.key === "ArrowDown") theGame.thePlayer2.movePlayer("y", +paddleSpeed);
   }
   if (e.key === "a" || e.key === "A") theGame.thePlayer.movePlayer("y", -paddleSpeed);
@@ -491,8 +473,7 @@ function gameOver2() {
 // Timer Function
 
 function timerToggle() {
-  if (timerMode === true) timerFuction();
-  else gameOver();
+  timerMode === true ? timerFuction() : gameOver();
 }
 
 function timerFuction() {
