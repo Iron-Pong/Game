@@ -405,7 +405,7 @@ class Game {
         this.clearUnusedPowerUps();
         let message = `${player2name} Scores!`;
         document.getElementById("game-notification").innerHTML = message;
-        this.theBallArray.splice(i, 1);
+        this.theBallArray.splice(i, this.theBallArray.length);
         let newBalls = new Ball(70, 200, -2, 2, ballRadius);
         this.theBallArray.push(newBalls);
         // startGame();
@@ -419,7 +419,7 @@ class Game {
         this.clearUnusedPowerUps();
         let message = `${player1name} Scores!`;
         document.getElementById("game-notification").innerHTML = message;
-        this.theBallArray.splice(i, 1);
+        this.theBallArray.splice(i, this.theBallArray.length);
         let newBalls = new Ball(760, 200, 2, 2, ballRadius);
         this.theBallArray.push(newBalls);
         // startGame();
