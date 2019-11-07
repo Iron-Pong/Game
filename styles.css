@@ -18,8 +18,13 @@
 }
 
 @font-face {
-  font-family: "soccer2";
+  font-family: "soccerscore";
   src: url("./images/fonts/soccer2.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "soccer";
+  src: url("./images/fonts/EASPORTS15.ttf") format("truetype");
 }
 
 body {
@@ -88,21 +93,20 @@ body {
 #back-button,
 #back-button a {
   padding: 20px 20px 0px 0px;
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: white;
 }
 
-#footer {
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+#timer {
+  font-size: 2em;
 }
 
 #title {
   font-size: 2em;
   display: flex;
   justify-content: center;
+  align-content: center;
+  align-items: center;
 }
 
 .modal-content {
@@ -113,6 +117,13 @@ body {
   max-height: 55px;
   font-size: 30px;
   margin: auto;
+}
+
+#footer {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 /* Shake animation https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
@@ -195,10 +206,23 @@ body {
   -webkit-transform: scale(1.1);
 }
 
+.basketball #timer {
+  color: white;
+}
+
+.basketball #timer span{
+  font-family: basketball;
+  color: yellow;
+}
+
 .basketball-theme {
   background-image: url("./images/basketball-canvas.jpg");
   background-size: 100% 400px;
   background-repeat: no-repeat;
+}
+
+.basketball #game-screen-message {
+  font-family: basketball;
 }
 
 .basketball .player-card {
@@ -232,6 +256,7 @@ body {
   background-image: url("./images/soccer-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  font-family: arial;
 }
 
 .soccer-theme {
@@ -263,7 +288,7 @@ body {
 }
 
 .soccer #player-score {
-  font-family: soccer2;
+  font-family: soccerscore;
   font-size: 3em;
   background-color: rgba(00, 00, 00, 0.4);
   padding: 20px;
@@ -276,6 +301,27 @@ body {
 .soccer #back-button a {
   color: black;
 }
+
+.soccer #timer {
+  color: black;
+  font-size: 1.5em;
+}
+
+.soccer #game-notification {
+  color: white;
+}
+
+
+.soccer #timer span{
+  font-family: basketball;
+  color: red;
+}
+
+.soccer #game-screen-message {
+  font-family: basketball;
+  color: red;
+}
+
 /*End Soccer CSS */
 
 /* Balls Of Fury CSS */
@@ -309,7 +355,14 @@ body {
   background-color: rgba(00, 00, 00, 0.4);
   color: white;
 }
-/*End Soccer CSS */
+
+.ballsoffury #skip-video-button {
+  position: absolute;
+  bottom: 80px;
+  right: 80px;
+  font-size: 3em;
+}
+/*End Balls of Fury CSS */
 
 /* Landing Page */
 #landing {
@@ -344,6 +397,13 @@ body {
   margin: 20px;
   border-radius: 20px;
   height: 120px;
+  color: white;
+  font-size: 2em;
+  font-family: pong-normal;
+}
+
+#landing #instructions {
+  text-align: left !important;
 }
 /* END Landing  */
 
