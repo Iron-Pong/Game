@@ -37,47 +37,44 @@ player2name = urlQuery[1][1]
   .split("+")
   .join(" ")
   .toUpperCase();
-  theme = urlQuery[2][1];
-  
+theme = urlQuery[2][1];
+
 let singlePlayerMode = false;
 
-  if(urlQuery.length===4 && urlQuery[3][0]==="singlePlayerMode"){
+if (urlQuery.length === 4 && urlQuery[3][0] === "singlePlayerMode") {
   singlePlayerMode = true;
-  } else if (urlQuery.length===5) {
-    singlePlayerMode = true;}
-  else {
-    singlePlayerMode = false;
-  }
-
-
+} else if (urlQuery.length === 5) {
+  singlePlayerMode = true;
+} else {
+  singlePlayerMode = false;
+}
 
 let timerMode = false;
 
-  if(urlQuery.length===4 && urlQuery[3][0]==="timedMode"){
+if (urlQuery.length === 4 && urlQuery[3][0] === "timedMode") {
   timerMode = true;
   console.log(timerMode);
-  } 
-  else if (urlQuery.length===5) {
-    timerMode = true;
-    console.log(timerMode); }
-    else {
-    timerMode = false;
-    document.querySelector("#header > div:nth-child(3)").innerHTML = "";
-    }
+} else if (urlQuery.length === 5) {
+  timerMode = true;
+  console.log(timerMode);
+} else {
+  timerMode = false;
+  document.querySelector("#header > div:nth-child(3)").innerHTML = "";
+}
 
 var vid = document.getElementById("myVideo");
 
 if (theme === "ballsoffury") {
-    vid.play();
-    vid.onended = function() {
-        vid.width = 0;
-        vid.height = 0;
-    }
-} else {vid.width = 0;
-    vid.height = 0;3}
-
-
-
+  vid.play();
+  vid.onended = function() {
+    vid.width = 0;
+    vid.height = 0;
+  };
+} else {
+  vid.width = 0;
+  vid.height = 0;
+  3;
+}
 
 document.body.classList.add(theme);
 document.querySelector("canvas").classList.add(`${theme}-theme`);
@@ -107,9 +104,18 @@ class Player {
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
     if (singlePlayerToggle === true) {
-      for (let i = 0; i < theGame.theBallArray.length; i++) {
+      console.log(theGame.theBallArray[0].y);
+      this.y = theGame.theBallArray[0].y;
+      for (let i = 0; i < theGame.theBallArray.length - 1; i++) {
         if (theGame.theBallArray[i].dx === -2) {
           this.y = theGame.theBallArray[i].y;
+          if (theGame.theBallArray.length > 1) {
+            console.log(theGame.theBallArray[i].x);
+            console.log(theGame.theBallArray[i + 1].x);
+            if (theGame.theBallArray[i].x > theGame.theBallArray[i + 1].x) {
+              this.y = theGame.theBallArray[i].y;
+            }
+          }
         }
       }
     }
@@ -172,20 +178,20 @@ function draw(u, object) {
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
   if (object === "twoBalls") {
-    ctx.drawImage(twoBallsImg, u.x, u.y, u.width, u.height)
+    ctx.drawImage(twoBallsImg, u.x, u.y, u.width, u.height);
   }
 
   if (object === "speedUp") {
-      ctx.drawImage(speedUpImg, u.x, u.y, u.width, u.height)
+    ctx.drawImage(speedUpImg, u.x, u.y, u.width, u.height);
   }
 
   if (object === "barLarge") {
-    ctx.drawImage(barLargeImg, u.x, u.y, u.width, u.height)
-}
+    ctx.drawImage(barLargeImg, u.x, u.y, u.width, u.height);
+  }
 
-if (object === "slowDown") {
-    ctx.drawImage(slowDownImg, u.x, u.y, u.width, u.height)
-    }
+  if (object === "slowDown") {
+    ctx.drawImage(slowDownImg, u.x, u.y, u.width, u.height);
+  }
 
   if (object === "player" && theGame.thePlayer2.y < 0) {
     theGame.thePlayer2.y = 0;
@@ -219,13 +225,16 @@ function mainLoop() {
   });
   theGame.powerUpsArray.forEach(eachPowerUps => {
     if (eachPowerUps.name === "twoBalls") {
-        draw(eachPowerUps, "twoBalls");
-    } if (eachPowerUps.name === "speedUp") {
-        draw(eachPowerUps, "speedUp");
-    } if (eachPowerUps.name === "barLarge") {
-        draw(eachPowerUps, "barLarge");
-    } if (eachPowerUps.name === "slowDown") {
-        draw(eachPowerUps, "slowDown");
+      draw(eachPowerUps, "twoBalls");
+    }
+    if (eachPowerUps.name === "speedUp") {
+      draw(eachPowerUps, "speedUp");
+    }
+    if (eachPowerUps.name === "barLarge") {
+      draw(eachPowerUps, "barLarge");
+    }
+    if (eachPowerUps.name === "slowDown") {
+      draw(eachPowerUps, "slowDown");
     }
   });
 
@@ -248,8 +257,8 @@ function mainLoop() {
   theGame.thePlayer2.singlePlayer();
 
   if (timerMode === false) {
-      gameOver();
-    }
+    gameOver();
+  }
 
   if (isPlaying === true) {
     requestId = requestAnimationFrame(mainLoop);
@@ -547,44 +556,40 @@ function gameOver2() {
 
 // Timer Function
 
-
 function timerToggle() {
-    if (timerMode === true) {
-        timerFuction();
-    } else {
-        gameOver();
-    }
+  if (timerMode === true) {
+    timerFuction();
+  } else {
+    gameOver();
+  }
 }
 
-function timerFuction(){
-    let counter1 = theTimer;
-    // let counter2 = 0;
-    
-    let timer1 = setInterval(function() {
-      startCountUp(counter1);
-    }, 1000);
-    
-    // let timer2 = setInterval(function() {
-    //     startCountUp(counter2);
-    //   }, 100);
-  
-    function startCountUp() {
-      if (counter1 === 0) {
-        
-        clearInterval(timer1);
-        // clearInterval(timer2);
-        document.querySelector("#header > div:nth-child(3) > span").innerHTML = 0;
-        gameOver2();
-      } else {
-        counter1--;
-        document.querySelector("#header > div:nth-child(3) > span").innerHTML = counter1 
+function timerFuction() {
+  let counter1 = theTimer;
+  // let counter2 = 0;
+
+  let timer1 = setInterval(function() {
+    startCountUp(counter1);
+  }, 1000);
+
+  // let timer2 = setInterval(function() {
+  //     startCountUp(counter2);
+  //   }, 100);
+
+  function startCountUp() {
+    if (counter1 === 0) {
+      clearInterval(timer1);
+      // clearInterval(timer2);
+      document.querySelector("#header > div:nth-child(3) > span").innerHTML = 0;
+      gameOver2();
+    } else {
+      counter1--;
+      document.querySelector("#header > div:nth-child(3) > span").innerHTML = counter1;
     }
   }
 }
 
-  //
-
-
+//
 
 // var startTime = Date.now();
 // function countUp() {
@@ -597,7 +602,6 @@ function timerFuction(){
 //             }
 //     }, 100);
 // }
-
 
 //Start Button
 
