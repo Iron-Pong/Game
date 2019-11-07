@@ -101,6 +101,10 @@ body {
   font-size: 2em;
 }
 
+#rally {
+  font-size: 2em;
+}
+
 #title {
   font-size: 2em;
   display: flex;
@@ -210,7 +214,16 @@ body {
   color: white;
 }
 
+.basketball #rally {
+  color: white;
+}
+
 .basketball #timer span{
+  font-family: basketball;
+  color: yellow;
+}
+
+.basketball #rally span{
   font-family: basketball;
   color: yellow;
 }
@@ -307,12 +320,22 @@ body {
   font-size: 1.5em;
 }
 
+.soccer #rally {
+  color: black;
+  font-size: 1.5em;
+}
+
 .soccer #game-notification {
   color: white;
 }
 
 
 .soccer #timer span{
+  font-family: basketball;
+  color: red;
+}
+
+.soccer #rally span{
   font-family: basketball;
   color: red;
 }

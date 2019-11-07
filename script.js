@@ -22,12 +22,14 @@ let singlePlayerToggle = false;
 let url = window.location.search;
 let urlSplit = url.substring(1).split("&");
 let urlQuery = [];
-let theTimer = 10;
+let theTimer = 120;
 
 urlSplit.forEach(function(queries) {
   newQuery = queries.split("=");
   urlQuery.push(newQuery);
 });
+
+
 
 player1name = urlQuery[0][1]
   .split("+")
@@ -61,8 +63,6 @@ if (urlQuery.length === 4 && urlQuery[3][0] === "timedMode") {
   timerMode = false;
   document.querySelector("#header > div:nth-child(3)").innerHTML = "";
 }
-
-
 
 var vid = document.getElementById("myVideo");
 if (theme === "ballsoffury") {
@@ -347,10 +347,18 @@ let powerUpsName = [
   "twoBalls"
 ];
 
+
+let rallyScore = 0;
+
+let increaseRally = function() {
+    document.querySelector("#rally > span").innerText = rallyScore;
+}
+
+
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
-    this.thePlayer = new Player(20, 225, 10, 200); //left of screen
+    this.thePlayer = new Player(20, 225, 10, 60); //left of screen
     this.thePlayer2 = new Player(770, 225, 10, 60); //right of screen
     this.theBall = new Ball(70, 200, 2, -2, ballRadius);
     this.theBallArray = [this.theBall];
@@ -372,6 +380,8 @@ class Game {
   clearUnusedPowerUps() {
     this.powerUpsArray.splice(0, 1);
   }
+  
+  
   handleCollision(eachBall) {
     // console.log(eachBall.x, eachBall.y);
     if (
@@ -384,6 +394,8 @@ class Game {
       obj[theme + "2"].play();
       eachBall.x += 5;
       eachBall.dx *= -1;
+      rallyScore++;
+      increaseRally();
     } else if (
       eachBall.x <
         this.thePlayer2.x + this.thePlayer2.width + eachBall.radius * 2 &&
@@ -394,6 +406,8 @@ class Game {
       eachBall.x -= 5;
       eachBall.dx *= -1;
       obj[theme + "2"].play();
+      rallyScore++
+      increaseRally();
       // } else if (eachBall.x < 0 || eachBall.x > 800) {
       //   eachBall.dx *= -1;
       //   // console.log("hit x walls");
@@ -410,6 +424,8 @@ class Game {
           ".player-card #player2 #player-score span"
         ).innerText = playerTwoScore;
         obj[theme + "4"].play();
+        rallyScore = 0;
+        increaseRally();
         this.clearUnusedPowerUps();
         let message = `${player2name} Scores!`;
         document.getElementById("game-notification").innerHTML = message;
@@ -430,6 +446,8 @@ class Game {
           ".player-card #player1 #player-score span"
         ).innerText = playerOneScore;
         obj[theme + "3"].play();
+        rallyScore = 0;
+        increaseRally();
         this.clearUnusedPowerUps();
         let message = `${player1name} Scores!`;
         document.getElementById("game-notification").innerHTML = message;
@@ -453,15 +471,29 @@ class Game {
         // // console.log(this.powerUpsArray[i], i);
         switch (this.powerUpsArray[i].name) {
           case "slowDown":
-            ballSpeed = 1;
-            // alert("slowing down");
+            ballSpeed = 1.5;
+            setTimeout(function() {
+                ballSpeed = 2.5;
+              }, 5000);  
             break;
           case "speedUp":
-            ballSpeed = 3;
+            ballSpeed+=1.5;  
+            setTimeout(function() {
+                ballSpeed = 2.5
+              }, 5000);  
             break;
           case "barLarge":
             if (eachBall.dx === -2) {
-              this.thePlayer.height = 200;
+              if (singlePlayerToggle = true) {
+                this.thePlayer.height = 200;
+                  setTimeout(function() {
+                theGame.thePlayer.height = 60;
+              }, 10000);} else {
+                this.thePlayer.height = 200;
+                setTimeout(function() {
+                    theGame.thePlayer.height = 60;
+                  }, 5000);
+              }
             } else if (eachBall.dx === 2) {
               this.thePlayer2.height = 200;
               setTimeout(function() {
@@ -502,6 +534,7 @@ function resetPlayerScores() {
 
 function countDown() {
   resetPlayerScores();
+  document.getElementById("game-screen-message").innerHTML = "";
   let counter = 3;
   let timer = setInterval(function() {
     startCountDown(counter);
