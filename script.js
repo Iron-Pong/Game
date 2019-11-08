@@ -3,13 +3,13 @@ ctx.width = 800;
 ctx.height = 450;
 
 // variables
-
-let paddleSpeed = 50;
+const paddleSpeed = 50;
+const endGameScore = 10;
+const ballRadius = 5;
 let playerOneScore = 0;
+let rallyScore = 0;
 let playerTwoScore = 0;
 let isPlaying;
-let endGameScore = 2;
-let ballRadius = 5;
 let ballSpeed = 2.5;
 let theme = "";
 let player1name = "";
@@ -50,10 +50,10 @@ else {
   document.querySelector("#header > div:nth-child(3)").innerHTML = "";
 }
 
-var vid = document.getElementById("myVideo");
-if (theme === "ballsoffury") {
-  vid.play();
-} else {
+if (!timerMode) document.querySelector("#header > div:nth-child(3)").innerHTML = "";
+const vid = document.getElementById("myVideo");
+if (theme === "ballsoffury") vid.play();
+else {
   vid.style.display = "none";
   document.getElementById("skip-video-button").style.display = "none";
   vid.pause();
@@ -88,15 +88,13 @@ class Player {
 
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
-    if (singlePlayerToggle === true) {
+    if (singlePlayerToggle) {
       this.y = theGame.theBallArray[0].y;
       for (let i = 0; i < theGame.theBallArray.length - 1; i++) {
         if (theGame.theBallArray[i].dx === -2) {
           this.y = theGame.theBallArray[i].y;
-          if (theGame.theBallArray.length > 1) {
-            if (theGame.theBallArray[i].x > theGame.theBallArray[i + 1].x) {
-              this.y = theGame.theBallArray[i].y;
-            }
+          if (theGame.theBallArray.length > 1 && theGame.theBallArray[i].x > theGame.theBallArray[i + 1].x) {
+            this.y = theGame.theBallArray[i].y;
           }
         }
       }
@@ -143,13 +141,11 @@ const slowDownImg = new Image();
 slowDownImg.src = `./images/powerups/${theme}4.png`;
 
 // Draw Function
-function draw(u, object) {
+const draw = (u, object) => {
   if (object === "ball") ctx.drawImage(ballImg, u.x, u.y, 15, 15);
-
   if (object === "player") {
-    if (theme === "classic") ctx.fillStyle = "white";
-    else if (theme === "ballsoffury") ctx.fillStyle = "red";
-    else ctx.fillStyle = "black";
+    const fillStyle = { classic: "white", ballsoffury: "red" }[theme] || "black";
+    ctx.fillStyle = fillStyle;
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
   if (object === "twoBalls") ctx.drawImage(twoBallsImg, u.x, u.y, u.width, u.height);
@@ -160,7 +156,7 @@ function draw(u, object) {
   if (object === "player" && theGame.thePlayer2.y > 375) theGame.thePlayer2.y = 395;
   if (object === "player" && theGame.thePlayer.y < 0) theGame.thePlayer.y = 0;
   if (object === "player" && theGame.thePlayer.y > 375) theGame.thePlayer.y = 395;
-}
+};
 
 // Main Loop - runs animation, draws players
 let frames = 0;
@@ -171,6 +167,8 @@ function mainLoop() {
   draw(theGame.thePlayer2, "player");
   theGame.theBallArray.forEach(eachBalls => {
     draw(eachBalls, "ball");
+    eachBalls.moveBall();
+    theGame.handleCollision(eachBalls);
   });
   theGame.powerUpsArray.forEach(eachPowerUps => {
     if (eachPowerUps.name === "twoBalls") draw(eachPowerUps, "twoBalls");
@@ -180,14 +178,8 @@ function mainLoop() {
   });
   if (frames % 150 === 0) theGame.spawnPowerUps();
   if (frames % 800 === 0) theGame.clearUnusedPowerUps();
-  theGame.theBallArray.forEach(eachBalls => {
-    eachBalls.moveBall();
-  });
-  theGame.theBallArray.forEach(eachBalls => {
-    theGame.handleCollision(eachBalls);
-  });
   theGame.thePlayer2.singlePlayer();
-  if (timerMode === false) gameOver();
+  if (!timerMode) gameOver();
   if (isPlaying === true) requestId = requestAnimationFrame(mainLoop);
 }
 
@@ -204,7 +196,7 @@ document.onkeydown = function(e) {
 //allow two player keydown strokes
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
 
-var map = {}; // You could also use an array
+const map = {}; // You could also use an array
 onkeydown = onkeyup = function(e) {
   e = e || event; // to deal with IE
   map[e.key] = e.type == "keydown";
@@ -222,7 +214,7 @@ function stop() {
 }
 
 // Audio Objects
-let obj = {
+const obj = {
   // Basketball Sounds
   basketball1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
   basketball2: new Audio("./sounds/bounce.mp3"), // bounce off paddle
@@ -256,8 +248,6 @@ let powerUpsName = [
   // "barLarge",
   "twoBalls"
 ];
-
-let rallyScore = 0;
 
 let increaseRally = function() {
   document.querySelector("#rally > span").innerText = rallyScore;
@@ -311,9 +301,6 @@ class Game {
       obj[theme + "2"].play();
       rallyScore++;
       increaseRally();
-      // } else if (eachBall.x < 0 || eachBall.x > 800) {
-      //   eachBall.dx *= -1;
-      //   // // console.loglog("hit x walls");
     } else if (eachBall.y < 0 || eachBall.y > 450) {
       eachBall.dy *= -1;
     }
@@ -418,36 +405,30 @@ class Game {
   }
 }
 
-function resetPlayerScores() {
+resetPlayerScores = () => {
   playerOneScore = 0;
   playerTwoScore = 0;
-
   document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
   document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
-  document.querySelector("#game-notification").innerText = "Begins in...";
+  document.querySelector("#game-notification").innerText = "New Game";
   ballSpeed = 2.5;
-}
+};
 
-function countDown() {
+countDown = () => {
   resetPlayerScores();
-  document.getElementById("game-screen-message").innerHTML = "";
   let counter = 3;
-  let timer = setInterval(function() {
-    startCountDown(counter);
-  }, 1000);
-
-  function startCountDown() {
+  let timer = setInterval(() => startCountDown(counter), 1000);
+  startCountDown = () => {
     if (counter === 0) {
       clearInterval(timer);
       startGame();
-      document.querySelector("#game-notification").innerText = " ";
       document.getElementById("game-screen-message").innerHTML = "";
     } else {
       document.getElementById("game-screen-message").innerHTML = counter;
       counter--;
     }
-  }
-}
+  };
+};
 
 //Game Over function
 
@@ -475,7 +456,7 @@ function gameOver() {
 
 //Timed Game Over Function
 
-function gameOver2() {
+gameOver2 = () => {
   if (playerOneScore > playerTwoScore) {
     if (singlePlayerToggle === true) {
       message = `${player1name} WON! <a href="http://avrahm.com/ironpong/highscores.php${url}&playerScore=${playerOneScore}">Submit Scores</a>`;
@@ -505,7 +486,7 @@ function gameOver2() {
     obj[theme + "5"].play();
     stop();
   }
-}
+};
 
 // Timer Function
 
@@ -513,14 +494,10 @@ function timerToggle() {
   timerMode === true ? timerFuction() : gameOver();
 }
 
-function timerFuction() {
+timerFuction = () => {
   let counter1 = theTimer;
-
-  let timer1 = setInterval(function() {
-    startCountUp(counter1);
-  }, 1000);
-
-  function startCountUp() {
+  let timer1 = setInterval(() => startCountUp(counter1), 1000);
+  startCountUp = () => {
     if (counter1 === 0) {
       clearInterval(timer1);
       document.querySelector("#header > div:nth-child(3) > span").innerHTML = 0;
@@ -529,19 +506,18 @@ function timerFuction() {
       counter1--;
       document.querySelector("#header > div:nth-child(3) > span").innerHTML = counter1;
     }
-  }
-}
+  };
+};
 
 //Start Button
 
 document.getElementById("start-game").onclick = countDown;
-let theGame;
 
-function startGame() {
+startGame = () => {
   isPlaying = true;
   theGame = new Game();
   timerToggle();
   mainLoop();
   ballSpeedIncrease();
-  obj[theme + "1"].play();
-}
+  obj[`${theme}1`].play();
+};
