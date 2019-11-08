@@ -70,12 +70,12 @@ if ($search_sql->num_rows != 0) {
                 </div>
             </div>
             <?php if (empty($playerNameSet)) { ?>
-                <div class="col-12" id="sub-title"><a href="http://avrahm.com/IronPong/">Play IronPong</a></div>
+                <div class="col-12" id="sub-title"><a class="btn btn-dark" href="http://avrahm.com/IronPong/">Play IronPong</a></div>
             <?php } else { ?>
                 <div class="col-12" id="sub-title">
-                    Player: <?php echo $playerNameSet; ?><br>
+                    Player: <?php echo ucwords($playerNameSet); ?><br>
                     Score: <?php echo $playerScoreSet; ?><br>
-                    Mode: <?php echo $modeSet; ?>
+                    Mode: <?php echo ucwords($modeSet); ?>
                     <form action="highscores.php" method="POST">
                         <input type="hidden" id="player1name" name="player1name" value="<?php echo $playerNameSet; ?>">
                         <input type="hidden" id="playerScore" name="playerScore" value="<?php echo $playerScoreSet; ?>">
@@ -88,6 +88,7 @@ if ($search_sql->num_rows != 0) {
                 <h3>High score Timed and Single Player Mode</h3>
                 <table class="table table-dark">
                     <thead>
+                        <th>Date</th>
                         <th>Player Name</th>
                         <th>Player Score</th>
                         <th>Mode</th>
@@ -96,6 +97,8 @@ if ($search_sql->num_rows != 0) {
                         <?php if ($search_sql->num_rows != 0) {
                             do { ?>
                                 <tr>
+                                    <td><?php echo date('g:ha M d y', strtotime($search_rs->date)); ?>
+                                    </td>
                                     <td><?php echo ucwords($search_rs->playerName); ?>
                                     </td>
                                     <td><?php echo $search_rs->playerScore; ?>

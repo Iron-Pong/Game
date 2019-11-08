@@ -255,9 +255,9 @@ let obj = {
 
 //powerup array for the game
 let powerUpsName = [
-  // "slowDown",
+  "slowDown",
   "speedUp",
-  // "barLarge",
+  "barLarge",
   "twoBalls"
 ];
 
@@ -485,7 +485,7 @@ function gameOver2() {
 
     if (playerOneScore > playerTwoScore) {
       if(singlePlayerToggle===true){
-       message = `${player1name} WON! <a href="http://avrahm.com/ironpong/highscores.php${url}&playerScore=${playerOneScore}">Submit Scores</a>`;
+       message = `${player1name} WON! <a class="submit-score" href="http://avrahm.com/ironpong/highscores.php${url}&playerScore=${playerOneScore}">Submit Scores</a>`;
       } else {
         message = `${player1name} WON!`;
       }
@@ -494,7 +494,11 @@ function gameOver2() {
         obj[theme + "5"].play();
         stop();
     } else if (playerTwoScore > playerOneScore) {
+      if(singlePlayerToggle===true){
+       message = `${player2name} WON!<br> <p class="submit-score">It's ok <a href="http://avrahm.com/ironpong/highscores.php${url}&playerScore=${playerOneScore}">Submit Score</a> anyway!</p>`;
+      } else {
         message = `${player2name} WON!`;
+      }
         document.getElementById("game-notification").innerHTML = message;
         document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
         obj[theme + "5"].play();

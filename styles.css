@@ -161,6 +161,10 @@ body {
   justify-content: center;
 }
 
+.submit-score {
+  font-size: 0.4em !important;
+}
+
 /* Shake animation https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
 
 .score-shake {
@@ -540,7 +544,7 @@ body {
 }
 
 .highscores div {
-  padding: 20px 0;
+  padding: 5px 0;
 }
 
 .highscores #title {
@@ -549,4 +553,10 @@ body {
 
 .highscores {
   overflow: scroll !important;
+}
+
+.btn-dark, .btn-warning, .btn-success, .btn-danger {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #343a40;
 }
