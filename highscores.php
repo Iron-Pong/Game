@@ -53,10 +53,10 @@ if ($search_sql->num_rows != 0) {
 
 </head>
 
-<body id="landing">
+<body id="landing" class="highscores">
 
     <div class="container">
-        <div class="highscores">
+        <div>
             <div class="col-12" id="title">
                 <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
                     <div class="flipper">
@@ -69,20 +69,26 @@ if ($search_sql->num_rows != 0) {
                     </div>
                 </div>
             </div>
-            <div class="col-12" id="sub-title">
-                <form action="highscores.php" method="POST">
-                    <input type="text" id="player1name" disabled name="player1name" value="<?php echo $playerNameSet; ?>">
-                    <input type="text" id="playerScore" disabled name="playerScore" value="<?php echo $playerScoreSet; ?>">
-                    <input type="hidden" id="theme" name="theme" value="<?php echo $modeSet; ?>">
-                    <input type="submit" id="submitscore" name="submitscore" value="submit">
-                </form>
-            </div>
-            <div class="col-12" id="sub-title">
-                Submit Your Highscore
-            </div>
+            <?php if (empty($playerNameSet)) { ?>
+                <div class="col-12" id="sub-title"><a class="btn btn-dark" href="http://avrahm.com/IronPong/">Play IronPong</a></div>
+            <?php } else { ?>
+                <div class="col-12" id="sub-title">
+                    Player: <?php echo ucwords($playerNameSet); ?><br>
+                    Score: <?php echo $playerScoreSet; ?><br>
+                    Mode: <?php echo ucwords($modeSet); ?>
+                    <form action="highscores.php" method="POST">
+                        <input type="hidden" id="player1name" name="player1name" value="<?php echo $playerNameSet; ?>">
+                        <input type="hidden" id="playerScore" name="playerScore" value="<?php echo $playerScoreSet; ?>">
+                        <input type="hidden" id="theme" name="theme" value="<?php echo $modeSet; ?>">
+                        <input type="submit" id="submitscore" name="submitscore" value="submit">
+                    </form>
+                </div> <?php } ?>
+
             <div class="col-12">
+                <h3>High score Timed and Single Player Mode</h3>
                 <table class="table table-dark">
                     <thead>
+                        <th>Date</th>
                         <th>Player Name</th>
                         <th>Player Score</th>
                         <th>Mode</th>
@@ -91,6 +97,8 @@ if ($search_sql->num_rows != 0) {
                         <?php if ($search_sql->num_rows != 0) {
                             do { ?>
                                 <tr>
+                                    <td><?php echo date('g:ha M d y', strtotime($search_rs->date)); ?>
+                                    </td>
                                     <td><?php echo ucwords($search_rs->playerName); ?>
                                     </td>
                                     <td><?php echo $search_rs->playerScore; ?>

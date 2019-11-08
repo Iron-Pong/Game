@@ -161,6 +161,10 @@ body {
   justify-content: center;
 }
 
+.submit-score {
+  font-size: 0.4em !important;
+}
+
 /* Shake animation https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
 
 .score-shake {
@@ -218,7 +222,7 @@ body {
 }
 
 .modal#classic img {
-  background-color:  black;
+  background-color: black;
 }
 
 .classic-background:hover {
@@ -258,12 +262,12 @@ body {
   color: white;
 }
 
-.basketball #timer span{
+.basketball #timer span {
   font-family: basketball;
   color: yellow;
 }
 
-.basketball #rally span{
+.basketball #rally span {
   font-family: basketball;
   color: yellow;
 }
@@ -299,7 +303,8 @@ body {
   color: black;
 }
 
-.basketball #game-notification, .basketball .player-controls {
+.basketball #game-notification,
+.basketball .player-controls {
   color: white;
 }
 /* End Basketball CSS */
@@ -375,7 +380,7 @@ body {
   color: red;
 }
 
-.soccer #rally span{
+.soccer #rally span {
   font-family: basketball;
   color: red;
 }
@@ -539,10 +544,20 @@ body {
   transform: rotateY(180deg);
 }
 
-/* .highscores div {
-  padding: 20px;
+.highscores div {
+  padding: 5px 0;
 }
 
 .highscores #title {
   height: 250px !important;
-} */
+}
+
+.highscores {
+  overflow: scroll !important;
+}
+
+.btn-dark, .btn-warning, .btn-success, .btn-danger {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #343a40;
+}
