@@ -25,11 +25,11 @@ urlSplit.forEach(function(queries) {
   urlQuery.push(newQuery);
 });
 
-player1name = urlQuery[0][1]
+const player1name = urlQuery[0][1]
   .split("+")
   .join(" ")
   .toUpperCase();
-player2name = urlQuery[1][1]
+const player2name = urlQuery[1][1]
   .split("+")
   .join(" ")
   .toUpperCase();
@@ -389,10 +389,10 @@ class Game {
             let randomXTwo = Math.floor(Math.random() * 390) + 400;
             let randomY = Math.floor(Math.random() * 300) + 65;
             if (eachBall.dx === -2) {
-              let newBalls = new Ball(randomXTwo, randomY, 2, 2, ballRadius);
+              let newBalls = new Ball(760, randomY, 2, 2, ballRadius);
               this.theBallArray.push(newBalls);
             } else if (eachBall.dx === 2) {
-              let newBalls = new Ball(randomXOne, randomY, -2, 2, ballRadius);
+              let newBalls = new Ball(70, randomY, -2, 2, ballRadius);
               this.theBallArray.push(newBalls);
             }
             break;
