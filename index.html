@@ -81,12 +81,45 @@
                             placeholder="Player 2 Name">
                         <br>
                         <input type="hidden" id="theme" name="theme" value="classic">
-                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
-                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> Timed Game
+                        <div class="container" id="instructions">
+                            <div class="options">
+                                <div>Game Options</div>
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-dark">
+                                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode"
+                                            value="true"> Single Player
+                                    </label>
+
+                                    <label class="btn btn-dark">
+                                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> 2 Minutes
+                                        Unlimited
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    Rules:
+                                    <ul>
+                                        <li>Select Single Player and go against the computer</li>
+                                        <li>Default mode: First to score 10</li>
+                                        <li>2 miuntes Unlimited: Player with high score wins</li>
+                                    </ul>
+                                </div>
+                                <div class="col-12">
+                                    PowerUps
+                                    <ul>
+                                        <li><img src="./images/powerups/classic1.png"> - Add another ball</li>
+                                        <li><img src="./images/powerups/classic2.png"> - Increase ball speed</li>
+                                        <li><img src="./images/powerups/classic3.png"> - Increase paddle size</li>
+                                        <li><img src="./images/powerups/classic4.png"> - Slow down ball speed</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
+                        <button class="btn btn-dark" href="./main.html" role="button">Start IronPong</button>
                     </div>
                 </form>
             </div>
@@ -117,12 +150,45 @@
                             placeholder="Player 2 Name">
                         <br>
                         <input type="hidden" id="theme" name="theme" value="basketball">
-                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
-                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> Timed Game
+                        <div class="container" id="instructions">
+                            <div class="options">
+                                <div>Game Options</div>
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-warning">
+                                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode"
+                                            value="true"> Single Player
+                                    </label>
+
+                                    <label class="btn btn-warning">
+                                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> 2 Minutes
+                                        Unlimited
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    Rules:
+                                    <ul>
+                                        <li>Select Single Player and go against the computer</li>
+                                        <li>Default mode: First to score 10</li>
+                                        <li>2 miuntes Unlimited: Player with high score wins</li>
+                                    </ul>
+                                </div>
+                                <div class="col-12">
+                                    PowerUps
+                                    <ul>
+                                        <li><img src="./images/powerups/basketball1.png"> - Add another ball</li>
+                                        <li><img src="./images/powerups/basketball2.png"> - Increase ball speed</li>
+                                        <li><img src="./images/powerups/basketball3.png"> - Increase paddle size</li>
+                                        <li><img src="./images/powerups/basketball4.png"> - Slow down ball speed</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
+                        <button class="btn btn-warning" href="./main.html" role="button">Start IronPong</button>
                     </div>
                 </form>
             </div>
@@ -142,39 +208,55 @@
                 </div>
                 <form action="game.html" method="GET">
                     <div class="modal-body">
+
                         <h4>Enter Player Info</h4>
                         <label id="player1name">Player 1 Name</label>
-                        <input value="Name" required type="text" id="player1name" name="player1name"
+                        <input value="" required type="text" id="player1name" name="player1name"
                             placeholder="Player 1 Name">
                         <div id="twoPlayerDetails">
                             <label id="player2name">Player 2 Name</label>
-                            <input value="Name 2" required type="text" id="player2name" name="player2name"
-                                placeholder="Player 2 Name">
+                            <input value="" type="text" id="player2name" name="player2name" placeholder="Player 2 Name">
                         </div>
-                        <!-- <div class="container d-flex justify-content-start" id="instructions">
+                        <input type="hidden" id="theme" name="theme" value="soccer">
+                        <div class="container" id="instructions">
+                            <div class="options">
+                                <div>Game Options</div>
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-success">
+                                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode"
+                                            value="true"> Single Player
+                                    </label>
+
+                                    <label class="btn btn-success">
+                                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> 2 Minutes
+                                        Unlimited
+                                    </label>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-12">
-                                    HOW TO PLAY THE GAME:<br>
+                                    Rules:
                                     <ul>
-                                        <li>Battle a friend or the computer</li>
-                                        <li>Select Single Player or Two Players</li>
+                                        <li>Select Single Player and go against the computer</li>
+                                        <li>Default mode: First to score 10</li>
+                                        <li>2 miuntes Unlimited: Player with high score wins</li>
                                     </ul>
                                 </div>
                                 <div class="col-12">
-                                    POWERUPS<br>
+                                    PowerUps
                                     <ul>
-                                        <li>Red - Increase the ball speed by 5</li>
+                                        <li><img src="./images/powerups/soccer1.png"> - Add another ball</li>
+                                        <li><img src="./images/powerups/soccer2.png"> - Increase ball speed</li>
+                                        <li><img src="./images/powerups/soccer3.png"> - Increase paddle size</li>
+                                        <li><img src="./images/powerups/soccer4.png"> - Slow down ball speed</li>
                                     </ul>
                                 </div>
                             </div>
-                        </div> -->
-                        <input type="hidden" id="theme" name="theme" value="soccer">
-                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
-                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> Timed Game
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
+                        <button class="btn btn-success" href="./main.html" role="button">Start IronPong</button>
                     </div>
                 </form>
             </div>
@@ -202,14 +284,46 @@
                         <label id="player2name">Player 2 Name</label>
                         <input value="Name 2" required type="text" id="player2name" name="player2name"
                             placeholder="Player 2 Name">
-                        <br>
                         <input type="hidden" id="theme" name="theme" value="ballsoffury">
-                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode" value="true"> Single Player
-                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> Timed Game
+                        <div class="container" id="instructions">
+                            <div class="options">
+                                <div>Game Options</div>
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-danger">
+                                        <input type="checkbox" id="singlePlayerMode" name="singlePlayerMode"
+                                            value="true"> Single Player
+                                    </label>
+
+                                    <label class="btn btn-danger">
+                                        <input type="checkbox" id="timedMode" name="timedMode" value="true"> 2 Minutes
+                                        Unlimited
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    Rules:
+                                    <ul>
+                                        <li>Select Single Player and go against the computer</li>
+                                        <li>Default mode: First to score 10</li>
+                                        <li>2 miuntes Unlimited: Player with high score wins</li>
+                                    </ul>
+                                </div>
+                                <div class="col-12">
+                                    PowerUps
+                                    <ul>
+                                        <li><img src="./images/powerups/ballsoffury1.png"> - Add another ball</li>
+                                        <li><img src="./images/powerups/ballsoffury2.png"> - Increase ball speed</li>
+                                        <li><img src="./images/powerups/ballsoffury3.png"> - Increase paddle size</li>
+                                        <li><img src="./images/powerups/ballsoffury4.png"> - Slow down ball speed</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" href="./main.html" role="button">Start IronPong</button>
+                        <button class="btn btn-danger" href="./main.html" role="button">Start IronPong</button>
 
                     </div>
                 </form>
