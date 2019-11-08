@@ -255,9 +255,9 @@ let obj = {
 
 //powerup array for the game
 let powerUpsName = [
-  // "slowDown",
+  "slowDown",
   "speedUp",
-  // "barLarge",
+  "barLarge",
   "twoBalls"
 ];
 
