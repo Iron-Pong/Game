@@ -1,18 +1,21 @@
 <?php
 
 include('config.php');
-$playerNameSet = $_GET['player1name'];
-$playerScoreSet = $_GET['playerScore'];
-$modeSet = $_GET['theme'];
+$playerNameSet = $_POST['player1name'];
+$playerScoreSet = $_POST['playerScore'];
+$computerScoreSet = $_POST['computerScore'];
+$modeSet = $_POST['theme'];
 
 if (isset($_POST['submitscore'])) {
     $playerName = trim(mysqli_real_escape_string($con, $_POST['player1name']));
     $playerScore = trim(mysqli_real_escape_string($con, $_POST['playerScore']));
+    $computerScore = trim(mysqli_real_escape_string($con, $_POST['computerScore']));
     $mode = trim(mysqli_real_escape_string($con, $_POST['theme']));
     $submitSuccess = mysqli_query($con, "
 		insert ironpong set  
 		playerName='$playerName',
 		playerScore='$playerScore', 
+		computerScore='$computerScore', 
 		mode='$mode'");
     if ($submitSuccess == 1) {
         header('Location:highscores.php');
@@ -91,17 +94,20 @@ if ($search_sql->num_rows != 0) {
                         <th>Date</th>
                         <th>Player Name</th>
                         <th>Player Score</th>
+                        <th>Computer Score</th>
                         <th>Mode</th>
                     </thead>
                     <tbody>
                         <?php if ($search_sql->num_rows != 0) {
                             do { ?>
                                 <tr>
-                                    <td><?php echo date('g:ha M d y', strtotime($search_rs->date)); ?>
+                                    <td><?php echo date('M d y, g:ia ', strtotime($search_rs->date)); ?>
                                     </td>
                                     <td><?php echo ucwords($search_rs->playerName); ?>
                                     </td>
                                     <td><?php echo $search_rs->playerScore; ?>
+                                    </td>
+                                    <td><?php echo $search_rs->computerScore; ?>
                                     </td>
                                     <td><?php echo ucwords($search_rs->mode); ?>
                                     </td>

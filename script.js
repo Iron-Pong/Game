@@ -4,7 +4,7 @@ ctx.height = 450;
 
 // variables
 const paddleSpeed = 50;
-const endGameScore = 2;
+const endGameScore = 10;
 const ballRadius = 5;
 let playerOneScore = 0;
 let rallyScore = 0;
@@ -459,7 +459,7 @@ function gameOver2() {
 
     if (playerOneScore > playerTwoScore) {
       if(singlePlayerToggle===true){
-       message = `${player1name} WON! <a class="submit-score" href="http://avrahm.com/ironpong/highscores.php${url}&playerScore=${playerOneScore}">Submit Scores</a>`;
+       message = `${player1name} WON!<br><form action="http://avrahm.com/ironpong/highscores.php" method="POST"> <input type="hidden" id="player1name" name="player1name" value="${player1name}"> <input type="hidden" id="playerScore" name="playerScore" value="${playerOneScore}"> <input type="hidden" id="computerScore" name="computerScore" value="${playerTwoScore}"> <input type="hidden" id="theme" name="theme" value="${theme}"> <input class="submit-score" type="submit" id="submitscore" name="submitscore" value="Woohoo! Submit Score"> </form>`;
       } else {
         message = `${player1name} WON!`;
       }
@@ -469,7 +469,7 @@ function gameOver2() {
         stop();
     } else if (playerTwoScore > playerOneScore) {
       if(singlePlayerToggle===true){
-       message = `${player2name} WON!<br> <p class="submit-score">It's ok <a href="http://avrahm.com/ironpong/highscores.php${url}&playerScore=${playerOneScore}">Submit Score</a> anyway!</p>`;
+       message = `${player2name} WON!<br> <form action="http://avrahm.com/ironpong/highscores.php" method="POST"> <input type="hidden" id="player1name" name="player1name" value="${player1name}"> <input type="hidden" id="playerScore" name="playerScore" value="${playerOneScore}"> <input type="hidden" id="computerScore" name="computerScore" value="${playerTwoScore}"> <input type="hidden" id="theme" name="theme" value="${theme}"> <input class="submit-score" type="submit" id="submitscore" name="submitscore" value="It's ok Submit Scores Anyway!"> </form> `;
       } else {
         message = `${player2name} WON!`;
       }
@@ -478,7 +478,11 @@ function gameOver2() {
         obj[theme + "5"].play();
         stop();
     } else { 
+      if(singlePlayerToggle===true){
+       message = `TIE GAME!<br><form action="http://avrahm.com/ironpong/highscores.php" method="POST"> <input type="hidden" id="player1name" name="player1name" value="${player1name}"> <input type="hidden" id="playerScore" name="playerScore" value="${playerOneScore}"> <input type="hidden" id="computerScore" name="computerScore" value="${playerTwoScore}"> <input type="hidden" id="theme" name="theme" value="${theme}"> <input class="submit-score" type="submit" id="submitscore" name="submitscore" value="Submit Scores"> </form>`;
+      } else {
         message = `TIE GAME!`;
+      }
         document.getElementById("game-notification").innerHTML = message;
         document.getElementById("game-screen-message").innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
         obj[theme + "5"].play();
