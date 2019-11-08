@@ -1,79 +1,49 @@
-//IronPong JS
-
-var ctx = document.getElementById("game-board").getContext("2d");
+const ctx = document.getElementById("game-board").getContext("2d");
 ctx.width = 800;
 ctx.height = 450;
-
 // variables
-
-let paddleSpeed = 50;
+let theGame;
+const paddleSpeed = 50;
+const endGameScore = 10;
+const ballRadius = 5;
+const url = window.location.search;
+const queryParams = getQueryParams(url);
+const theTimer = 10;
+let singlePlayerToggle = false;
+let frames = 0;
 let playerOneScore = 0;
 let playerTwoScore = 0;
 let isPlaying;
-let endGameScore = 10;
-let ballRadius = 5;
 let ballSpeed = 2.5;
-let theme = "";
-let player1name = "";
-let player2name = "";
-let singlePlayerToggle = false;
-let url = window.location.search;
-let urlSplit = url.substring(1).split("&");
-let urlQuery = [];
-let theTimer = 10;
-
-urlSplit.forEach(function(queries) {
-  newQuery = queries.split("=");
-  urlQuery.push(newQuery);
-});
-
-player1name = urlQuery[0][1]
+const { player1name: player1Name = "", player2name: player2Name = "", theme, singlePlayerMode, timeMode: timerMode } =
+  queryParams || {};
+const player1name = player1Name
   .split("+")
   .join(" ")
   .toUpperCase();
-player2name = urlQuery[1][1]
+const player2name = player2Name
   .split("+")
   .join(" ")
   .toUpperCase();
-theme = urlQuery[2][1];
 
-let singlePlayerMode = false;
-
-if (urlQuery.length === 4 && urlQuery[3][0] === "singlePlayerMode") singlePlayerMode = true;
-else if (urlQuery.length === 5) singlePlayerMode = true;
-else singlePlayerMode = false;
-
-let timerMode = false;
-
-if (urlQuery.length === 4 && urlQuery[3][0] === "timedMode") timerMode = true;
-else if (urlQuery.length === 5) timerMode = true;
+if (!timerMode) document.querySelector("#header > div:nth-child(3)").innerHTML = "";
+const vid = document.getElementById("myVideo");
+if (theme === "ballsoffury") vid.play();
 else {
-  timerMode = false;
-  document.querySelector("#header > div:nth-child(3)").innerHTML = "";
-}
-
-var vid = document.getElementById("myVideo");
-if (theme === "ballsoffury") {
-  vid.play();
-} else {
   vid.style.display = "none";
   document.getElementById("skip-video-button").style.display = "none";
   vid.pause();
 }
-
-skipVideo = () => {
+function skipVideo() {
   vid.style.display = "none";
   document.getElementById("skip-video-button").style.display = "none";
   vid.pause();
-};
-
+}
 document.body.classList.add(theme);
 document.querySelector("canvas").classList.add(`${theme}-theme`);
 document.querySelector("#player1 > #name").innerText = player1name;
 document.querySelector("#player2 > #name").innerText = player2name;
-
 if (singlePlayerMode === true) singlePlayerToggle = true;
-
 class Player {
   constructor(x, y, width, height) {
     this.x = x;
@@ -83,29 +53,25 @@ class Player {
   }
 
   // Move Player function
-
   movePlayer(direction, value) {
     this[direction] += value;
   }
 
   // Single Player Function... if singlePlayerToggle is True then set the computer(player2) to match the ball y
   singlePlayer() {
-    if (singlePlayerToggle === true) {
+    if (singlePlayerToggle) {
       this.y = theGame.theBallArray[0].y;
       for (let i = 0; i < theGame.theBallArray.length - 1; i++) {
         if (theGame.theBallArray[i].dx === -2) {
           this.y = theGame.theBallArray[i].y;
-          if (theGame.theBallArray.length > 1) {
-            if (theGame.theBallArray[i].x > theGame.theBallArray[i + 1].x) {
-              this.y = theGame.theBallArray[i].y;
-            }
+          if (theGame.theBallArray.length > 1 && theGame.theBallArray[i].x > theGame.theBallArray[i + 1].x) {
+            this.y = theGame.theBallArray[i].y;
           }
         }
       }
     }
   }
 }
-
 class Ball {
   constructor(x, y, dx, dy, radius) {
     this.x = x;
@@ -122,36 +88,28 @@ class Ball {
 }
 
 //function to increase ball speed every 5.5 secs
-ballSpeedIncrease = () => {
+function ballSpeedIncrease() {
   ballSpeed = 2.5;
   setInterval(() => {
     ballSpeed += 0.5;
   }, 5500);
-};
-
+}
 const ballImg = new Image();
 ballImg.src = `./images/${theme}.png`;
-
 const twoBallsImg = new Image();
 twoBallsImg.src = `./images/powerups/${theme}1.png`;
-
 const speedUpImg = new Image();
 speedUpImg.src = `./images/powerups/${theme}2.png`;
-
 const barLargeImg = new Image();
 barLargeImg.src = `./images/powerups/${theme}3.png`;
-
 const slowDownImg = new Image();
 slowDownImg.src = `./images/powerups/${theme}4.png`;
-
 // Draw Function
-draw = (u, object) => {
+const draw = (u, object) => {
   if (object === "ball") ctx.drawImage(ballImg, u.x, u.y, 15, 15);
-
   if (object === "player") {
-    if (theme === "classic") ctx.fillStyle = "white";
-    else if (theme === "ballsoffury") ctx.fillStyle = "red";
-    else ctx.fillStyle = "black";
+    const fillStyle = { classic: "white", ballsoffury: "red" }[theme] || "black";
+    ctx.fillStyle = fillStyle;
     ctx.fillRect(u.x, u.y, u.width, u.height);
   }
   if (object === "twoBalls") ctx.drawImage(twoBallsImg, u.x, u.y, u.width, u.height);
@@ -163,16 +121,16 @@ draw = (u, object) => {
   if (object === "player" && theGame.thePlayer.y < 0) theGame.thePlayer.y = 0;
   if (object === "player" && theGame.thePlayer.y > 375) theGame.thePlayer.y = 395;
 };
-
 // Main Loop - runs animation, draws players
-let frames = 0;
-mainLoop = () => {
+function mainLoop() {
   frames++;
   ctx.clearRect(0, 0, ctx.width, ctx.height);
   draw(theGame.thePlayer, "player");
   draw(theGame.thePlayer2, "player");
   theGame.theBallArray.forEach(eachBalls => {
     draw(eachBalls, "ball");
+    eachBalls.moveBall();
+    theGame.handleCollision(eachBalls);
   });
   theGame.powerUpsArray.forEach(eachPowerUps => {
     if (eachPowerUps.name === "twoBalls") draw(eachPowerUps, "twoBalls");
@@ -182,32 +140,23 @@ mainLoop = () => {
   });
   if (frames % 150 === 0) theGame.spawnPowerUps();
   if (frames % 800 === 0) theGame.clearUnusedPowerUps();
-  theGame.theBallArray.forEach(eachBalls => {
-    eachBalls.moveBall();
-  });
-  theGame.theBallArray.forEach(eachBalls => {
-    theGame.handleCollision(eachBalls);
-  });
   theGame.thePlayer2.singlePlayer();
-  if (timerMode === false) gameOver();
-  if (isPlaying === true) requestId = requestAnimationFrame(mainLoop);
-};
-
+  if (!timerMode) gameOver();
+  if (isPlaying) requestId = requestAnimationFrame(mainLoop);
+}
 // Paddle controls
-gameControls = e => {
-  if (singlePlayerMode === false) {
+function gameControls(e) {
+  if (!singlePlayerMode) {
     if (e.key === "ArrowUp") theGame.thePlayer2.movePlayer("y", -paddleSpeed);
     if (e.key === "ArrowDown") theGame.thePlayer2.movePlayer("y", +paddleSpeed);
   }
   if (e.key === "a" || e.key === "A") theGame.thePlayer.movePlayer("y", -paddleSpeed);
   if (e.key === "z" || e.key === "Z") theGame.thePlayer.movePlayer("y", +paddleSpeed);
-};
-
+}
 //allow two player keydown strokes
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
-
-var map = {}; // You could also use an array
-onkeydown = onkeyup = function(e) {
+const map = {}; // You could also use an array
+onkeydown = onkeyup = e => {
   e = e || event; // to deal with IE
   map[e.key] = e.type == "keydown";
   /* insert conditional here */
@@ -215,16 +164,13 @@ onkeydown = onkeyup = function(e) {
     if (map[k]) gameControls({ key: k });
   }
 };
-
-stop = () => {
+function stop() {
   isPlaying = false;
-
   /// kill any request in progress
   mainLoop ? cancelAnimationFrame : false;
-};
-
+}
 // Audio Objects
-let obj = {
+const obj = {
   // Basketball Sounds
   basketball1: new Audio("./sounds/buzzer.mp3"), // opening buzzer
   basketball2: new Audio("./sounds/bounce.mp3"), // bounce off paddle
@@ -250,15 +196,13 @@ let obj = {
   ballsoffury4: new Audio("./sounds/backhand.mov"), // player 2 scores
   ballsoffury5: new Audio("./sounds/furywin.mov") // player 1 or 2 wins
 };
-
 //powerup array for the game
-let powerUpsName = [
+const powerUpsName = [
   // "slowDown",
   "speedUp",
   // "barLarge",
   "twoBalls"
 ];
-
 //here is where all the classes are called to create the game
 class Game {
   constructor() {
@@ -268,18 +212,15 @@ class Game {
     this.theBallArray = [this.theBall];
     this.powerUpsArray = [];
   }
-
   spawnPowerUps() {
-    let rName = powerUpsName[Math.floor(Math.random() * powerUpsName.length)];
-    let rX = Math.floor(Math.random() * 600) + 65;
-    let rY = Math.floor(Math.random() * 300) + 25;
-    let rWidth = 45;
-    let rHeight = 45;
-
-    let newPowerUps = new PowerUps(rName, rX, rY, rWidth, rHeight);
+    const rName = powerUpsName[Math.floor(Math.random() * powerUpsName.length)];
+    const rX = Math.floor(Math.random() * 600) + 65;
+    const rY = Math.floor(Math.random() * 300) + 25;
+    const rWidth = 45;
+    const rHeight = 45;
+    const newPowerUps = new PowerUps(rName, rX, rY, rWidth, rHeight);
     this.powerUpsArray.push(newPowerUps);
   }
-
   clearUnusedPowerUps() {
     this.powerUpsArray.splice(0, 1);
   }
@@ -303,27 +244,23 @@ class Game {
       eachBall.x -= 5;
       eachBall.dx *= -1;
       eachBall.dy *= -1;
-      console.log(eachBall.dy);
       obj[theme + "2"].play();
     } else if (eachBall.y < 0 || eachBall.y > 450) eachBall.dy *= -1;
-
     // Restart ball and keep score
     for (let i = 0; i < this.theBallArray.length; i++) {
-      let randomY = Math.floor(Math.random() * 300) + 65;
+      const randomY = Math.floor(Math.random() * 300) + 65;
       if (eachBall.x < 0) {
         playerTwoScore += 1;
         ballSpeed = 2;
         document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
         obj[theme + "4"].play();
         this.clearUnusedPowerUps();
-        let message = `${player2name} Scores!`;
+        const message = `${player2name} Scores!`;
         document.getElementById("game-notification").innerHTML = message;
         document.querySelector("canvas").classList.add("score-shake");
-        setTimeout(() => {
-          document.querySelector("canvas").classList.remove("score-shake");
-        }, 600);
+        setTimeout(() => document.querySelector("canvas").classList.remove("score-shake"), 600);
         this.theBallArray.splice(i, this.theBallArray.length);
-        let newBalls = new Ball(70, randomY, -2, 2, ballRadius);
+        const newBalls = new Ball(70, randomY, -2, 2, ballRadius);
         this.theBallArray.push(newBalls);
       }
       if (eachBall.x > 800) {
@@ -332,14 +269,12 @@ class Game {
         document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
         obj[theme + "3"].play();
         this.clearUnusedPowerUps();
-        let message = `${player1name} Scores!`;
+        const message = `${player1name} Scores!`;
         document.getElementById("game-notification").innerHTML = message;
         document.querySelector("canvas").classList.add("score-shake");
-        setTimeout(() => {
-          document.querySelector("canvas").classList.remove("score-shake");
-        }, 600);
+        setTimeout(() => document.querySelector("canvas").classList.remove("score-shake"), 600);
         this.theBallArray.splice(i, this.theBallArray.length);
-        let newBalls = new Ball(760, randomY, 2, 2, ballRadius);
+        const newBalls = new Ball(760, randomY, 2, 2, ballRadius);
         this.theBallArray.push(newBalls);
       }
     }
@@ -361,21 +296,19 @@ class Game {
             if (eachBall.dx === -2) this.thePlayer.height = 200;
             else if (eachBall.dx === 2) {
               this.thePlayer2.height = 200;
-              setTimeout(function() {
-                theGame.thePlayer2.height = 60;
-              }, 5000);
+              setTimeout(() => (theGame.thePlayer2.height = 60), 5000);
             }
             break;
           case "twoBalls":
-            let randomXOne = Math.floor(Math.random() * 400);
-            let randomXTwo = Math.floor(Math.random() * 390) + 400;
-            let randomY = Math.floor(Math.random() * 300) + 65;
-            let randomDir = Math.floor(Math.random() * 5) + 1;
+            const randomXOne = Math.floor(Math.random() * 400);
+            const randomXTwo = Math.floor(Math.random() * 390) + 400;
+            const randomY = Math.floor(Math.random() * 300) + 65;
+            const randomDir = Math.floor(Math.random() * 5) + 1;
             if (eachBall.dx === -2) {
-              let newBalls = new Ball(randomXTwo, randomY, 2, randomDir, ballRadius);
+              const newBalls = new Ball(randomXTwo, randomY, 2, randomDir, ballRadius);
               this.theBallArray.push(newBalls);
             } else if (eachBall.dx === 2) {
-              let newBalls = new Ball(randomXOne, randomY, -2, randomDir, ballRadius);
+              const newBalls = new Ball(randomXOne, randomY, -2, randomDir, ballRadius);
               this.theBallArray.push(newBalls);
             }
             break;
@@ -387,24 +320,18 @@ class Game {
     }
   }
 }
-
 resetPlayerScores = () => {
   playerOneScore = 0;
   playerTwoScore = 0;
-
   document.querySelector(".player-card #player1 #player-score span").innerText = playerOneScore;
   document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
   document.querySelector("#game-notification").innerText = "New Game";
   ballSpeed = 2.5;
 };
-
 countDown = () => {
   resetPlayerScores();
   let counter = 3;
-  let timer = setInterval(function() {
-    startCountDown(counter);
-  }, 1000);
-
+  let timer = setInterval(() => startCountDown(counter), 1000);
   startCountDown = () => {
     if (counter === 0) {
       clearInterval(timer);
@@ -416,74 +343,56 @@ countDown = () => {
     }
   };
 };
-
 //Game Over function
-
-gameOver = () => {
+function gameOver() {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
+    document.getElementById("game-screen-message").innerHTML =
+      '<a onclick="countDown()"> <i class="fas fa-redo"></i></a>';
+    obj[`${theme}5`].play();
     stop();
   }
-
   if (playerTwoScore === endGameScore) {
     message = `${player2name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
+    document.getElementById("game-screen-message").innerHTML =
+      '<a onclick="countDown()"> <i class="fas fa-redo"></i></a>';
+    obj[`${theme}5`].play();
     stop();
   }
-};
-
+}
 //Timed Game Over Function
-
 gameOver2 = () => {
   if (playerOneScore > playerTwoScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
+    document.getElementById("game-screen-message").innerHTML =
+      '<a onclick="countDown()"> <i class="fas fa-redo"></i></a>';
+    obj[`${theme}5`].play();
     stop();
   } else if (playerTwoScore > playerOneScore) {
     message = `${player2name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
+    document.getElementById("game-screen-message").innerHTML =
+      '<a onclick="countDown()"> <i class="fas fa-redo"></i></a>';
+    obj[`${theme}5`].play();
     stop();
   } else {
-    message = `TIE GAME!`;
+    message = "TIE GAME!";
     document.getElementById("game-notification").innerHTML = message;
-    document.getElementById(
-      "game-screen-message"
-    ).innerHTML = `<a onclick="countDown()"> <i class="fas fa-redo"></i></a>`;
-    obj[theme + "5"].play();
+    document.getElementById("game-screen-message").innerHTML =
+      '<a onclick="countDown()"> <i class="fas fa-redo"></i></a>';
+    obj[`${theme}5`].play();
     stop();
   }
 };
-
 // Timer Function
-
-timerToggle = () => {
-  timerMode === true ? timerFuction() : gameOver();
-};
+timerToggle = () => (timerMode ? timerFuction() : gameOver());
 
 timerFuction = () => {
   let counter1 = theTimer;
-
-  let timer1 = setInterval(function() {
-    startCountUp(counter1);
-  }, 1000);
-
+  let timer1 = setInterval(() => startCountUp(counter1), 1000);
   startCountUp = () => {
     if (counter1 === 0) {
       clearInterval(timer1);
@@ -495,17 +404,25 @@ timerFuction = () => {
     }
   };
 };
-
 //Start Button
-
 document.getElementById("start-game").onclick = countDown;
-let theGame;
-
 startGame = () => {
   isPlaying = true;
   theGame = new Game();
   timerToggle();
   mainLoop();
   ballSpeedIncrease();
-  obj[theme + "1"].play();
+  obj[`${theme}1`].play();
 };
+
+function getQueryParams(str = "") {
+  if (!str) return {};
+  const queryStrStartIdx = str.indexOf("?");
+  const queryStr = str.substr(queryStrStartIdx + 1);
+  const strArr = queryStr.split("&");
+  return strArr.reduce((acc, query) => {
+    if (!query.includes("=")) return acc;
+    const [param, value] = query.split("=");
+    return { ...acc, [param]: value };
+  }, {});
+}
