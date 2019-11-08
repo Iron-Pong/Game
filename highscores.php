@@ -53,10 +53,10 @@ if ($search_sql->num_rows != 0) {
 
 </head>
 
-<body id="landing">
+<body id="landing" class="highscores">
 
     <div class="container">
-        <div class="highscores">
+        <div>
             <div class="col-12" id="title">
                 <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
                     <div class="flipper">
@@ -69,18 +69,23 @@ if ($search_sql->num_rows != 0) {
                     </div>
                 </div>
             </div>
-            <div class="col-12" id="sub-title">
-                <form action="highscores.php" method="POST">
-                    <input type="text" id="player1name" disabled name="player1name" value="<?php echo $playerNameSet; ?>">
-                    <input type="text" id="playerScore" disabled name="playerScore" value="<?php echo $playerScoreSet; ?>">
-                    <input type="hidden" id="theme" name="theme" value="<?php echo $modeSet; ?>">
-                    <input type="submit" id="submitscore" name="submitscore" value="submit">
-                </form>
-            </div>
-            <div class="col-12" id="sub-title">
-                Submit Your Highscore
-            </div>
+            <?php if (empty($playerNameSet)) { ?>
+                <div class="col-12" id="sub-title"><a href="http://avrahm.com/IronPong/">Play IronPong</a></div>
+            <?php } else { ?>
+                <div class="col-12" id="sub-title">
+                    Player: <?php echo $playerNameSet; ?><br>
+                    Score: <?php echo $playerScoreSet; ?><br>
+                    Mode: <?php echo $modeSet; ?>
+                    <form action="highscores.php" method="POST">
+                        <input type="hidden" id="player1name" name="player1name" value="<?php echo $playerNameSet; ?>">
+                        <input type="hidden" id="playerScore" name="playerScore" value="<?php echo $playerScoreSet; ?>">
+                        <input type="hidden" id="theme" name="theme" value="<?php echo $modeSet; ?>">
+                        <input type="submit" id="submitscore" name="submitscore" value="submit">
+                    </form>
+                </div> <?php } ?>
+
             <div class="col-12">
+                <h3>High score Timed and Single Player Mode</h3>
                 <table class="table table-dark">
                     <thead>
                         <th>Player Name</th>

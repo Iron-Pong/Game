@@ -539,10 +539,14 @@ body {
   transform: rotateY(180deg);
 }
 
-/* .highscores div {
-  padding: 20px;
+.highscores div {
+  padding: 20px 0;
 }
 
 .highscores #title {
   height: 250px !important;
-} */
+}
+
+.highscores {
+  overflow: scroll !important;
+}
