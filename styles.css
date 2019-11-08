@@ -222,7 +222,7 @@ body {
 }
 
 .modal#classic img {
-  background-color:  black;
+  background-color: black;
 }
 
 .classic-background:hover {
@@ -262,12 +262,12 @@ body {
   color: white;
 }
 
-.basketball #timer span{
+.basketball #timer span {
   font-family: basketball;
   color: yellow;
 }
 
-.basketball #rally span{
+.basketball #rally span {
   font-family: basketball;
   color: yellow;
 }
@@ -303,7 +303,8 @@ body {
   color: black;
 }
 
-.basketball #game-notification, .basketball .player-controls {
+.basketball #game-notification,
+.basketball .player-controls {
   color: white;
 }
 /* End Basketball CSS */
@@ -379,7 +380,7 @@ body {
   color: red;
 }
 
-.soccer #rally span{
+.soccer #rally span {
   font-family: basketball;
   color: red;
 }

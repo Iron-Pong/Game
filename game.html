@@ -1,95 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
     <!-- IronPong CSS -->
-    <link rel="stylesheet" href="./styles.css" type="text/css">
+    <link rel="stylesheet" href="./styles.css" type="text/css" />
     <script src="https://kit.fontawesome.com/ea74f168d9.js" crossorigin="anonymous"></script>
 
     <title>IronPong</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container-fluid">
-        <div id="bofVido">
-            <video id="myVideo">
-                <source src="./images/ballsoffury-video.mp4" type="video/mp4"></video>
-                    <div id="skip-video-button"><button onclick="skipVideo()">Skip</button></div>
-        </div>
-        <div class="row" id="header">
-            <div class="col-3" id="back-button">
-                <a href="./index.html"><img src="./images/back.png" width="40px" height="40px"> Change Mode</a>
-            </div>
-            <div class="col-6" id="game-notification">
-                <button id="start-game">Start</button>
-            </div>
-            <div class="col-2" id="timer">Timer <span></span></div>
-            <div class="col-1" id="rally">Rally <span></span></div>
-        </div>
-        <div class="row" id="main-board">
-            <div class="col-2 player-card">
-                <div class="row" id="player1">
-                    <div class="col-12" id="name">
+      <div id="bofVido">
+        <video id="myVideo" src="./images/ballsoffury-video.mp4" type="video/mp4" autoplay="true" muted="muted"></video>
 
-                    </div>
-                    <div class="col-12" id="player-score">
-                        <span class="number">0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-8" id="game-screen"><canvas id="game-board" width="800" height="450"></canvas>
-                <div id="game-screen-message"></div>
-            </div>
-            <div class="col-2 player-card">
-                <div class="row" id="player2">
-                    <div class="col-12" id="name">
-
-                    </div>
-                    <div class="col-12" id="player-score">
-                        <span class="number">0</span>
-                    </div>
-                </div>
-            </div>
+        <div id="skip-video-button"><button onclick="skipVideo()">Skip</button></div>
+      </div>
+      <div class="row" id="header">
+        <div class="col-3" id="back-button">
+          <a href="./index.html"><img src="./images/back.png" width="40px" height="40px" /> Change Mode</a>
         </div>
-        <div class="row" id="footer">
-            <div class="col-3 player-controls d-flex flex-column">
-                <div class="row">
-                    <div class="col-12">Controls</div>
-                    <div class="col-12  d-flex justify-content-around">
-                        <div><img src="./images/computer_key_A.png"></div>
-                        <div><img src="./images/computer_key_Z.png"></div>
-                    </div>
-                    <div class="col-12 d-flex justify-content-around">
-                        <div>Up</div>
-                        <div>Down</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 d-flex justify-content-center align-items-center"> <img src="./images/pong-logo3.png"
-                    wdith="100px" height="100px">
-            </div>
-            <div class="col-3 player-controls d-flex flex-column">
-                <div class="row">
-                    <div class="col-12">Controls</div>
-                    <div class="col-12  d-flex justify-content-around">
-                        <div><img src="./images/computer_key_Arrow_Up.png"></div>
-                        <div><img src="./images/computer_key_Arrow_Down.png"></div>
-                    </div>
-                    <div class="col-12 d-flex justify-content-around">
-                        <div>Up</div>
-                        <div>Down</div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-6" id="game-notification">
+          <button id="start-game">Start</button>
         </div>
+        <div class="col-2" id="timer">Timer <span></span></div>
+        <div class="col-1" id="rally">Rally <span></span></div>
+      </div>
+      <div class="row" id="main-board">
+        <div class="col-2 player-card">
+          <div class="row" id="player1">
+            <div class="col-12" id="name"></div>
+            <div class="col-12" id="player-score">
+              <span class="number">0</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-8" id="game-screen">
+          <canvas id="game-board" width="800" height="450"></canvas>
+          <div id="game-screen-message"></div>
+        </div>
+        <div class="col-2 player-card">
+          <div class="row" id="player2">
+            <div class="col-12" id="name"></div>
+            <div class="col-12" id="player-score">
+              <span class="number">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="footer">
+        <div class="col-3 player-controls d-flex flex-column">
+          <div class="row">
+            <div class="col-12">Controls</div>
+            <div class="col-12  d-flex justify-content-around">
+              <div><img src="./images/computer_key_A.png" /></div>
+              <div><img src="./images/computer_key_Z.png" /></div>
+            </div>
+            <div class="col-12 d-flex justify-content-around">
+              <div>Up</div>
+              <div>Down</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <img src="./images/pong-logo3.png" wdith="100px" height="100px" />
+        </div>
+        <div class="col-3 player-controls d-flex flex-column">
+          <div class="row">
+            <div class="col-12">Controls</div>
+            <div class="col-12  d-flex justify-content-around">
+              <div><img src="./images/computer_key_Arrow_Up.png" /></div>
+              <div><img src="./images/computer_key_Arrow_Down.png" /></div>
+            </div>
+            <div class="col-12 d-flex justify-content-around">
+              <div>Up</div>
+              <div>Down</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- IronPong JS -->
     <script src="./powerups.js"></script>
@@ -97,15 +97,20 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-</body>
-
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
