@@ -61,11 +61,11 @@ if (theme === "ballsoffury") {
   vid.pause();
 }
 
-function skipVideo() {
+skipVideo = () => {
   vid.style.display = "none";
   document.getElementById("skip-video-button").style.display = "none";
   vid.pause();
-}
+};
 
 document.body.classList.add(theme);
 document.querySelector("canvas").classList.add(`${theme}-theme`);
@@ -122,12 +122,12 @@ class Ball {
 }
 
 //function to increase ball speed every 5.5 secs
-function ballSpeedIncrease() {
+ballSpeedIncrease = () => {
   ballSpeed = 2.5;
   setInterval(() => {
     ballSpeed += 0.5;
   }, 5500);
-}
+};
 
 const ballImg = new Image();
 ballImg.src = `./images/${theme}.png`;
@@ -145,7 +145,7 @@ const slowDownImg = new Image();
 slowDownImg.src = `./images/powerups/${theme}4.png`;
 
 // Draw Function
-function draw(u, object) {
+draw = (u, object) => {
   if (object === "ball") ctx.drawImage(ballImg, u.x, u.y, 15, 15);
 
   if (object === "player") {
@@ -162,11 +162,11 @@ function draw(u, object) {
   if (object === "player" && theGame.thePlayer2.y > 375) theGame.thePlayer2.y = 395;
   if (object === "player" && theGame.thePlayer.y < 0) theGame.thePlayer.y = 0;
   if (object === "player" && theGame.thePlayer.y > 375) theGame.thePlayer.y = 395;
-}
+};
 
 // Main Loop - runs animation, draws players
 let frames = 0;
-function mainLoop() {
+mainLoop = () => {
   frames++;
   ctx.clearRect(0, 0, ctx.width, ctx.height);
   draw(theGame.thePlayer, "player");
@@ -191,17 +191,17 @@ function mainLoop() {
   theGame.thePlayer2.singlePlayer();
   if (timerMode === false) gameOver();
   if (isPlaying === true) requestId = requestAnimationFrame(mainLoop);
-}
+};
 
 // Paddle controls
-function gameControls(e) {
+gameControls = e => {
   if (singlePlayerMode === false) {
     if (e.key === "ArrowUp") theGame.thePlayer2.movePlayer("y", -paddleSpeed);
     if (e.key === "ArrowDown") theGame.thePlayer2.movePlayer("y", +paddleSpeed);
   }
   if (e.key === "a" || e.key === "A") theGame.thePlayer.movePlayer("y", -paddleSpeed);
   if (e.key === "z" || e.key === "Z") theGame.thePlayer.movePlayer("y", +paddleSpeed);
-}
+};
 
 //allow two player keydown strokes
 //https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
@@ -216,12 +216,12 @@ onkeydown = onkeyup = function(e) {
   }
 };
 
-function stop() {
+stop = () => {
   isPlaying = false;
 
   /// kill any request in progress
   mainLoop ? cancelAnimationFrame : false;
-}
+};
 
 // Audio Objects
 let obj = {
@@ -293,6 +293,7 @@ class Game {
       obj[theme + "2"].play();
       eachBall.x += 5;
       eachBall.dx *= -1;
+      eachBall.dy *= -Math.random();
     } else if (
       eachBall.x < this.thePlayer2.x + this.thePlayer2.width + eachBall.radius * 2 &&
       eachBall.x + eachBall.radius * 2 > this.thePlayer2.x &&
@@ -301,6 +302,8 @@ class Game {
     ) {
       eachBall.x -= 5;
       eachBall.dx *= -1;
+      eachBall.dy *= -1;
+      console.log(eachBall.dy);
       obj[theme + "2"].play();
     } else if (eachBall.y < 0 || eachBall.y > 450) eachBall.dy *= -1;
 
@@ -367,11 +370,12 @@ class Game {
             let randomXOne = Math.floor(Math.random() * 400);
             let randomXTwo = Math.floor(Math.random() * 390) + 400;
             let randomY = Math.floor(Math.random() * 300) + 65;
+            let randomDir = Math.floor(Math.random() * 5) + 1;
             if (eachBall.dx === -2) {
-              let newBalls = new Ball(randomXTwo, randomY, 2, 2, ballRadius);
+              let newBalls = new Ball(randomXTwo, randomY, 2, randomDir, ballRadius);
               this.theBallArray.push(newBalls);
             } else if (eachBall.dx === 2) {
-              let newBalls = new Ball(randomXOne, randomY, -2, 2, ballRadius);
+              let newBalls = new Ball(randomXOne, randomY, -2, randomDir, ballRadius);
               this.theBallArray.push(newBalls);
             }
             break;
@@ -384,7 +388,7 @@ class Game {
   }
 }
 
-function resetPlayerScores() {
+resetPlayerScores = () => {
   playerOneScore = 0;
   playerTwoScore = 0;
 
@@ -392,16 +396,16 @@ function resetPlayerScores() {
   document.querySelector(".player-card #player2 #player-score span").innerText = playerTwoScore;
   document.querySelector("#game-notification").innerText = "New Game";
   ballSpeed = 2.5;
-}
+};
 
-function countDown() {
+countDown = () => {
   resetPlayerScores();
   let counter = 3;
   let timer = setInterval(function() {
     startCountDown(counter);
   }, 1000);
 
-  function startCountDown() {
+  startCountDown = () => {
     if (counter === 0) {
       clearInterval(timer);
       startGame();
@@ -410,12 +414,12 @@ function countDown() {
       document.getElementById("game-screen-message").innerHTML = counter;
       counter--;
     }
-  }
-}
+  };
+};
 
 //Game Over function
 
-function gameOver() {
+gameOver = () => {
   if (playerOneScore === endGameScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
@@ -435,11 +439,11 @@ function gameOver() {
     obj[theme + "5"].play();
     stop();
   }
-}
+};
 
 //Timed Game Over Function
 
-function gameOver2() {
+gameOver2 = () => {
   if (playerOneScore > playerTwoScore) {
     message = `${player1name} WON!`;
     document.getElementById("game-notification").innerHTML = message;
@@ -465,22 +469,22 @@ function gameOver2() {
     obj[theme + "5"].play();
     stop();
   }
-}
+};
 
 // Timer Function
 
-function timerToggle() {
+timerToggle = () => {
   timerMode === true ? timerFuction() : gameOver();
-}
+};
 
-function timerFuction() {
+timerFuction = () => {
   let counter1 = theTimer;
 
   let timer1 = setInterval(function() {
     startCountUp(counter1);
   }, 1000);
 
-  function startCountUp() {
+  startCountUp = () => {
     if (counter1 === 0) {
       clearInterval(timer1);
       document.querySelector("#header > div:nth-child(3) > span").innerHTML = 0;
@@ -489,19 +493,19 @@ function timerFuction() {
       counter1--;
       document.querySelector("#header > div:nth-child(3) > span").innerHTML = counter1;
     }
-  }
-}
+  };
+};
 
 //Start Button
 
 document.getElementById("start-game").onclick = countDown;
 let theGame;
 
-function startGame() {
+startGame = () => {
   isPlaying = true;
   theGame = new Game();
   timerToggle();
   mainLoop();
   ballSpeedIncrease();
   obj[theme + "1"].play();
-}
+};
